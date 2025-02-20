@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "Lobo guar\xE1_0": -3828158805636993950
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
