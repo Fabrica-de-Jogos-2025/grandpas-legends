@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "Boitat\xE1_0": 3316924010653511858
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

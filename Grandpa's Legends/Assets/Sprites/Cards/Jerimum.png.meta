@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Jerimum_0: 420744309785906725
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

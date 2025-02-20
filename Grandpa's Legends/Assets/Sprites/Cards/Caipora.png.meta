@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Caipora_0: -3810183262394673366
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

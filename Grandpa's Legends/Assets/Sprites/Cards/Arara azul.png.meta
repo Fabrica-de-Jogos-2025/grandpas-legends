@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Arara azul_0: -4621404746855163676
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -4,6 +4,7 @@ using TMPro;
 public class DisplayCard : MonoBehaviour
 {
     public int displayId;
+    public Cards cardData;
 
     public TextMeshProUGUI costText;
     public TextMeshProUGUI powerText;

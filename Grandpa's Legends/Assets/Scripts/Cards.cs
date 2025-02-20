@@ -8,7 +8,6 @@ public class Cards
     public int life;
     public string cardDescription;
 
-    // Constructor to initialize card data
     public Cards(int id, string cardName, int cost, int power, int life, string cardDescription)
     {
         this.id = id;
