@@ -99,7 +99,7 @@ PrefabInstance:
     - target: {fileID: 4257276728998462539, guid: 0735000be9e058142bab57ec91298c31, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 420744309785906725, guid: 0e920b88d4a5575469c961465370af7b, type: 3}
+      objectReference: {fileID: 4666763433365559914, guid: e32e26b1418667943845b485fa952d51, type: 3}
     - target: {fileID: 4909475430339443713, guid: 0735000be9e058142bab57ec91298c31, type: 3}
       propertyPath: m_Name
       value: 42 - Jerimum

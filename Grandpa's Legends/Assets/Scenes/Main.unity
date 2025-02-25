@@ -709,31 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293f94c7bdb78ff48b6c5bee70628a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allCards:
-  - id: 1
-    cardName: 
-    cost: 0
-    power: 0
-    life: 0
-    cardDescription: 
-  - id: 2
-    cardName: 
-    cost: 0
-    power: 0
-    life: 0
-    cardDescription: 
-  - id: 3
-    cardName: 
-    cost: 0
-    power: 0
-    life: 0
-    cardDescription: 
-  - id: 4
-    cardName: 
-    cost: 0
-    power: 0
-    life: 0
-    cardDescription: 
+  allCards: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

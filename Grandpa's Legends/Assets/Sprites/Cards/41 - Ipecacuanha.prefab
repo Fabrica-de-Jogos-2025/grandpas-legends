@@ -99,7 +99,7 @@ PrefabInstance:
     - target: {fileID: 4257276728998462539, guid: 0735000be9e058142bab57ec91298c31, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -7019825698325581230, guid: 668a011c5840f244b8d528918ad73f9c, type: 3}
+      objectReference: {fileID: 736971698023015787, guid: c91d682d809e43f40988640548209a70, type: 3}
     - target: {fileID: 4909475430339443713, guid: 0735000be9e058142bab57ec91298c31, type: 3}
       propertyPath: m_Name
       value: 41 - Ipecacuanha
