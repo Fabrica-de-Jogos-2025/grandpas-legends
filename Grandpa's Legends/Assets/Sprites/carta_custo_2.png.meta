@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2276c4986ea2ed44f98abfee05d21ac2
+guid: 27d8fee118695ad429977e3362762843
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8261308913886201206
-    second: Carta_0
+      213: 910037341531983991
+    second: carta_custo_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Carta_0
+      name: carta_custo_2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a8a7b08205fe95d80800000000000000
-      internalID: -8261308913886201206
+      spriteID: 770da5af32a11ac00800000000000000
+      internalID: 910037341531983991
       vertices: []
       indices: 
       edges: []
