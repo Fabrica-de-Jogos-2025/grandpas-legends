@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,13 @@ public class DeckManager : MonoBehaviour
     void Start()
     {
         allCards.AddRange(CardDatabase.cardList);
+        HandManager hand = FindAnyObjectByType<HandManager>();
+        for(int i = 0; i < 6; i++){
+            DrawCard(hand);
+        }
     }
+
+
     public void DrawCard(HandManager handManager){
         if(allCards.Count == 0){
             return;
