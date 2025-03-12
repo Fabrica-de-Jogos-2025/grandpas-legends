@@ -1,12 +1,32 @@
 using UnityEngine;
 using TMPro;
 
-public class ManaManager : MonoBehaviour{
-    public TextMeshProUGUI meuTexto; // Arraste o objeto de texto no Inspector
-    public int minhaVariavel = 10;   // Variável que será exibida
+public class ManaManager : MonoBehaviour
+{
+    public int currentMana = 10; // Começa com 10 de mana
+    public TextMeshProUGUI currentManaText;
 
-    void Update()
+    private void Start()
     {
-        meuTexto.text = "" + minhaVariavel; // Atualiza o texto conforme a variável muda
+        UpdateManaText();
+    }
+
+    public bool HasEnoughMana(int cost)
+    {
+        return currentMana >= cost;
+    }
+
+    public void SpendMana(int cost)
+    {
+        if (HasEnoughMana(cost))
+        {
+            currentMana -= cost;
+            UpdateManaText();
+        }
+    }
+
+    private void UpdateManaText()
+    {
+        currentManaText.text = currentMana.ToString();
     }
 }
