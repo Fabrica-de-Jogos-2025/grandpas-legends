@@ -831,6 +831,15 @@ MonoBehaviour:
   playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 338323529103644169}
   playArrow: {fileID: 3280230379526217738}
+  lerpFactor: 0.9
+  cardPlayDivider: 5
+  cardPlayMultiplier: 1
+  needUpdateCardPlayPosition: 0
+  playPositionYDivider: 4
+  playPositionYMultiplier: 1
+  playPositionXDivider: 6
+  playPositionXMultiplier: 1
+  needUpdatePlayPosition: 0
 --- !u!114 &2998629894308083205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1317,7 +1326,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 128
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1196067271945220290
 MonoBehaviour:
   m_ObjectHideFlags: 0
