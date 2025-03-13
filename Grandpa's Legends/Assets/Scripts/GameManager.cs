@@ -1,16 +1,10 @@
 using UnityEngine;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager Instance; 
 
-    public int currentMana = 1; // Starting mana
-    public int maxMana = 10;    // Maximum mana
-
-    public TextMeshProUGUI manaText; // Reference to the TextMeshPro UI element
-
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -22,38 +16,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
-        UpdateManaUI(); // Initialize the mana display
+        InitializeGame();
     }
 
-    // Called at the start of each round
-    public void StartNewRound()
+    private void InitializeGame()
     {
-        // Increase mana by 1, but don't exceed maxMana
-        currentMana = Mathf.Min(currentMana + 1, maxMana);
-
-        UpdateManaUI(); // Update the mana display
+        ManaManager.Instance.ResetMana();
+        StartNewTurn();
     }
 
-    // Deduct mana when playing a card
-    public bool DeductMana(int amount)
+    public void StartNewTurn()
     {
-        if (currentMana >= amount)
-        {
-            currentMana -= amount;
-            UpdateManaUI(); // Update the mana display
-            return true;
-        }
-        return false;
+        Debug.Log("Novo turno iniciado.");
+
+        ManaManager.Instance.IncrementMana();
+
     }
 
-    // Update the TextMeshPro UI with the current mana
-    private void UpdateManaUI()
+    public void EndPlayerTurn()
     {
-        if (manaText != null)
-        {
-            manaText.text = $"Mana: {currentMana}/{maxMana}";
-        }
+        Debug.Log("Turno do jogador finalizado.");
+
+
+        Invoke("StartNewTurn", 1f); // 1 segundo de delay
     }
 }

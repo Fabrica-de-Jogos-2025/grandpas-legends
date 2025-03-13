@@ -5,7 +5,6 @@ public class HandManager : MonoBehaviour
 {
     public DeckManager deckManager;
     
-    // Lista de mapeamentos entre ID de carta e seu prefab correspondente
     public List<CardPrefabMapping> cardPrefabMappings;
     
     public Transform handTransform;
@@ -14,12 +13,10 @@ public class HandManager : MonoBehaviour
 
     void Start()
     {
-        // Inicialização, se necessário.
     }
 
     public void AddCardToHand(Cards cardData)
     {
-        // Procura o mapeamento que possua o cardId igual ao id da carta
         CardPrefabMapping mapping = cardPrefabMappings.Find(m => m.cardId == cardData.id);
         
         if(mapping == null)
@@ -28,11 +25,9 @@ public class HandManager : MonoBehaviour
             return;
         }
         
-        // Instancia o prefab correspondente
         GameObject newCard = Instantiate(mapping.cardPrefab, handTransform.position, Quaternion.identity, handTransform);
         cardsInHand.Add(newCard);
         
-        // Se o prefab tiver o script DisplayCard, podemos passar os dados da carta
         DisplayCard display = newCard.GetComponent<DisplayCard>();
         if(display != null)
         {

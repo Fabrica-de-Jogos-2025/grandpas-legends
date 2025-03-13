@@ -9,7 +9,8 @@ public class DisplayCard : MonoBehaviour
     public TextMeshProUGUI costText;
     public TextMeshProUGUI powerText;
     public TextMeshProUGUI lifeText;
-
+    //public TextMeshProUGUI cardText;
+ 
     void Start()
     {
         Cards cardData = CardDatabase.cardList.Find(card => card.id == displayId);
@@ -19,6 +20,7 @@ public class DisplayCard : MonoBehaviour
             costText.text = cardData.cost.ToString();
             powerText.text = cardData.power.ToString();
             lifeText.text = cardData.life.ToString();
+            //cardText.text = cardData.cardDescription.ToString();
         }
         else
         {
