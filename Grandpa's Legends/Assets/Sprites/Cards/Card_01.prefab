@@ -781,8 +781,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2110641017996463233}
-  - component: {fileID: 7614533509574976348}
   - component: {fileID: 2998629894308083205}
+  - component: {fileID: 6797528199124663534}
   - component: {fileID: 2663746858277933038}
   - component: {fileID: 3373496990389517617}
   m_Layer: 0
@@ -814,32 +814,6 @@ RectTransform:
   m_AnchoredPosition: {x: 11.837401, y: 1.2822}
   m_SizeDelta: {x: 152, y: 233}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7614533509574976348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6039559520840224145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27fafb7bc683f8b409d601a280ccb40e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
-  glowEffect: {fileID: 338323529103644169}
-  playArrow: {fileID: 3280230379526217738}
-  lerpFactor: 0.9
-  cardPlayDivider: 5
-  cardPlayMultiplier: 1
-  needUpdateCardPlayPosition: 0
-  playPositionYDivider: 4
-  playPositionYMultiplier: 1
-  playPositionXDivider: 6
-  playPositionXMultiplier: 1
-  needUpdatePlayPosition: 0
 --- !u!114 &2998629894308083205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -863,6 +837,32 @@ MonoBehaviour:
   costText: {fileID: 162522896092754241}
   powerText: {fileID: 5012092697182987391}
   lifeText: {fileID: 1247613272888598001}
+--- !u!114 &6797528199124663534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6039559520840224145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27fafb7bc683f8b409d601a280ccb40e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectScale: 1.1
+  cardPlay: {x: 0, y: 0}
+  playPosition: {x: 0, y: 0, z: 0}
+  glowEffect: {fileID: 338323529103644169}
+  playArrow: {fileID: 3280230379526217738}
+  lerpFactor: 0.1
+  cardPlayDivider: 4
+  cardPlayMultiplier: 1
+  needUpdateCardPlayPosition: 0
+  playPositionYDivider: 2
+  playPositionYMultiplier: 1
+  playPositionXDivider: 4
+  playPositionXMultiplier: 1
+  needUpdatePlayPosition: 0
 --- !u!61 &2663746858277933038
 BoxCollider2D:
   m_ObjectHideFlags: 0
