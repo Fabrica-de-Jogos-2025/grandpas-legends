@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 9033214536567421440}
   - component: {fileID: 6578744198417397087}
   - component: {fileID: 4235522205238282386}
+  - component: {fileID: 2387133229398205021}
   m_Layer: 0
   m_Name: Card_19
   m_TagString: Untagged
@@ -470,10 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 4074473711452167611}
-  playArrow: {fileID: 2738000920631791067}
 --- !u!114 &9033214536567421440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +564,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2387133229398205021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2306536976622235060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 19
+    cardName: "Barba Ruiva - Crian\xE7a"
+    cost: 5
+    power: 0
+    life: 8
+    cardDescription: 'Se sobreviver por 3 rodadas, evolui. Upgrade: ganha +5 de dano
+      e recupera toda a vida'
 --- !u!1 &2515571561113727077
 GameObject:
   m_ObjectHideFlags: 0

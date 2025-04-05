@@ -989,6 +989,7 @@ GameObject:
   - component: {fileID: -931111275880767115}
   - component: {fileID: 6555116777982295865}
   - component: {fileID: 2512597697568608520}
+  - component: {fileID: 7375888147786615765}
   m_Layer: 0
   m_Name: Card_17
   m_TagString: Untagged
@@ -1031,10 +1032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 1941777599338656665}
-  playArrow: {fileID: 4831823020170641284}
 --- !u!114 &-931111275880767115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1127,6 +1125,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &7375888147786615765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400739965624174732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 17
+    cardName: Negrinho do Pastoreio
+    cost: 5
+    power: 2
+    life: 1
+    cardDescription: "Ap\xF3s ser derrotada, revive com 4 de vida e 4 de dano. Passivamente,
+      recupera 1 de vida por turno se n\xE3o estiver com a vida m\xE1xima"
 --- !u!1 &7544352770777091188
 GameObject:
   m_ObjectHideFlags: 0

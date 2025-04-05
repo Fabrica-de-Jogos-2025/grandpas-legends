@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 4414132054276610891}
   - component: {fileID: 8177770847719813390}
   - component: {fileID: 1372261698493213712}
+  - component: {fileID: 4198335168639577935}
   m_Layer: 0
   m_Name: Card_36
   m_TagString: Untagged
@@ -191,10 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 8631543260123054496}
-  playArrow: {fileID: 4022079808645727003}
 --- !u!114 &4414132054276610891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +285,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &4198335168639577935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396695273406554873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 36
+    cardName: Sapo
+    cost: 2
+    power: 3
+    life: 1
+    cardDescription: 
 --- !u!1 &2114885881760475424
 GameObject:
   m_ObjectHideFlags: 0

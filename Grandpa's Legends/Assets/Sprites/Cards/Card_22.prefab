@@ -854,6 +854,7 @@ GameObject:
   - component: {fileID: -8560673717430997361}
   - component: {fileID: 5621894740229268123}
   - component: {fileID: 6581996259755522316}
+  - component: {fileID: -118275913892776896}
   m_Layer: 0
   m_Name: Card_22
   m_TagString: Untagged
@@ -896,10 +897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 5168545443734193361}
-  playArrow: {fileID: 525616749624275862}
 --- !u!114 &-8560673717430997361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -992,6 +990,27 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-118275913892776896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7630482217274782917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 22
+    cardName: Iara
+    cost: 5
+    power: 2
+    life: 4
+    cardDescription: "Ao entrar em combate, escolhe uma carta inimiga para ser executada
+      em 3 rodadas. Se for derrotada antes, o efeito \xE9 cancelado. Recebe -1 de
+      dano da carta seduzida"
 --- !u!1 &7769043972533127003
 GameObject:
   m_ObjectHideFlags: 0

@@ -925,6 +925,7 @@ GameObject:
   - component: {fileID: -2609108368120996581}
   - component: {fileID: 8859834866198270657}
   - component: {fileID: 2524442307758253039}
+  - component: {fileID: -656185033078948516}
   m_Layer: 0
   m_Name: Card_16
   m_TagString: Untagged
@@ -967,10 +968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 4858093467320724626}
-  playArrow: {fileID: 6461015224837776986}
 --- !u!114 &-2609108368120996581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1063,6 +1061,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-656185033078948516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6665086743147875614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 16
+    cardName: "Mula sem cabe\xE7a"
+    cost: 4
+    power: 2
+    life: 2
+    cardDescription: Aplica queimadura por 3 turnos
 --- !u!1 &7076734785909053477
 GameObject:
   m_ObjectHideFlags: 0

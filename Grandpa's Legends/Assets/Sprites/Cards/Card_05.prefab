@@ -1025,6 +1025,7 @@ GameObject:
   - component: {fileID: 2494156708352783557}
   - component: {fileID: 2389670790189092318}
   - component: {fileID: 163222502172501413}
+  - component: {fileID: -6374739198016977623}
   m_Layer: 0
   m_Name: Card_05
   m_TagString: Untagged
@@ -1067,10 +1068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 3503172219979157824}
-  playArrow: {fileID: 927656050317161230}
 --- !u!114 &2494156708352783557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,6 +1161,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-6374739198016977623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8236686863404509063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 5
+    cardName: Hipocampo
+    cost: 3
+    power: 2
+    life: 3
+    cardDescription: Escolha um inimigo e reduza seu ataque em 2
 --- !u!1 &8319168144433352146
 GameObject:
   m_ObjectHideFlags: 0

@@ -500,6 +500,7 @@ GameObject:
   - component: {fileID: 2985938548875098923}
   - component: {fileID: 6226853109751609756}
   - component: {fileID: 9109490201256333956}
+  - component: {fileID: -4124709776613670272}
   m_Layer: 0
   m_Name: Card_10
   m_TagString: Untagged
@@ -542,10 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 8439213924750293278}
-  playArrow: {fileID: 7277853578659621103}
 --- !u!114 &2985938548875098923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,6 +636,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-4124709776613670272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3978727217804905427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 10
+    cardName: "On\xE7a-boi"
+    cost: 3
+    power: 2
+    life: 3
+    cardDescription: "A cada On\xE7a-Boi em campo, ganha um buff de status"
 --- !u!1 &4444312859377956103
 GameObject:
   m_ObjectHideFlags: 0

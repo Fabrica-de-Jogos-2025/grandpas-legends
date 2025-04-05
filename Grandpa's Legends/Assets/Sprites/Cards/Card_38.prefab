@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 3274787957985849138}
   - component: {fileID: 7175148792598971733}
   - component: {fileID: 5606083677339959970}
+  - component: {fileID: 4787692546665985257}
   m_Layer: 0
   m_Name: Card_38
   m_TagString: Untagged
@@ -191,10 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 5011550875482752773}
-  playArrow: {fileID: 7375218821065076259}
 --- !u!114 &3274787957985849138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +285,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &4787692546665985257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148861612748036672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 38
+    cardName: Batata-de-Purga
+    cost: 3
+    power: 0
+    life: 0
+    cardDescription: "Remove todos os efeitos negativos(alvo-\xFAnico) e cura em
+      +1 de vida"
 --- !u!1 &1717325911618711132
 GameObject:
   m_ObjectHideFlags: 0

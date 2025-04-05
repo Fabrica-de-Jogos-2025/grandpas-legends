@@ -950,6 +950,7 @@ GameObject:
   - component: {fileID: -9153689743023395248}
   - component: {fileID: 6136613856667509010}
   - component: {fileID: 5682765564263621241}
+  - component: {fileID: -3775458811986600084}
   m_Layer: 0
   m_Name: Card_13
   m_TagString: Untagged
@@ -992,10 +993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 4261305688066234106}
-  playArrow: {fileID: 4802870826387455426}
 --- !u!114 &-9153689743023395248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1088,6 +1086,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-3775458811986600084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5760127748921220890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 13
+    cardName: Alamoa - Humana
+    cost: 4
+    power: 2
+    life: 6
+    cardDescription: 'Escolha 2 inimigos e reduza sua vida em -2 ao seduzi-los. Upgrade:
+      Se executar 3 inimigos, evolui e ganha +2 de vida'
 --- !u!1 &6405176048507483607
 GameObject:
   m_ObjectHideFlags: 0

@@ -1061,6 +1061,7 @@ GameObject:
   - component: {fileID: 6513646598321625681}
   - component: {fileID: 3913549048168313121}
   - component: {fileID: 5377492413592939007}
+  - component: {fileID: 2093856596555776385}
   m_Layer: 0
   m_Name: Card_07
   m_TagString: Untagged
@@ -1103,10 +1104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 7242924356828281949}
-  playArrow: {fileID: 1310889789832600329}
 --- !u!114 &6513646598321625681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1199,6 +1197,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2093856596555776385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468288144863118096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 7
+    cardName: Caipora
+    cost: 3
+    power: 0
+    life: 3
+    cardDescription: Concede um escudo de 3 a uma carta aliada a cada rodada
 --- !u!1 &9069137805617827116
 GameObject:
   m_ObjectHideFlags: 0

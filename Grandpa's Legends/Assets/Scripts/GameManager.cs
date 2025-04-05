@@ -3,9 +3,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance {get; private set;}
-    private int playerHealth;
+    public static GameManager Instance { get; private set; }
+    public int playerHealth = 20; // Valor inicial da vida do jogador
+    public int enemyHealth = 20;  // Valor inicial da vida do inimigo
+    public int quantityDeadCards = 0;
+    public int PlayerHealth
+    {
+        get { return playerHealth; }
+        set { playerHealth = Mathf.Max(0, value); } // Impede valores negativos
+    }
 
+    public int EnemyHealth
+    {
+        get { return enemyHealth; }
+        set { enemyHealth = Mathf.Max(0, value); } // Impede valores negativos
+    }
     public OptionsManager OptionsManager {get; private set;}
     public AudioManager AudioManager {get; private set;}
     public DeckManager DeckManager {get; private set;}
@@ -15,11 +27,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null){
+        if(Instance == null)
+        {
             Instance = this;
             DontDestroyOnLoad(gameObject);
             InitializeManagers();
-        }else if(Instance != this){
+        }
+        else if(Instance != this)
+        {
             Destroy(gameObject);
         }
     }
@@ -92,8 +107,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // public int PlayerHealth {
-    //     get { return playerHealth; }
-    //     set { playerHealth = value;}
-    // }
+    public void TakeDamage(int damage, bool isPlayer)
+    {
+    if (isPlayer)
+    {
+        playerHealth -= damage;
+        Debug.Log($"O jogador recebeu {damage} de dano! Vida restante: {playerHealth}");
+    }
+    else
+    {
+        enemyHealth -= damage;
+        Debug.Log($"O inimigo recebeu {damage} de dano! Vida restante: {enemyHealth}");
+    }
+
+    // Verifica se o jogo acabou
+    if (playerHealth <= 0)
+    {
+        Debug.Log("O jogador perdeu!");
+        // Aqui você pode adicionar lógica de fim de jogo.
+    }
+    else if (enemyHealth <= 0)
+    {
+        Debug.Log("O inimigo foi derrotado!");
+        // Aqui você pode adicionar lógica de vitória.
+    }
+}
+
+    //public int PlayerHealth {
+        //get { return playerHealth; }
+        //set { playerHealth = value;}
+    //}
 }

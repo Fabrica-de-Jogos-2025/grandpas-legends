@@ -431,6 +431,7 @@ GameObject:
   - component: {fileID: 4271623483226443342}
   - component: {fileID: 6994392041140497243}
   - component: {fileID: 3229546276666591902}
+  - component: {fileID: -8261014691526891341}
   m_Layer: 0
   m_Name: Card_27
   m_TagString: Untagged
@@ -473,10 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 6898144341581689556}
-  playArrow: {fileID: 273736873076244331}
 --- !u!114 &4271623483226443342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,6 +567,27 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-8261014691526891341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2547767186743450988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 27
+    cardName: "Rom\xE3ozinho"
+    cost: 6
+    power: 2
+    life: 2
+    cardDescription: "Reduz 1 de dano do inimigo. Retorna a m\xE3o do jogador ap\xF3s
+      a morte. Fica mais forte sempre que um inimigo morre enquanto estiver em campo
+      +1 de vida e dano (perde o buff ao reviver)"
 --- !u!1 &3843472011245934171
 GameObject:
   m_ObjectHideFlags: 0

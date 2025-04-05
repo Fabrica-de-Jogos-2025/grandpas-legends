@@ -488,6 +488,7 @@ GameObject:
   - component: {fileID: 7544892566098435332}
   - component: {fileID: 3153173917601536509}
   - component: {fileID: 8641983006914549736}
+  - component: {fileID: 7294060587303802416}
   m_Layer: 0
   m_Name: Card_12
   m_TagString: Untagged
@@ -530,10 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 6410193739721650118}
-  playArrow: {fileID: 2894467478435079292}
 --- !u!114 &7544892566098435332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,6 +624,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &7294060587303802416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4271095744239718104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 12
+    cardName: "Boi\xFAna"
+    cost: 4
+    power: 2
+    life: 3
+    cardDescription: "Adiciona 2 cartas de Peixe \xE0 m\xE3o do jogador"
 --- !u!1 &4327964783637929533
 GameObject:
   m_ObjectHideFlags: 0

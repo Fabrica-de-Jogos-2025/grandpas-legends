@@ -875,6 +875,7 @@ GameObject:
   - component: {fileID: -6092120536886199986}
   - component: {fileID: 3392234078129748178}
   - component: {fileID: 2594316960184506806}
+  - component: {fileID: -611729193838881094}
   m_Layer: 0
   m_Name: Card_20
   m_TagString: Untagged
@@ -917,10 +918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 7479910636066559516}
-  playArrow: {fileID: 557082279777129440}
 --- !u!114 &-6092120536886199986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1013,6 +1011,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-611729193838881094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368068189853531148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 20
+    cardName: Barba Ruiva - Adulto
+    cost: 5
+    power: 5
+    life: 6
+    cardDescription: 
 --- !u!1 &7479910636066559516
 GameObject:
   m_ObjectHideFlags: 0

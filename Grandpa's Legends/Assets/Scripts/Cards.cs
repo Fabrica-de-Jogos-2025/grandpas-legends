@@ -6,6 +6,7 @@ public class Cards
     public int cost;
     public int power;
     public int life;
+    public int shield;
     public string cardDescription;
 
     public Cards(int id, string cardName, int cost, int power, int life, string cardDescription)

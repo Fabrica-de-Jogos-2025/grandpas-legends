@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: -4517348778866686571}
   - component: {fileID: 483168809824941015}
   - component: {fileID: 3209047729233372322}
+  - component: {fileID: -7949743388825973782}
   m_Layer: 0
   m_Name: Card_23
   m_TagString: Untagged
@@ -91,10 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 6399184155237803368}
-  playArrow: {fileID: 1774707033957041156}
 --- !u!114 &-4517348778866686571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +185,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-7949743388825973782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496967661646758881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 23
+    cardName: Lobisomem - Homem
+    cost: 5
+    power: 2
+    life: 4
+    cardDescription: 'Para se transformar em Lobisomem, precisa sobreviver por 3
+      rodadas. Upgrade: Ganha +1 de dano e +2 de vida.'
 --- !u!1 &1774707033957041156
 GameObject:
   m_ObjectHideFlags: 0

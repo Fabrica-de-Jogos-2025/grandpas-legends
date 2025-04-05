@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8696424292873856316}
   - component: {fileID: 2667373111189549367}
   - component: {fileID: 7682775595320440372}
+  - component: {fileID: 8143696982286926811}
   m_Layer: 0
   m_Name: Card_26
   m_TagString: Untagged
@@ -55,10 +56,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 6569504384614242394}
-  playArrow: {fileID: 5321140008044970629}
 --- !u!114 &8696424292873856316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +149,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &8143696982286926811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274937839199488465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 26
+    cardName: Boto Cor de Rosa - Homem
+    cost: 6
+    power: 6
+    life: 4
+    cardDescription: Reduz a vida do inimigo atacado em 2
 --- !u!1 &377423181958856258
 GameObject:
   m_ObjectHideFlags: 0

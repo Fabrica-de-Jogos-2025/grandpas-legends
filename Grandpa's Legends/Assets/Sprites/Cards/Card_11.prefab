@@ -399,6 +399,7 @@ GameObject:
   - component: {fileID: 8268645810823105836}
   - component: {fileID: 3961796597449521260}
   - component: {fileID: 1759776175091743859}
+  - component: {fileID: 4233301673048385137}
   m_Layer: 0
   m_Name: Card_11
   m_TagString: Untagged
@@ -441,10 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 1106491934104578139}
-  playArrow: {fileID: 3149681930184197671}
 --- !u!114 &8268645810823105836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +535,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &4233301673048385137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012476010080798414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 11
+    cardName: Zumbi da meia noite
+    cost: 3
+    power: 1
+    life: 5
+    cardDescription: "S\xF3 \xE9 derrotado se receber dano suficiente para zerar
+      sua vida de uma vez. Se sobreviver ao round, restaura toda a vida"
 --- !u!1 &2181647566889540375
 GameObject:
   m_ObjectHideFlags: 0

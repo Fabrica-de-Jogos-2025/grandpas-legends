@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 9048352959550739066}
   - component: {fileID: 838106476478937388}
   - component: {fileID: 5769570597841594973}
+  - component: {fileID: 3325598682968435066}
   m_Layer: 0
   m_Name: Card_41
   m_TagString: Untagged
@@ -523,10 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 514043522637157440}
-  playArrow: {fileID: 5495619601120387436}
 --- !u!114 &9048352959550739066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,6 +617,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &3325598682968435066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798199668483171033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 41
+    cardName: Ipecacuanha
+    cost: 7
+    power: 0
+    life: 0
+    cardDescription: Concede imunidade a efeitos negativos para todo o campo por
+      2 turnos.
 --- !u!1 &7025109114031230367
 GameObject:
   m_ObjectHideFlags: 0

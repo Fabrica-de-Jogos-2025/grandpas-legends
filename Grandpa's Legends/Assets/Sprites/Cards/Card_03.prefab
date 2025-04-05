@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 6553695806593518069}
   - component: {fileID: 7491387577571230610}
   - component: {fileID: 3673282346778043527}
+  - component: {fileID: -4071031222266995652}
   m_Layer: 0
   m_Name: Card_03
   m_TagString: Untagged
@@ -652,10 +653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
   glowEffect: {fileID: 7274431831388885574}
-  playArrow: {fileID: 1984662262806010681}
 --- !u!114 &6553695806593518069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,6 +746,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-4071031222266995652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399526670002313444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 3
+    cardName: Corpo Seco
+    cost: 2
+    power: 2
+    life: 2
+    cardDescription: "Quando for derrotado, retorna para a m\xE3o do jogador"
 --- !u!1 &5340136077612047972
 GameObject:
   m_ObjectHideFlags: 0
