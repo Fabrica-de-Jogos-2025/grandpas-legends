@@ -190,11 +190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27fafb7bc683f8b409d601a280ccb40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectScale: 1.1
-  cardPlay: {x: 0, y: 400}
-  playPosition: {x: -200, y: 375, z: 0}
+  selectScale: 1.25
   glowEffect: {fileID: 5011550875482752773}
-  playArrow: {fileID: 7375218821065076259}
 --- !u!114 &3274787957985849138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +215,7 @@ MonoBehaviour:
   costText: {fileID: 1387597770444647581}
   powerText: {fileID: 910234851139113065}
   lifeText: {fileID: 7829739471402095268}
+  isEnemyCard: 0
 --- !u!61 &7175148792598971733
 BoxCollider2D:
   m_ObjectHideFlags: 0

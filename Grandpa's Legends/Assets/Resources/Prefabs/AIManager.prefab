@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3926821117053706377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5642759676079584998}
+  - component: {fileID: 2150860842096879312}
+  - component: {fileID: 8098287127251310032}
+  m_Layer: 0
+  m_Name: AIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5642759676079584998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3926821117053706377}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1239.1002, y: 650.6752, z: 4.8366528}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2150860842096879312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3926821117053706377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ee00da05b835b46967e73c3549ed1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDifficulty: 0
+  playDelay: 0.5
+  maxCardsPerTurnEasy: 1
+  maxCardsPerTurnHard: 2
+  cardPlayScale: 1.25
+  deckManager: {fileID: 0}
+  playAreas:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &8098287127251310032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3926821117053706377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c5b75ab3fb58c645bc16bd9646783f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckPrefabs:
+  - {fileID: 6039559520840224145, guid: 62523473002f3d840a2c3a53ecb32357, type: 3}
+  - {fileID: 6039559520840224145, guid: c83441248163aa444b21add14d09fca4, type: 3}
+  - {fileID: 4399526670002313444, guid: 332037c9b3a1a5846b92b539205a7f0d, type: 3}
+  - {fileID: 5896973953446664878, guid: 9c459b19088e47e49ad87e5df1445d43, type: 3}
+  - {fileID: 8236686863404509063, guid: 0b7c56ed263569249845da62a449ae28, type: 3}
+  - {fileID: 8951368411162500226, guid: acde15469f1867d408f39319c4a01df0, type: 3}
+  - {fileID: 7468288144863118096, guid: c56b9a93ceb7b894a844e78ec2a8f86b, type: 3}

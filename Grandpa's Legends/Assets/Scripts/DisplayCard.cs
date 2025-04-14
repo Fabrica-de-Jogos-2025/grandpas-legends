@@ -1,30 +1,38 @@
 using UnityEngine;
-using TMPro; 
+using TMPro;
 
 public class DisplayCard : MonoBehaviour
 {
     public int displayId;
     public Cards cardData;
-
     public TextMeshProUGUI costText;
     public TextMeshProUGUI powerText;
     public TextMeshProUGUI lifeText;
-    //public TextMeshProUGUI cardText;
- 
+    public bool isEnemyCard;
+
     void Start()
     {
-        Cards cardData = CardDatabase.cardList.Find(card => card.id == displayId);
+        UpdateCardData();
+        if (isEnemyCard) DisableInteractions();
+    }
 
-        if (cardData != null)
+    public void UpdateCardData()
+    {
+        Cards data = CardDatabase.cardList.Find(card => card.id == displayId);
+        if (data != null)
         {
-            costText.text = cardData.cost.ToString();
-            powerText.text = cardData.power.ToString();
-            lifeText.text = cardData.life.ToString();
-            //cardText.text = cardData.cardDescription.ToString();
+            cardData = data;
+            costText.text = data.cost.ToString();
+            powerText.text = data.power.ToString();
+            lifeText.text = data.life.ToString();
         }
-        else
+    }
+
+    private void DisableInteractions()
+    {
+        if (TryGetComponent(out CanvasGroup canvasGroup))
         {
-            Debug.LogError($"Card with ID {displayId} not found in the database!");
+            canvasGroup.blocksRaycasts = false;
         }
     }
 }

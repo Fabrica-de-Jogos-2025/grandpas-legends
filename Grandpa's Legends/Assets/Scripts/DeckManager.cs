@@ -6,7 +6,7 @@ public class DeckManager : MonoBehaviour
 {
     public List<Cards> allCards = new List<Cards>();
 
-    private int currentIndex = 0;
+    private int currentIndex = 1;
 
     void Start()
     {

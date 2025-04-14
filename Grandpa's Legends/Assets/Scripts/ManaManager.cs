@@ -3,53 +3,44 @@ using TMPro;
 
 public class ManaManager : MonoBehaviour
 {
-    public static ManaManager Instance; 
-
+    public static ManaManager Instance;
+    
+    [Header("Settings")]
+    public const int StartMana = 3;
+    public const int MaxMana = 10;  
+    
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI manaText;
+    
     public int CurrentMana { get; private set; }
-    public int MaxMana = 10;
-
-    [SerializeField] private TextMeshProUGUI manaText; 
+    public int CurrentTurnMax { get; private set; } 
 
     private void Awake()
     {
-        if (Instance == null){
-            Instance = this;
-        }else{
-            Destroy(gameObject);
-        }
-        CurrentMana = 1;
-        UpdateManaUI();
+        Instance = this;
+        CurrentTurnMax = StartMana;
+        CurrentMana = StartMana;
+        UpdateUI();
     }
 
-    public void ResetMana()
+    public void RefreshMana(int turnNumber)
     {
-        CurrentMana = 1;
-        UpdateManaUI();
+        CurrentTurnMax = Mathf.Min(StartMana + (turnNumber - 1), MaxMana);
+        CurrentMana = CurrentTurnMax; 
+        UpdateUI();
     }
+
+    public bool CanSpendMana(int amount) => CurrentMana >= amount;
 
     public void SpendMana(int amount)
     {
-        CurrentMana -= amount;
-        CurrentMana = Mathf.Max(CurrentMana, 0); 
-        UpdateManaUI();
+        CurrentMana = Mathf.Max(CurrentMana - amount, 0);
+        UpdateUI();
     }
 
-    public void IncrementMana()
+    private void UpdateUI()
     {
-        CurrentMana += 1;
-        CurrentMana = Mathf.Min(CurrentMana, MaxMana); 
-        UpdateManaUI();
-    }
-
-    private void UpdateManaUI()
-    {
-        if (manaText != null)
-        {
-            manaText.text = $"{CurrentMana}/{MaxMana}";
-        }
-        else
-        {
-            Debug.LogWarning("Mana TextMeshPro não atribuído!");
-        }
+        if (manaText) 
+            manaText.text = $"{CurrentMana}/10"; 
     }
 }
