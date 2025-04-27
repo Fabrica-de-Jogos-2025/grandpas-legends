@@ -10,7 +10,7 @@ public class HandManager : MonoBehaviour
     public int maxHandSize = 12; 
     public float fanSpread = 0f;
     public List<GameObject> cardsInHand = new List<GameObject>();
-
+    public static HandManager Instance;
     void Start()
     {
     }
@@ -52,37 +52,48 @@ public class HandManager : MonoBehaviour
         UpdateHandVisuals();
     }
 
-    private void UpdateHandVisuals()
+private void UpdateHandVisuals()
+{
+    // Remover cartas nulas da lista antes de processar
+    cardsInHand.RemoveAll(card => card == null);
+
+    int cardCount = cardsInHand.Count;
+
+    if (cardCount == 0) return;
+
+    if (cardCount == 1)
     {
-        int cardCount = cardsInHand.Count;
-
-        if (cardCount == 1)
-        {
-            cardsInHand[0].transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-            cardsInHand[0].transform.localPosition = new Vector3(0f, 0f, 0f);
-            return;
-        }
-
-        for (int i = 0; i < cardCount; i++)
-        {
-            float rotationAngle = (fanSpread * (i - (cardCount - 1) / 2f));
-            cardsInHand[i].transform.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
-
-            float horizontalOffset = (cardSpacing * (i - (cardCount - 1) / 2f));
-
-            float normalizedPosition = (2f * i / (cardCount - 1) - 1f); 
-            float verticalOffset = verticalSpacing * (1 - normalizedPosition * normalizedPosition);
-
-            cardsInHand[i].transform.localPosition = new Vector3(horizontalOffset, verticalOffset, 0f);
-        }
+        cardsInHand[0].transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        cardsInHand[0].transform.localPosition = new Vector3(0f, 0f, 0f);
+        return;
     }
 
-    public void RemoveCardFromHand(GameObject card)
+    for (int i = 0; i < cardCount; i++)
+    {
+        if (cardsInHand[i] == null) continue; // Evita acessar um objeto destruído
+
+        float rotationAngle = (fanSpread * (i - (cardCount - 1) / 2f));
+        cardsInHand[i].transform.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
+
+        float horizontalOffset = (cardSpacing * (i - (cardCount - 1) / 2f));
+
+        float normalizedPosition = (2f * i / (cardCount - 1) - 1f); 
+        float verticalOffset = verticalSpacing * (1 - normalizedPosition * normalizedPosition);
+
+        cardsInHand[i].transform.localPosition = new Vector3(horizontalOffset, verticalOffset, 0f);
+    }
+}
+public void DestroyCard()
+{
+    Destroy(gameObject);
+}
+
+public void RemoveCardFromHand(GameObject card)
 {
     if (cardsInHand.Contains(card))
     {
         cardsInHand.Remove(card);
-        UpdateHandVisuals(); // Reorganize the remaining cards
+        UpdateHandVisuals(); 
     }
 }
 }

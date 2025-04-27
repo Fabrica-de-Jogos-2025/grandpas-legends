@@ -913,6 +913,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 7024459455281400463}
   powerText: {fileID: 9207913176291669345}
@@ -1004,6 +1005,7 @@ MonoBehaviour:
     cost: 4
     power: 0
     life: 0
+    shield: 0
     cardDescription: Cura 1 para todas as cartas aliadas no campo
 --- !u!1 &8012828239915920433
 GameObject:

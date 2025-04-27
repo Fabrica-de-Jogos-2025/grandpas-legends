@@ -544,6 +544,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 9166651773605200060}
   powerText: {fileID: 1093292825491365336}
@@ -635,6 +636,7 @@ MonoBehaviour:
     cost: 7
     power: 0
     life: 0
+    shield: 0
     cardDescription: Concede imunidade a efeitos negativos para todo o campo por
       2 turnos.
 --- !u!1 &7025109114031230367

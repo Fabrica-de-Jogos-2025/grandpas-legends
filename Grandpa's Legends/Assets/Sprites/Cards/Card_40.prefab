@@ -1221,6 +1221,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 3867979396293103357}
   powerText: {fileID: 5588849081313832654}
@@ -1312,6 +1313,7 @@ MonoBehaviour:
     cost: 2
     power: 0
     life: 0
+    shield: 0
     cardDescription: "Cura 1. O pr\xF3ximo dano recebido ser\xE1 reduzido em 1."
 --- !u!1 &8656733375579274032
 GameObject:

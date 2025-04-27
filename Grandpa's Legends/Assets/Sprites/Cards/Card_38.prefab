@@ -212,6 +212,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 1387597770444647581}
   powerText: {fileID: 910234851139113065}
@@ -303,6 +304,7 @@ MonoBehaviour:
     cost: 3
     power: 0
     life: 0
+    shield: 0
     cardDescription: "Remove todos os efeitos negativos(alvo-\xFAnico) e cura em
       +1 de vida"
 --- !u!1 &1717325911618711132

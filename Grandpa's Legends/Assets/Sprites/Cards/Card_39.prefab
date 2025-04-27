@@ -112,6 +112,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 6951146101921687082}
   powerText: {fileID: 2450379080407658389}
@@ -203,6 +204,7 @@ MonoBehaviour:
     cost: 6
     power: 0
     life: 0
+    shield: 0
     cardDescription: Escolha uma carta aliada para aumentar seu dano em metade do
       valor do dano dessa carta e permitir que ataque duas vezes no mesmo turno
 --- !u!1 &1182431560225303128

@@ -1,12 +1,13 @@
 using UnityEditor;
 using UnityEngine;
-
+using System.Collections;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public int playerHealth = 20; // Valor inicial da vida do jogador
     public int enemyHealth = 20;  // Valor inicial da vida do inimigo
     public int quantityDeadCards = 0;
+    public int turns = 0;
     public int PlayerHealth
     {
         get { return playerHealth; }
@@ -120,6 +121,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"O inimigo recebeu {damage} de dano! Vida restante: {enemyHealth}");
     }
 
+    
     // Verifica se o jogo acabou
     if (playerHealth <= 0)
     {

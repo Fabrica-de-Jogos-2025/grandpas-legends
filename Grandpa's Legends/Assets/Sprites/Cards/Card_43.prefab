@@ -1082,6 +1082,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 7404850134973262105}
   powerText: {fileID: 851405285579178559}
@@ -1173,6 +1174,7 @@ MonoBehaviour:
     cost: 1
     power: 0
     life: 0
+    shield: 0
     cardDescription: Cura 1
 --- !u!1 &5710005496214185237
 GameObject:

@@ -733,8 +733,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64117ff234ba7ec47ba34d98745646f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  enemySlot: {fileID: 858501287}
 --- !u!1 &744760575
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,8 +821,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf345b90da369b409e7723d9741f134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  playerSlot: {fileID: 2038034583}
 --- !u!1 &771037367
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,8 +909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64117ff234ba7ec47ba34d98745646f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  enemySlot: {fileID: 1586481502}
 --- !u!1 &858501286
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,8 +997,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf345b90da369b409e7723d9741f134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  playerSlot: {fileID: 657797826}
 --- !u!4 &940487155 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6899553847453609978, guid: 08d68cd26b62336409200179fd34a491, type: 3}
@@ -1098,8 +1090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64117ff234ba7ec47ba34d98745646f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  enemySlot: {fileID: 1089184714}
 --- !u!1 &1063849007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,8 +1449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf345b90da369b409e7723d9741f134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  playerSlot: {fileID: 968664031}
 --- !u!1 &1106432796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,8 +1674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf345b90da369b409e7723d9741f134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  playerSlot: {fileID: 1572840737}
 --- !u!1 &1228568012
 GameObject:
   m_ObjectHideFlags: 0
@@ -2244,8 +2230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64117ff234ba7ec47ba34d98745646f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  enemySlot: {fileID: 1130876692}
 --- !u!1 &1586481501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2334,8 +2318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf345b90da369b409e7723d9741f134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  playerSlot: {fileID: 771037368}
 --- !u!4 &1784370667 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3275611261517718277, guid: 4b3905b5aea3a1842b0d36c045d7630e, type: 3}
@@ -2584,8 +2566,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64117ff234ba7ec47ba34d98745646f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
-  enemySlot: {fileID: 744760576}
 --- !u!1001 &112486587798776459
 PrefabInstance:
   m_ObjectHideFlags: 0
