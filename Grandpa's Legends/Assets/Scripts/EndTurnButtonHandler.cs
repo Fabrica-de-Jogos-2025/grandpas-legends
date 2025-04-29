@@ -3,17 +3,15 @@ using UnityEngine.UI;
 
 public class EndTurnButtonHandler : MonoBehaviour
 {
-    private Button endTurnButton;
-
+    [SerializeField] private Button endTurnButton;
+    
     private void Start()
     {
-        endTurnButton = GetComponent<Button>();
-
-        endTurnButton.onClick.AddListener(OnEndTurnButtonClick);
+        endTurnButton.onClick.AddListener(TurnManager.Instance.EndPlayerTurn);
     }
 
-    private void OnEndTurnButtonClick()
+    private void OnDestroy()
     {
-        TurnManager.Instance.StartTurn();
+        endTurnButton.onClick.RemoveAllListeners();
     }
 }

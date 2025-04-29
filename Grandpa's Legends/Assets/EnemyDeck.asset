@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45973dfd079b7df4db659a58fad7a1b0, type: 3}
+  m_Name: EnemyDeck
+  m_EditorClassIdentifier: 
+  maxCards: 22
+  cards:
+  - cardPrefab: {fileID: 0}
+    copies: 1
+  - cardPrefab: {fileID: 6039559520840224145, guid: c83441248163aa444b21add14d09fca4, type: 3}
+    copies: 1
+  - cardPrefab: {fileID: 4399526670002313444, guid: 332037c9b3a1a5846b92b539205a7f0d, type: 3}
+    copies: 0
+  - cardPrefab: {fileID: 8951368411162500226, guid: acde15469f1867d408f39319c4a01df0, type: 3}
+    copies: 0
+  - cardPrefab: {fileID: 3978727217804905427, guid: b0428561f735fea42a1cbf7977635bac, type: 3}
+    copies: 0
+  - cardPrefab: {fileID: 5760127748921220890, guid: 4899215d0a45170448432e6ce70a9b30, type: 3}
+    copies: 0
+  - cardPrefab: {fileID: 2278773927805323301, guid: 8c6be0753c05a504bae516c50bb8d3be, type: 3}
+    copies: 0
+  - cardPrefab: {fileID: 8914199679637205009, guid: 079a08d203138d846b3fc2f67e06a6db, type: 3}
+    copies: 0
+  - cardPrefab: {fileID: 8434498046024098586, guid: 70c277a9cd00c9a45bd8a51ba0bea6a2, type: 3}
+    copies: 0
+  - cardPrefab: {fileID: 6388500400807274352, guid: 3282726b10fe34a4ea3c39f6014eadb9, type: 3}
+    copies: 0

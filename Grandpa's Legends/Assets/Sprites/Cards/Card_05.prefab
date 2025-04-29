@@ -1067,7 +1067,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27fafb7bc683f8b409d601a280ccb40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   selectScale: 1.1
+=======
+  selectScale: 1.25
+>>>>>>> e3fc490128f50736b41097114bbff4179aae7c0c
   glowEffect: {fileID: 3503172219979157824}
 --- !u!114 &2494156708352783557
 MonoBehaviour:
@@ -1092,6 +1096,7 @@ MonoBehaviour:
   costText: {fileID: 1735841953493217125}
   powerText: {fileID: 8671063490406991194}
   lifeText: {fileID: 4423861284698310710}
+  isEnemyCard: 0
 --- !u!61 &2389670790189092318
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class TurnManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            StartFirstTurn();
         }
         else
         {
@@ -19,7 +20,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void StartTurn()
+    private void StartFirstTurn()
     {
         ManaManager.Instance.IncrementMana();
         GameManager.Instance.turns += 1;

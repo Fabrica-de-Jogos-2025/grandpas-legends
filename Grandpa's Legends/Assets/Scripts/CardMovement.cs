@@ -12,7 +12,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     private int currentState = 0;
     private Vector3 originalPosition;
 
-    [SerializeField] private float selectScale = 1.1f;
+    [SerializeField] private float selectScale = 1.25f;
     [SerializeField] private GameObject glowEffect;
 
     private Vector2 offset;
