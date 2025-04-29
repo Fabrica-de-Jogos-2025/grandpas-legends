@@ -24,16 +24,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8126020469073221615}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 13.262645}
+  m_LocalScale: {x: 0.5796296, y: 0.5796296, z: 0.5796296}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 152.8097, y: -32.408478}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7524482725099512097
@@ -140,8 +140,8 @@ MonoBehaviour:
   - cardId: 45
     cardPrefab: {fileID: 2356720914803552942, guid: 08f4ff4e87c245944a3092aafc24e4c6, type: 3}
   handTransform: {fileID: 0}
-  cardSpacing: -100
+  cardSpacing: -120
   verticalSpacing: 0
-  maxHandSize: 10
+  maxHandSize: 8
   fanSpread: 0
   cardsInHand: []

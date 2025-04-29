@@ -55,7 +55,4 @@ public class PlayAreaManager : MonoBehaviour
     Debug.Log("Card added to Play Area " + playAreaIndex);
     return true;
 }
-
-
-
 }

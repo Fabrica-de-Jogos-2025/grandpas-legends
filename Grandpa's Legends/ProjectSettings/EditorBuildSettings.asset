@@ -6,8 +6,26 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/CardPrefab.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/StartScreen.unity
+    guid: 19b4038194fe1074c927b74079195c76
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 5b698410ca2950c49ba8b238e4d3a9aa
+  - enabled: 1
+    path: Assets/Scenes/Options.unity
+    guid: 629f8e4b086f4194ebbd1d23cfee8d46
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 1cfcb48ba25c34449a32a37d779d0f0c
+  - enabled: 1
+    path: Assets/Scenes/Map.unity
+    guid: 9b954ec9d3e24bf4aa1883913782aaf0
+  - enabled: 1
+    path: Assets/Scenes/Region 1.unity
+    guid: 1efea26f42f756b428ff4c3e0981e7fd
+  - enabled: 1
+    path: Assets/Scenes/Batalha 1.unity
+    guid: c2cd5e75420ecbe4ebff6c503d9d8290
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

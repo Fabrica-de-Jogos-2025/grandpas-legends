@@ -10,7 +10,7 @@ public class TurnManager : MonoBehaviour
     [Header("Referências")]
     [SerializeField] private DeckManager playerDeckManager;
     [SerializeField] private HandManager playerHand;
-    [SerializeField] private IACardPlayer iaCardPlayer; // Adicione esta referência
+    [SerializeField] private IACardPlayer iaCardPlayer; 
 
     private void Awake()
     {
