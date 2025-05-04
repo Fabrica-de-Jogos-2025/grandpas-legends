@@ -10,9 +10,17 @@ public class HandManager : MonoBehaviour
     public int maxHandSize = 12; 
     public float fanSpread = 0f;
     public List<GameObject> cardsInHand = new List<GameObject>();
-
-    void Start()
+    public static HandManager Instance { get; private set; }
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // previne múltiplos
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     public void AddCardToHand(Cards cardData)

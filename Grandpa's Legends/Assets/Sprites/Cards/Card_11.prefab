@@ -399,6 +399,7 @@ GameObject:
   - component: {fileID: 8268645810823105836}
   - component: {fileID: 3961796597449521260}
   - component: {fileID: 1759776175091743859}
+  - component: {fileID: -7287183069685858138}
   m_Layer: 0
   m_Name: Card_11
   m_TagString: Untagged
@@ -461,6 +462,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 6715553430728151595}
   powerText: {fileID: 8556666400716817399}
@@ -535,6 +537,31 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-7287183069685858138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012476010080798414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 11
+    cardName: Zumbi da Meia Noite
+    cost: 3
+    power: 1
+    life: 5
+    shield: 0
+    cardDescription: "S\xF3 morre se perder toda sua vida numa \xFAnica inst\xE2ncia
+      de dano."
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &2181647566889540375
 GameObject:
   m_ObjectHideFlags: 0

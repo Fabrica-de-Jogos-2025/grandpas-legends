@@ -1061,6 +1061,7 @@ GameObject:
   - component: {fileID: 6513646598321625681}
   - component: {fileID: 3913549048168313121}
   - component: {fileID: 5377492413592939007}
+  - component: {fileID: -3251835196431276057}
   m_Layer: 0
   m_Name: Card_07
   m_TagString: Untagged
@@ -1123,6 +1124,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 2019133467788070967}
   powerText: {fileID: 5011267891350340828}
@@ -1197,6 +1199,31 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-3251835196431276057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468288144863118096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 7
+    cardName: Caipora
+    cost: 3
+    power: 0
+    life: 3
+    shield: 0
+    cardDescription: "A cada turno d\xE1 3 de escudo a uma carta aleat\xF3ria aliada,
+      priorizando outras cartas al\xE9m de si mesma."
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &9069137805617827116
 GameObject:
   m_ObjectHideFlags: 0

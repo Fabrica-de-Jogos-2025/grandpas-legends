@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: -8314695333728653809}
   - component: {fileID: 25128215355437475}
   - component: {fileID: 4662063336480091475}
+  - component: {fileID: 8282237151449716595}
   m_Layer: 0
   m_Name: Card_14
   m_TagString: Untagged
@@ -293,6 +294,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 8651034051115004166}
   powerText: {fileID: 7703749359499039987}
@@ -367,6 +369,30 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &8282237151449716595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2278773927805323301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 14
+    cardName: Alamoa - Esqueleto
+    cost: 4
+    power: 2
+    life: 8
+    shield: 0
+    cardDescription: Ao atacar, se cura em 1
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &2603436684944784780
 GameObject:
   m_ObjectHideFlags: 0

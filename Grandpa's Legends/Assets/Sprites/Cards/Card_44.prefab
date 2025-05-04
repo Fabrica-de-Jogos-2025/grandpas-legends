@@ -782,6 +782,7 @@ GameObject:
   - component: {fileID: 2448122608646034720}
   - component: {fileID: 8864985916983033219}
   - component: {fileID: 5154245260804717752}
+  - component: {fileID: -5821285787154543167}
   m_Layer: 0
   m_Name: Card_44
   m_TagString: Untagged
@@ -844,6 +845,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 3118766795101073623}
   powerText: {fileID: 1503281101692015552}
@@ -918,6 +920,30 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-5821285787154543167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6152942758754939017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 44
+    cardName: "Vit\xF3ria-r\xE9gia"
+    cost: 3
+    power: 0
+    life: 0
+    shield: 0
+    cardDescription: Cura 2
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &6463777984770194624
 GameObject:
   m_ObjectHideFlags: 0

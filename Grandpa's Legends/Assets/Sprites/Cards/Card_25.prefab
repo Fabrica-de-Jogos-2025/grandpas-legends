@@ -1061,6 +1061,7 @@ GameObject:
   - component: {fileID: -4850891161143160647}
   - component: {fileID: 8714191983156850546}
   - component: {fileID: 1347246620774788082}
+  - component: {fileID: 5623877096028137638}
   m_Layer: 0
   m_Name: Card_25
   m_TagString: Untagged
@@ -1123,6 +1124,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 6647108465638550859}
   powerText: {fileID: 7353594453901449833}
@@ -1197,6 +1199,31 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &5623877096028137638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8629628578502145622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 25
+    cardName: Boto Cor de Rosa
+    cost: 6
+    power: 3
+    life: 3
+    shield: 0
+    cardDescription: A cada 2 turnos, fica imune a danos. Causar 9 de dano faz com
+      que evolua
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &8743090713646710858
 GameObject:
   m_ObjectHideFlags: 0

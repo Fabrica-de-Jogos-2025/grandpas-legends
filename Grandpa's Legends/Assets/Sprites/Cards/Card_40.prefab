@@ -1158,6 +1158,7 @@ GameObject:
   - component: {fileID: 2172714282138376164}
   - component: {fileID: 8881176827197694123}
   - component: {fileID: 6736134528911752120}
+  - component: {fileID: 1152294879132759431}
   m_Layer: 0
   m_Name: Card_40
   m_TagString: Untagged
@@ -1220,6 +1221,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 3867979396293103357}
   powerText: {fileID: 5588849081313832654}
@@ -1294,6 +1296,30 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1152294879132759431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7956908016550133557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 40
+    cardName: Inhame
+    cost: 2
+    power: 0
+    life: 0
+    shield: 0
+    cardDescription: "Cura 1. O pr\xF3ximo dano recebido ser\xE1 reduzido em 1."
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &8656733375579274032
 GameObject:
   m_ObjectHideFlags: 0

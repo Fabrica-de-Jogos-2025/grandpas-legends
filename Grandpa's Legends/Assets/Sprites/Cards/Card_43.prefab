@@ -1019,6 +1019,7 @@ GameObject:
   - component: {fileID: -3155708465090542159}
   - component: {fileID: 7896630073075463740}
   - component: {fileID: 6078768679027594563}
+  - component: {fileID: -6061407560657812573}
   m_Layer: 0
   m_Name: Card_43
   m_TagString: Untagged
@@ -1081,6 +1082,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 7404850134973262105}
   powerText: {fileID: 851405285579178559}
@@ -1155,6 +1157,30 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-6061407560657812573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5347174286613764882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 43
+    cardName: Milho
+    cost: 1
+    power: 0
+    life: 0
+    shield: 0
+    cardDescription: Cura 1
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &5710005496214185237
 GameObject:
   m_ObjectHideFlags: 0

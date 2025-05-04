@@ -914,6 +914,7 @@ GameObject:
   - component: {fileID: 1099202705468560004}
   - component: {fileID: 5358727352247968059}
   - component: {fileID: 4613469305697538888}
+  - component: {fileID: -8927987689223123298}
   m_Layer: 0
   m_Name: Card_09
   m_TagString: Untagged
@@ -976,6 +977,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 1410883412278737241}
   powerText: {fileID: 7194347591269876752}
@@ -1050,6 +1052,31 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-8927987689223123298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5294202111589840730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 9
+    cardName: Matinta Pereira
+    cost: 3
+    power: 1
+    life: 2
+    shield: 0
+    cardDescription: "Ao entrar em campo, d\xE1 duas cartas de consum\xEDvel aleat\xF3rias
+      a quem joga."
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &6237948102110443417
 GameObject:
   m_ObjectHideFlags: 0

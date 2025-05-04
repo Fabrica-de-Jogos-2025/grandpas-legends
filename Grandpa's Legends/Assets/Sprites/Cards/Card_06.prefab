@@ -1197,6 +1197,7 @@ GameObject:
   - component: {fileID: 603014198550360854}
   - component: {fileID: 3905987357356442367}
   - component: {fileID: 1762301981599201465}
+  - component: {fileID: -5049536379738532258}
   m_Layer: 0
   m_Name: Card_06
   m_TagString: Untagged
@@ -1259,6 +1260,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 3114920340161779531}
   powerText: {fileID: 5527763151837962064}
@@ -1333,3 +1335,27 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-5049536379738532258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8951368411162500226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 6
+    cardName: "Boitat\xE1"
+    cost: 3
+    power: 1
+    life: 6
+    shield: 0
+    cardDescription: Aterroriza quem atacar, reduzindo seu dano em 1 por 1 turno.
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0

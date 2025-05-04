@@ -500,6 +500,7 @@ GameObject:
   - component: {fileID: 2985938548875098923}
   - component: {fileID: 6226853109751609756}
   - component: {fileID: 9109490201256333956}
+  - component: {fileID: -3099962147498207355}
   m_Layer: 0
   m_Name: Card_10
   m_TagString: Untagged
@@ -562,6 +563,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 757528847261000012}
   powerText: {fileID: 4823686742600293535}
@@ -636,6 +638,31 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-3099962147498207355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3978727217804905427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 10
+    cardName: "On\xE7a-boi"
+    cost: 3
+    power: 2
+    life: 3
+    shield: 0
+    cardDescription: "\xC0 cada on\xE7a boi aliada existente, adiciona +1 vida e
+      dano \xE0s on\xE7a-boi aliadas."
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &4444312859377956103
 GameObject:
   m_ObjectHideFlags: 0

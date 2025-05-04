@@ -1054,6 +1054,7 @@ GameObject:
   - component: {fileID: -4665891511611025916}
   - component: {fileID: 7524854131505379783}
   - component: {fileID: 3987052150095795998}
+  - component: {fileID: 9171070640075268307}
   m_Layer: 0
   m_Name: Card_32
   m_TagString: Untagged
@@ -1116,6 +1117,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 4647396824998885555}
   powerText: {fileID: 582864058089646390}
@@ -1190,6 +1192,30 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &9171070640075268307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7968344059754086567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 32
+    cardName: Cobra
+    cost: 1
+    power: 1
+    life: 2
+    shield: 0
+    cardDescription: 
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &8749667755402358285
 GameObject:
   m_ObjectHideFlags: 0

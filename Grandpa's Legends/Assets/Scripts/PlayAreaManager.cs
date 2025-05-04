@@ -28,7 +28,7 @@ public class PlayAreaManager : MonoBehaviour
         }
     }
 
- public bool AddCardToPlayArea(GameObject card, int playAreaIndex)
+public bool AddCardToPlayArea(GameObject card, int playAreaIndex)
 {
     if (playAreaIndex < 0 || playAreaIndex >= playAreas.Length)
     {
@@ -36,7 +36,7 @@ public class PlayAreaManager : MonoBehaviour
         return false;
     }
 
-    if (cardsInPlayAreas[playAreaIndex].Count >= maxCardsPerArea)
+    if (playAreas[playAreaIndex].childCount >= maxCardsPerArea)
     {
         Debug.Log("Play area " + playAreaIndex + " is full!");
         return false;

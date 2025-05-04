@@ -1025,6 +1025,7 @@ GameObject:
   - component: {fileID: 2740692171407143465}
   - component: {fileID: 8035167206030320790}
   - component: {fileID: 7370005177993395230}
+  - component: {fileID: -7773292366333811338}
   m_Layer: 0
   m_Name: Card_31
   m_TagString: Untagged
@@ -1087,6 +1088,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 347793281665562368}
   powerText: {fileID: 3474406963055257704}
@@ -1161,6 +1163,30 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-7773292366333811338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7705875354167057235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 31
+    cardName: Esqueleto
+    cost: 1
+    power: 2
+    life: 1
+    shield: 0
+    cardDescription: 
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &7929946760651559473
 GameObject:
   m_ObjectHideFlags: 0

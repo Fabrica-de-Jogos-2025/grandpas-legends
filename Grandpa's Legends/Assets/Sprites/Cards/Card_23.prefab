@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: -4517348778866686571}
   - component: {fileID: 483168809824941015}
   - component: {fileID: 3209047729233372322}
+  - component: {fileID: -8163197654993193414}
   m_Layer: 0
   m_Name: Card_23
   m_TagString: Untagged
@@ -111,6 +112,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 7316400956792063778}
   powerText: {fileID: 6956542189643723944}
@@ -185,6 +187,31 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-8163197654993193414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496967661646758881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 23
+    cardName: Lobisomem - Humano
+    cost: 5
+    power: 2
+    life: 4
+    shield: 0
+    cardDescription: Se sobreviver por 3 rounds, evolui ganhando +1 de dano e +2
+      de vida
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &1774707033957041156
 GameObject:
   m_ObjectHideFlags: 0

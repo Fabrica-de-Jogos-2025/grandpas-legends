@@ -1025,6 +1025,7 @@ GameObject:
   - component: {fileID: 2494156708352783557}
   - component: {fileID: 2389670790189092318}
   - component: {fileID: 163222502172501413}
+  - component: {fileID: -8250109747208480170}
   m_Layer: 0
   m_Name: Card_05
   m_TagString: Untagged
@@ -1087,6 +1088,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 1735841953493217125}
   powerText: {fileID: 8671063490406991194}
@@ -1161,6 +1163,30 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-8250109747208480170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8236686863404509063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 5
+    cardName: Hipocampo
+    cost: 3
+    power: 2
+    life: 2
+    shield: 0
+    cardDescription: Escolha um inimigo e reduza seu ataque por 2 turnos.
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &8319168144433352146
 GameObject:
   m_ObjectHideFlags: 0

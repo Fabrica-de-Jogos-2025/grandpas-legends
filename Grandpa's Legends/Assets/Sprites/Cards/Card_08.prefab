@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: -7564284179063153655}
   - component: {fileID: 3647014018922915850}
   - component: {fileID: 1366622679405599140}
+  - component: {fileID: -2364171493694634101}
   m_Layer: 0
   m_Name: Card_08
   m_TagString: Untagged
@@ -536,6 +537,7 @@ MonoBehaviour:
     cost: 0
     power: 0
     life: 0
+    shield: 0
     cardDescription: 
   costText: {fileID: 4280066928067777882}
   powerText: {fileID: 1695813516506953400}
@@ -610,6 +612,30 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &-2364171493694634101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190330650449655862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4df8eb21fe20b4a9dd064245e44dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardData:
+    id: 8
+    cardName: Curupira
+    cost: 3
+    power: 3
+    life: 2
+    shield: 0
+    cardDescription: Toda vez que atacar, ganha +1 de dano.
+  MaxHealth: 0
+  shield: 0
+  isImmune: 0
+  isFromPlayer: 0
 --- !u!1 &5915482071627297147
 GameObject:
   m_ObjectHideFlags: 0
