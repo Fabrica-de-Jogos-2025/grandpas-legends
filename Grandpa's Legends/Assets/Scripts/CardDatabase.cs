@@ -10,7 +10,7 @@ public class CardDatabase : MonoBehaviour
         cardList.Add(new Cards(0, "None", 0, 0, 0, "None"));
         cardList.Add(new Cards(1, "Maria Caninana", 1, 1, 2, "None"));
         cardList.Add(new Cards(2, "Aticupu", 2, 1, 3, "Escolha uma carta aliada. Enquanto sobreviver, cura +1 de vida por rodada"));
-        cardList.Add(new Cards(3, "Corpo Seco", 2, 2, 2, "Quando for derrotado, retorna para a mão do jogador"));
+        cardList.Add(new Cards(3, "Corpo Seco", 2, 1, 5, "Quando for derrotado, retorna para a mão do jogador"));
         cardList.Add(new Cards(4, "Cumadre Fulôzinha", 2, 1, 2, "Envenena o alvo de ataque por 2 turnos"));
         cardList.Add(new Cards(5, "Hipocampo", 3, 2, 3, "Escolha um inimigo e reduza seu ataque em 2"));
         cardList.Add(new Cards(6, "Boitatá", 3, 0, 6, "Aterroriza quem atacar, reduzindo seu dano em 2"));

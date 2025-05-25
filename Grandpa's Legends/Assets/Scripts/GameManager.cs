@@ -3,15 +3,15 @@ using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
-
 {
     public static GameManager Instance { get; private set; }
     public int playerHealth = 20; // Valor inicial da vida do jogador
     public int enemyHealth = 20;  // Valor inicial da vida do inimigo
     public int quantityDeadCards = 0;
+    public int deadPlayerCards = 0;
+    public int deadEnemyCards = 0;
     public int turns = 0;
     public int PlayerHealth
-
     {
         get { return playerHealth; }
         set { playerHealth = Mathf.Max(0, value); } // Impede valores negativos

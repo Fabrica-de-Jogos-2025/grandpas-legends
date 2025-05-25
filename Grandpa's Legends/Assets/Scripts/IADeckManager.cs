@@ -4,6 +4,7 @@ using System.Linq;
 
 public class IADeckManager : MonoBehaviour
 {
+    public static IADeckManager Instance;
     public List<GameObject> deckPrefabs;
     private Queue<GameObject> drawPile = new Queue<GameObject>();
     private List<GameObject> currentHand = new List<GameObject>();
@@ -34,4 +35,10 @@ public class IADeckManager : MonoBehaviour
     {
         currentHand.Remove(card);
     }
+
+    public void AddCardToHand(GameObject cardPrefab)
+    {
+        currentHand.Add(cardPrefab);
+    }
 }
+
