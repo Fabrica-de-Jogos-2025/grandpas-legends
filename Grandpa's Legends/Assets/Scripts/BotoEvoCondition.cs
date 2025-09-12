@@ -56,6 +56,29 @@ public class BotoEvoCondition : MonoBehaviour
             Destroy(card.gameObject);
 
             GameObject newCardObj = Instantiate(evolvedPrefab, parentSlot);
+
+            CardMovement movement = newCardObj.GetComponent<CardMovement>();
+            if (movement != null)
+            {
+                movement.allowDragging = false; // trava arrasto nas evoluções
+                movement.isDragging = false;
+                movement.SetGlow(false);
+                movement.LockInSlot(parentSlot.GetSiblingIndex());
+                movement.allowHover = false;
+            }
+
+            RectTransform newRect = newCardObj.GetComponent<RectTransform>();
+            RectTransform parentRect = parentSlot.GetComponent<RectTransform>();
+
+            if (newRect != null && parentRect != null)
+            {
+                newRect.SetParent(parentSlot);
+                newRect.localPosition = Vector3.zero; // centraliza
+                newRect.sizeDelta = parentRect.sizeDelta;
+                newRect.localScale = Vector3.one;
+                newRect.localScale = newRect.localScale * 1.25f;
+            }
+
             CardBehaviour newCard = newCardObj.GetComponent<CardBehaviour>();
             newCard.Life = savedLife;
             newCard.isFromPlayer = card.isFromPlayer;

@@ -13,7 +13,7 @@ public class TurnManager : MonoBehaviour
     [Header("Referências")]
     [SerializeField] private DeckManager playerDeckManager;
     [SerializeField] private HandManager playerHand;
-    [SerializeField] private IACardPlayer iaCardPlayer; 
+    [SerializeField] private IACardPlayer iaCardPlayer;
 
     private void Awake()
     {
@@ -38,26 +38,26 @@ public class TurnManager : MonoBehaviour
             if (playerSlot.childCount > 0)
             {
                 CardBehaviour attacker = playerSlot.GetChild(0).GetComponent<CardBehaviour>();
-                
-            if (attacker.TryGetComponent<BotoEvoCondition>(out var boto))
-            {
-                // Executa no turno do inimigo
-                if (attacker.isFromPlayer != IsPlayerTurn)
-                {
-                    boto.OnEnemyTurnStart();
-                }
-            }
 
-            if (attacker.TryGetComponent<BarbaRuivaEvoComponent>(out var barba))
-            {
-                // Executa no turno do inimigo
-                if (attacker.isFromPlayer != IsPlayerTurn)
+                if (attacker.TryGetComponent<BotoEvoCondition>(out var boto))
                 {
-                    barba.OnOwnerTurnStart();
+                    // Executa no turno do inimigo
+                    if (attacker.isFromPlayer != IsPlayerTurn)
+                    {
+                        boto.OnEnemyTurnStart();
+                    }
                 }
-            }
 
-            if (attacker.GetComponent<StunnedComponent>() != null)
+                if (attacker.TryGetComponent<BarbaRuivaEvoComponent>(out var barba))
+                {
+                    // Executa no turno do inimigo
+                    if (attacker.isFromPlayer != IsPlayerTurn)
+                    {
+                        barba.OnOwnerTurnStart();
+                    }
+                }
+
+                if (attacker.GetComponent<StunnedComponent>() != null)
                 {
                     var stunned = attacker.GetComponent<StunnedComponent>();
                     stunned.ReduceTurn();  // Reduz 1 turno restante
@@ -216,7 +216,6 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
 
     public void SwitchEffect(int id, CardBehaviour attacker, CardBehaviour defender)
     {
-
         switch (id)
         {
             case 4:
@@ -269,10 +268,13 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
                 break;
 
             case 13:
-                var evoComponent = attacker.GetComponent<AlamoaEvoComponent>();
-                if (evoComponent != null)
+                if (attacker.Power >= defender.Life)
                 {
-                    evoComponent.RegisterDamage(attacker.Power);
+                    var alamoa = attacker.GetComponent<AlamoaEvoCondition>();
+                    if (alamoa != null)
+                    {
+                        alamoa.RegisterExecution();
+                    }
                 }
                 break;
 
@@ -336,7 +338,7 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
 
                 break;
         }   
-}
+    }
 
     public void QuickAttack(CardBehaviour attacker)
     {
@@ -370,7 +372,7 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
         StartCoroutine(QuickAttackRoutine(attacker, defender));
     }
 
-private IEnumerator AnimateAttack(Transform attacker, Transform target)
+    private IEnumerator AnimateAttack(Transform attacker, Transform target)
     {
         Vector3 originalPos = attacker.position;
         Vector3 attackPos = originalPos + (target.position - originalPos) * 0.3f;
@@ -405,60 +407,103 @@ private IEnumerator AnimateAttack(Transform attacker, Transform target)
         attacker.position = originalPos;
     }
 
-public void ProcessAllEffectsOnCard(GameObject card)
-{
-    // Verifica e processa cada tipo de componente de efeito contínuo
-    DamageComponent[] damageComponents = card.GetComponents<DamageComponent>();
-    foreach (DamageComponent effect in damageComponents)
+    public static void SelectionQuickAttack(CardBehaviour attacker, CardBehaviour defender)
     {
-        effect.ProcessEffect();
-    }
-
-    HealComponent[] healComponents = card.GetComponents<HealComponent>();
-    foreach (HealComponent effect in healComponents)
-    {
-        effect.ProcessEffect();
-    }
-
-    ImmunityComponent[] immunityComponents = card.GetComponents<ImmunityComponent>();
-    foreach (ImmunityComponent effect in immunityComponents)
-    {
-        effect.ProcessEffect();
-    }
-
-    ModifyPowerComponent[] modifyComponents = card.GetComponents<ModifyPowerComponent>();
-    foreach (ModifyPowerComponent effect in modifyComponents)
-    {
-        effect.ProcessEffect();
-    }
-
-    ConditionalHealComponent[] condHealComponents = card.GetComponents<ConditionalHealComponent>();
-    foreach (ConditionalHealComponent effect in condHealComponents)
-    {
-        effect.ProcessEffect();
-    }
-}
-
-private void HealCardId11IfSurvived(bool isPlayerSide)
-{
-    string areaPrefix = isPlayerSide ? "PlayArea " : "EnemyPlayArea ";
-
-    for (int i = 0; i < 5; i++)
-    {
-        Transform slot = GameObject.Find(areaPrefix + i).transform;
-
-        if (slot.childCount > 0)
+        if (TurnManager.Instance == null)
         {
-            CardBehaviour card = slot.GetChild(0).GetComponent<CardBehaviour>();
-            if (card.Id == 11 && card.Life > 0)
+            Debug.LogError("[TurnManager] Instance não encontrada para SelectionQuickAttack!");
+            return;
+        }
+
+        TurnManager.Instance.StartCoroutine(TurnManager.Instance.SelectionQuickAttackRoutine(attacker, defender));
+    }
+
+    private IEnumerator SelectionQuickAttackRoutine(CardBehaviour attacker, CardBehaviour defender)
+    {
+        if (attacker == null)
+        {
+            Debug.LogError("SelectionQuickAttackRoutine: attacker está null!");
+            yield break;
+        }
+
+        if (attacker.cardData == null)
+        {
+            Debug.LogError("SelectionQuickAttackRoutine: cardData do attacker está null!");
+            yield break;
+        }
+
+        if (defender != null)
+        {
+            // Anima ataque contra o alvo escolhido
+            yield return StartCoroutine(AnimateAttack(attacker.transform, defender.transform));
+
+            defender.TakeDamage(attacker.cardData.power);
+
+            // Aplica efeitos pós-ataque
+            SwitchEffect(attacker.cardData.id, attacker, defender);
+        }
+        else
+        {
+            Debug.LogWarning("SelectionQuickAttackRoutine chamado com defender = null. Nenhum ataque realizado.");
+        }
+    } 
+  
+
+    public void ProcessAllEffectsOnCard(GameObject card)
+    {
+        // Verifica e processa cada tipo de componente de efeito contínuo
+        DamageComponent[] damageComponents = card.GetComponents<DamageComponent>();
+        foreach (DamageComponent effect in damageComponents)
+        {
+            effect.ProcessEffect();
+        }
+
+        HealComponent[] healComponents = card.GetComponents<HealComponent>();
+        foreach (HealComponent effect in healComponents)
+        {
+            effect.ProcessEffect();
+        }
+
+        ImmunityComponent[] immunityComponents = card.GetComponents<ImmunityComponent>();
+        foreach (ImmunityComponent effect in immunityComponents)
+        {
+            effect.ProcessEffect();
+        }
+
+        ModifyPowerComponent[] modifyComponents = card.GetComponents<ModifyPowerComponent>();
+        foreach (ModifyPowerComponent effect in modifyComponents)
+        {
+            effect.ProcessEffect();
+        }
+
+        ConditionalHealComponent[] condHealComponents = card.GetComponents<ConditionalHealComponent>();
+        foreach (ConditionalHealComponent effect in condHealComponents)
+        {
+            effect.ProcessEffect();
+        }
+    }
+
+    private void HealCardId11IfSurvived(bool isPlayerSide)
+    {
+        string areaPrefix = isPlayerSide ? "PlayArea " : "EnemyPlayArea ";
+
+        for (int i = 0; i < 5; i++)
+        {
+            Transform slot = GameObject.Find(areaPrefix + i).transform;
+
+            if (slot.childCount > 0)
             {
-                card.Heal(card.MaxHealth);
+                CardBehaviour card = slot.GetChild(0).GetComponent<CardBehaviour>();
+                if (card.Id == 11 && card.Life > 0)
+                {
+                    card.Heal(card.MaxHealth);
+                }
             }
         }
     }
-}
 
-private void StartPlayerTurn()
+
+    private void StartPlayerTurn()
     {
         IsPlayerTurn = true;
         OnStartTurn?.Invoke(true);
@@ -467,7 +512,7 @@ private void StartPlayerTurn()
         Debug.Log($"Turno do Jogador {CurrentTurn} | Mana: {ManaManager.Instance.CurrentMana}");
     }
 
-public void EndPlayerTurn()
+    public void EndPlayerTurn()
     {
         if (IsPlayerTurn)
         {
@@ -475,16 +520,17 @@ public void EndPlayerTurn()
         }
     }
 
-private IEnumerator PlayerAttackThenAI()
-{
-    IsPlayerTurn = false;
-    yield return StartCoroutine(PlayerAttack());          // ← Aqui o jogador ataca
-    HealCardId11IfSurvived(true);     
-    yield return new WaitForSeconds(0.5f);                // ← Pequeno delay opcional
-    yield return StartCoroutine(AITurnRoutine());         // ← Depois a IA começa o turno dela
-    HealCardId11IfSurvived(false);         
-}
-private IEnumerator AITurnRoutine()
+    private IEnumerator PlayerAttackThenAI()
+    {
+        IsPlayerTurn = false;
+        yield return StartCoroutine(PlayerAttack());          // ← Aqui o jogador ataca
+        HealCardId11IfSurvived(true);
+        yield return new WaitForSeconds(0.5f);                // ← Pequeno delay opcional
+        yield return StartCoroutine(AITurnRoutine());         // ← Depois a IA começa o turno dela
+        HealCardId11IfSurvived(false);
+    }
+
+    private IEnumerator AITurnRoutine()
     {
         IsPlayerTurn = false;
         Debug.Log("Turno da IA Iniciado");
@@ -498,7 +544,7 @@ private IEnumerator AITurnRoutine()
         StartPlayerTurn();
     }
 
-private void StartFirstTurn()
+    private void StartFirstTurn()
     {
 
         if (ManaManager.Instance == null)
@@ -515,7 +561,7 @@ private void StartFirstTurn()
         Debug.Log($"Primeiro turno do Jogador | Mana: {ManaManager.Instance.CurrentMana}");
     }
 
-public void ForceEndAITurn()
+    public void ForceEndAITurn()
     {
         StopAllCoroutines();
         CurrentTurn++;

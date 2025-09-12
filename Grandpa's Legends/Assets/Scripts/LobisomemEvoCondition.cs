@@ -55,6 +55,30 @@ public class LobisomemEvoCondition : MonoBehaviour
             Destroy(card.gameObject);
 
             GameObject newObj = Instantiate(evolvedPrefab, parentSlot);
+
+            CardMovement movement = newObj.GetComponent<CardMovement>();
+            if (movement != null)
+            {
+                movement.allowDragging = false; // trava arrasto nas evoluções
+                movement.isDragging = false;
+                movement.SetGlow(false);
+                movement.LockInSlot(parentSlot.GetSiblingIndex());
+                movement.allowHover = false;    // não responde mais a hover do mouse
+                movement.allowDragging = false;
+            }   
+
+            RectTransform newRect = newObj.GetComponent<RectTransform>();
+            RectTransform parentRect = parentSlot.GetComponent<RectTransform>();
+
+            if (newRect != null && parentRect != null)
+            {
+                newRect.SetParent(parentSlot);
+                newRect.localPosition = Vector3.zero; // centraliza
+                newRect.sizeDelta = parentRect.sizeDelta;
+                newRect.localScale = Vector3.one;
+                newRect.localScale = newRect.localScale * 1.25f;
+            }
+
             CardBehaviour newCard = newObj.GetComponent<CardBehaviour>();
 
             newCard.Life         = savedLife;           // mantém vida atual

@@ -7,7 +7,12 @@ public class EndTurnButtonHandler : MonoBehaviour
     
     private void Start()
     {
-        endTurnButton.onClick.AddListener(TurnManager.Instance.EndPlayerTurn);
+        endTurnButton.onClick.AddListener(() =>
+        {         
+            DisplayCard.ClearSelection(); // limpa glows + callbacks
+            TargetingManager.CancelSelectionTimer();
+            TurnManager.Instance.EndPlayerTurn();
+        });
     }
 
     private void OnDestroy()

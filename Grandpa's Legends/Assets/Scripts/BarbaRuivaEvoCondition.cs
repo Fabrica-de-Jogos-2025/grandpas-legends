@@ -47,6 +47,29 @@ public class BarbaRuivaEvoComponent : MonoBehaviour
         Destroy(gameObject);
 
         GameObject evolvedCard = Instantiate(evolvedPrefab, parent);
+
+        CardMovement movement = evolvedCard.GetComponent<CardMovement>();
+        if (movement != null)
+        {
+            movement.allowDragging = false; // trava arrasto nas evoluções
+            movement.isDragging = false;
+            movement.SetGlow(false);
+            movement.LockInSlot(parent.GetSiblingIndex());
+            movement.allowHover = false;
+        }
+
+        RectTransform newRect = evolvedCard.GetComponent<RectTransform>();
+        RectTransform parentRect = parent.GetComponent<RectTransform>();
+
+        if (newRect != null && parentRect != null)
+        {
+            newRect.SetParent(parent);
+            newRect.localPosition = Vector3.zero; // centraliza
+            newRect.sizeDelta = parentRect.sizeDelta;
+            newRect.localScale = Vector3.one;
+            newRect.localScale = newRect.localScale * 1.25f;
+        }
+
         CardBehaviour evolvedBehaviour = evolvedCard.GetComponent<CardBehaviour>();
         if (evolvedBehaviour != null)
         {

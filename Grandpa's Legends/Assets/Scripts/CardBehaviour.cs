@@ -24,8 +24,14 @@ public class CardBehaviour : MonoBehaviour
     public int shield;
     public bool isImmune;
     public bool isFromPlayer;
+    private DisplayCard display; // <- cache
+
+    private void Awake()
+    {
+        display = GetComponent<DisplayCard>();
+    }
     private void Start()
-    {   
+    {
         if (cardData == null)
         {
             return;
@@ -38,6 +44,9 @@ public class CardBehaviour : MonoBehaviour
         MaxHealth = cardData.life;
         shield = 0;
         isImmune = false;
+
+        // primeira sincronização visual
+        display?.RefreshUI();
 
         Debug.Log($"[InitFromData] {Name} (id {Id}, custo {Cost}) inicializada com {Life}/{MaxHealth} de vida e {Power} de poder. Veio como imunidade = {isImmune} e com escudo de {shield}");
     }
@@ -73,45 +82,39 @@ public class CardBehaviour : MonoBehaviour
         var invulnerable = GetComponent<InvulnerableComponent>();
 
         //se estiver com o componente de invulnerabilidade, sai da função
-        if (invulnerable != null)
-        {
-            return;
-        }
+        if (invulnerable != null) return;
 
         while (damage > 0) // Enquanto houver dano a ser tomado
         {
-            if (shield > 0)
-            {
-                shield--; // Escudo absorve dano 1 a 1
-            }
-            else
-            {
-                Life--; // Se não houver escudo, o dano vai para a vida
-            }
+            if (shield > 0) shield--; // Escudo absorve dano 1 a 1
+        
+            else Life--; // Se não houver escudo, o dano vai para a vida
 
             damage--; // Reduz o dano aplicado
         }
 
-        if (Life <= 0)
-        {
-            Die();
-        }
+        display?.RefreshUI();   // <<< atualiza UI aqui
+
+        if (Life <= 0) Die();
     }
 
 public void Heal(int amount)
 {
     Life += amount;
-    if (Life > MaxHealth)
-    {
-        Life = MaxHealth;
-    }
+    if (Life > MaxHealth) Life = MaxHealth;
+    
+    display?.RefreshUI();   // <<< atualiza UI aqui
     Debug.Log($"Carta curada em {amount}. Vida atual: {Life}/{MaxHealth}");
 }
 
-public void ModifyPower(int modification)
-{
-    Power += modification;
-}
+    public void ModifyPower(int modification)
+    {
+        Power += modification;
+
+        if (Power < 0) Power = 0;
+
+        display?.RefreshUI();   // <<< atualiza UI aqui
+    }
 
 public void Die()
 {   
@@ -119,32 +122,20 @@ public void Die()
     if (pastureRevive != null)
     {
         bool revived = pastureRevive.TryRevive();
-        if (revived)
-        {
-            return; // Cancela a morte
-        }
+        if (revived) return; // Cancela a morte
     }
 
     ReviveComponent revive = GetComponent<ReviveComponent>();
     if (revive != null)
     {
         bool revived = revive.TryRevive();
-        if (revived)
-        {
-            return; // Cancela a morte
-        }
+        if (revived) return; // Cancela a morte
     }
 
     Debug.Log($"{cardData.cardName} foi destruída!");
 
-    if (isFromPlayer)
-    {
-        GameManager.Instance.deadPlayerCards++;
-    }
-    else
-    {
-        GameManager.Instance.deadEnemyCards++;
-    }
+    if (isFromPlayer) GameManager.Instance.deadPlayerCards++;
+    else GameManager.Instance.deadEnemyCards++;
 
     GameManager.Instance.quantityDeadCards++;
 
@@ -158,10 +149,8 @@ public void Die()
                 hand.AddCardToHand(cardData);
                 Debug.Log("Corpo Seco retornou para a mão do jogador.");
             }
-            else
-            {
-                Debug.LogWarning("HandManager não encontrado ao tentar retornar Corpo Seco.");
-            }
+            else Debug.LogWarning("HandManager não encontrado ao tentar retornar Corpo Seco.");
+
         }
         else
         {
@@ -183,7 +172,7 @@ public void Die()
             }
         }
     }
-
+    
     if (cardData.id == 27) // Romãozinho
     {
         if (isFromPlayer)
@@ -194,10 +183,8 @@ public void Die()
                 hand.AddCardToHand(cardData);
                 Debug.Log("Romãozinho retornou para a mão do jogador.");
             }
-            else
-            {
-                Debug.LogWarning("HandManager não encontrado ao tentar retornar Romãozinho.");
-            }
+            else Debug.LogWarning("HandManager não encontrado ao tentar retornar Romãozinho.");
+
         }
         else
         {

@@ -11,6 +11,7 @@ public class HandManager : MonoBehaviour
     public float fanSpread = 0f;
     public List<GameObject> cardsInHand = new List<GameObject>();
     public static HandManager Instance { get; private set; }
+    public List<CardBehaviour> allCards = new List<CardBehaviour>(); // Estado real do jogo
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -28,7 +29,7 @@ public class HandManager : MonoBehaviour
         if (cardsInHand.Count >= maxHandSize)
         {
             Debug.LogWarning("Hand is full! Cannot add more cards.");
-            return; 
+            return;
         }
 
         CardPrefabMapping mapping = cardPrefabMappings.Find(m => m.cardId == cardData.id);
@@ -86,11 +87,11 @@ public class HandManager : MonoBehaviour
     }
 
     public void RemoveCardFromHand(GameObject card)
-{
-    if (cardsInHand.Contains(card))
     {
-        cardsInHand.Remove(card);
-        UpdateHandVisuals(); // Reorganize the remaining cards
+        if (cardsInHand.Contains(card))
+        {
+            cardsInHand.Remove(card);
+            UpdateHandVisuals(); // Reorganize the remaining cards
+        }   
     }
-}
 }

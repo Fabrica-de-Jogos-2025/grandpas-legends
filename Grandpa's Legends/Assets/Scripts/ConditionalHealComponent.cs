@@ -9,7 +9,6 @@ public class ConditionalHealComponent : MonoBehaviour
     {
         source = sourceCard;
         healPerTurn = 1;
-
         Debug.Log($"[{targetCard.cardData.cardName}] recebeu cura condicional vinculada a [{source.cardData.cardName}]");
     }
 

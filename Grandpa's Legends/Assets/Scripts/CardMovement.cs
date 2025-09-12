@@ -16,8 +16,10 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     [SerializeField] private GameObject glowEffect;
 
     private Vector2 offset;
-    private bool isDragging = false;
+    public bool isDragging = false;
     private bool isInPlayArea = false;
+    public bool allowHover = true;
+    public bool allowDragging = true;
 
     void Awake()
     {
@@ -58,7 +60,8 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     }
 
     public void OnPointerEnter(PointerEventData eventData)
-    {
+    {      
+        if (!allowHover) return;
         if (currentState == 0 && !isInPlayArea)
         {
             currentState = 1;
@@ -67,6 +70,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (!allowHover) return;
         if (currentState == 1)
         {
             TransitionToState0();
@@ -74,7 +78,8 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {
+    {   
+        if (!allowDragging) return;
         if (currentState == 1 && !isInPlayArea)
         {
             currentState = 2;
@@ -87,7 +92,8 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     }
 
     public void OnDrag(PointerEventData eventData)
-    {
+    {   
+        if (!allowDragging) return; 
         if (currentState == 2 && isDragging && !isInPlayArea)
         {
             Vector2 localPoint;
@@ -97,10 +103,19 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     }
 
     public void OnPointerUp(PointerEventData eventData)
-    {
+    {   
+        if (!allowDragging) return;
         if (currentState == 2 && isDragging && !isInPlayArea)
         {
             OnDrop();
+        }
+    }
+
+    public void SetGlow(bool active)
+    {
+        if (glowEffect != null)
+        {
+            glowEffect.SetActive(active);
         }
     }
 
@@ -124,17 +139,21 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             DisplayCard displayCard = GetComponent<DisplayCard>();
             int manaCost = displayCard.cardData.cost;
 
+            Transform testSlotChildren = PlayAreaManager.Instance.playAreas[playAreaIndex];
+            if (testSlotChildren.childCount == 1)
+                return; // aqui já tem uma carta
+
             CardBehaviour cardBehaviour = displayCard.GetComponent<CardBehaviour>(); // Obtém apenas uma vez
 
             //primeiro checar se é um consumível
             if (cardBehaviour != null && cardBehaviour.Id >= 38 && cardBehaviour.Id <= 44)
-            {   
+            {
                 // Verifica se o PlayerSlot já tem uma carta dentro
                 Transform slotAtual = PlayAreaManager.Instance.playAreas[playAreaIndex];
                 if (slotAtual.childCount < 1)
                 {
-                Debug.Log("Não há nenhuma carta para usar um item aqui!");
-                return;
+                    Debug.Log("Não há nenhuma carta para usar um item aqui!");
+                    return;
                 }
 
                 // Obtém a carta alvo (primeiro filho do slot)
@@ -146,38 +165,39 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                     Debug.LogError("A carta alvo não possui um componente CardBehaviour!");
                     return;
                 }
-                
+
                 if (ManaManager.Instance.CurrentMana >= manaCost)
                 {
                     ManaManager.Instance.SpendMana(manaCost); // Gasta a mana necessária
 
                     // Código para ativar o efeito da carta consumível...
-                    switch(cardBehaviour.Id){
-                        case 38:   
+                    switch (cardBehaviour.Id)
+                    {
+                        case 38:
                             Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
                             EffectHandler.ApplyEffect(cartaAlvo, 38, cardBehaviour.gameObject);
                             return;
-                        case 39:   
+                        case 39:
                             Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
                             EffectHandler.ApplyEffect(cartaAlvo, 39, cardBehaviour.gameObject);
                             return;
-                        case 40:   
+                        case 40:
                             Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
                             EffectHandler.ApplyEffect(cartaAlvo, 40, cardBehaviour.gameObject);
                             return;
-                        case 41:   
+                        case 41:
                             Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
                             EffectHandler.ApplyEffect(cartaAlvo, 41, cardBehaviour.gameObject);
                             return;
-                        case 42:   
+                        case 42:
                             Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
                             EffectHandler.ApplyEffect(cartaAlvo, 42, cardBehaviour.gameObject);
                             return;
-                        case 43:   
+                        case 43:
                             Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
                             EffectHandler.ApplyEffect(cartaAlvo, 43, cardBehaviour.gameObject);
                             return;
-                        case 44:   
+                        case 44:
                             Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
                             EffectHandler.ApplyEffect(cartaAlvo, 44, cardBehaviour.gameObject);
                             return;
@@ -204,46 +224,26 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                     cardBehaviour.isFromPlayer = true;
 
                     rectTransform.SetParent(PlayAreaManager.Instance.playAreas[playAreaIndex]);
-                    
+
                     rectTransform.localPosition = Vector3.zero;
                 }
 
                 // Se for Aticupu, aplica cura a um aliado (ou a si mesmo, se for o único)
                 if (cardBehaviour != null && cardBehaviour.Id == 2)
                 {
-                    CardBehaviour attacker = cardBehaviour;
-                    List<CardBehaviour> validAllies = new List<CardBehaviour>();
-
-                    // Decide de qual lado buscar os aliados
-                    Transform[] slots = attacker.isFromPlayer
-                        ? PlayAreaManager.Instance.playAreas // slots do jogador
-                        : IACardPlayer.Instance.playAreas;   // slots da IA 
-
-                    for (int s = 0; s < slots.Length; s++)
-                    {
-                        Transform slot = slots[s];
-                        if (slot.childCount > 0)
-                        {
-                            CardBehaviour ally = slot.GetChild(0).GetComponent<CardBehaviour>();
-                            if (ally != attacker)
-                            {
-                                validAllies.Add(ally);
-                            }
-                        }
-                    }
-
-                    // Cura um aliado aleatório ou a si mesmo
-                    if (validAllies.Count > 0)
-                    {
-                        CardBehaviour chosen = validAllies[Random.Range(0, validAllies.Count)];
-                        chosen.gameObject.AddComponent<ConditionalHealComponent>().Initialize(attacker, chosen);
-                    }
-                    else
-                    {
-                        attacker.gameObject.AddComponent<ConditionalHealComponent>().Initialize(attacker, attacker);
-                    }
+                    DisplayCard.ClearSelection();
+                    TargetingManager.CancelSelectionTimer();
+                    TargetingManager.Execute(cardBehaviour, 2);
                 }
-                
+
+                // Se for a carta com ID 5 (Hipocampo), TargetingManager será chamado
+                if (cardBehaviour != null && cardBehaviour.Id == 5)
+                {
+                    DisplayCard.ClearSelection();
+                    TargetingManager.CancelSelectionTimer();
+                    TargetingManager.Execute(cardBehaviour, 5);
+                }
+
                 // se for uma carta com ID 9 (Matinta Pereira), adicione 2 cartas consumíveis aleatórias à mão
                 if (cardBehaviour != null && cardBehaviour.Id == 9)
                 {
@@ -285,40 +285,21 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                     }
                 }
 
+                // Se for a carta com ID 13, TargetingManager será chamado
+                if (cardBehaviour != null && cardBehaviour.Id == 13)
+                {
+                    DisplayCard.ClearSelection();
+                    TargetingManager.CancelSelectionTimer();
+                    TargetingManager.Execute(cardBehaviour, 13);
+                }
+
+
                 // Se for a carta com ID 15, concede Sobrevida a um aliado
                 if (cardBehaviour != null && cardBehaviour.Id == 15)
                 {
-                    CardBehaviour origin = cardBehaviour;
-                    List<CardBehaviour> validAllies = new List<CardBehaviour>();
-
-                    Transform[] slots = origin.isFromPlayer
-                        ? PlayAreaManager.Instance.playAreas
-                        : IACardPlayer.Instance.playAreas;
-
-                    for (int s = 0; s < slots.Length; s++)
-                    {
-                        Transform slot = slots[s];
-                        if (slot.childCount > 0)
-                        {
-                            CardBehaviour ally = slot.GetChild(0).GetComponent<CardBehaviour>();
-                            if (ally != origin)
-                            {
-                                validAllies.Add(ally);
-                            }
-                        }
-                    }
-
-                    if (validAllies.Count > 0)
-                    {
-                        CardBehaviour chosen = validAllies[Random.Range(0, validAllies.Count)];
-
-                        var reviveComponent = chosen.gameObject.AddComponent<ReviveComponent>();
-                        reviveComponent.Initialize(origin); // Define quem é o doador do efeito
-                    }
-                    else
-                    {
-                        Debug.Log("[Sobrevida] Nenhum aliado disponível para receber Sobrevida.");
-                    }
+                    DisplayCard.ClearSelection();
+                    TargetingManager.CancelSelectionTimer();
+                    TargetingManager.Execute(cardBehaviour, 15);
                 }
 
                 //Efeito da Cuca (id 18)
@@ -407,77 +388,21 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                 //boi vaquim id (21)
                 if (cardBehaviour != null && cardBehaviour.Id == 21)
                 {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        int randomIndex = Random.Range(0, 4);
-                        CardBehaviour attacker = cardBehaviour; // Supondo que isso já esteja definido
-
-                        CardBehaviour defender = null;
-
-                        if (attacker.isFromPlayer)
-                        {
-                            Transform enemySlot = IACardPlayer.Instance.playAreas[randomIndex];
-                            defender = enemySlot.childCount > 0 ? enemySlot.GetChild(0).GetComponent<CardBehaviour>() : null;
-                        }
-                        else
-                        {
-                            Transform playerSlot = PlayAreaManager.Instance.playAreas[randomIndex];
-                            defender = playerSlot.childCount > 0 ? playerSlot.GetChild(0).GetComponent<CardBehaviour>() : null;
-                        }
-
-                        if (defender != null)
-                        {
-                            TurnManager.Instance.StartCoroutine(
-                                TurnManager.Instance.QuickAttackRoutine(attacker, defender)
-                            );
-                        }
-                        else
-                        {
-                            // Slot vazio → ataque direto com metade do poder
-                            int originalPower = attacker.Power;
-                            attacker.Power = Mathf.Max(1, attacker.Power / 2);
-
-                            TurnManager.Instance.StartCoroutine(
-                                TurnManager.Instance.QuickAttackRoutine(attacker, null)
-                            );
-
-                            attacker.Power = originalPower;
-                        }
-                    }
+                    DisplayCard.ClearSelection();
+                    TargetingManager.CancelSelectionTimer();
+                    TargetingManager.Execute(cardBehaviour, 21);
                 }
 
                 // Se for uma carta com ID 22 (Iara) aplica suddendeath a um inimigo
                 if (cardBehaviour != null && cardBehaviour.Id == 22)
                 {
-                    CardBehaviour source = cardBehaviour;
-                    List<CardBehaviour> validEnemies = new List<CardBehaviour>();
-
-                    // Decide de qual lado buscar os inimigos
-                    Transform[] enemySlots = source.isFromPlayer
-                        ? IACardPlayer.Instance.playAreas   // inimigos do jogador
-                        : PlayAreaManager.Instance.playAreas; // inimigos da IA
-
-                    for (int i = 0; i < enemySlots.Length; i++)
-                    {
-                        Transform slot = enemySlots[i];
-                        if (slot.childCount > 0)
-                        {
-                            CardBehaviour enemy = slot.GetChild(0).GetComponent<CardBehaviour>();
-                            validEnemies.Add(enemy);
-                        }
-                    }
-
-                    if (validEnemies.Count > 0)
-                    {
-                        CardBehaviour target = validEnemies[Random.Range(0, validEnemies.Count)];
-                        SuddenDeathComponent.ApplyEffect(target.gameObject, "Morte Súbita", 3);
-                        Debug.Log($"[{source.cardData.cardName}] aplicou Morte Súbita em [{target.cardData.cardName}]");
-                    }
-                    else
-                    {
-                        Debug.Log($"[{source.cardData.cardName}] entrou em campo mas não havia inimigos para aplicar Morte Súbita.");
-                    }
+                    DisplayCard.ClearSelection();
+                    TargetingManager.CancelSelectionTimer();
+                    TargetingManager.Execute(cardBehaviour, 22);
                 }
+
+                if (cardBehaviour != null && cardBehaviour.Id == 23)
+                    cardBehaviour.gameObject.AddComponent<LobisomemEvoCondition>();
 
                 // Se for uma carta com ID 30 (Saci)
                 if (cardBehaviour != null && cardBehaviour.Id == 30)
@@ -526,7 +451,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                     }
                 }
 
-                if (cardBehaviour != null && cardBehaviour.Id == 30) // ID do Romãozinho
+                if (cardBehaviour != null && cardBehaviour.Id == 27) // ID do Romãozinho
                 {
                     CardBehaviour source = cardBehaviour;
 
@@ -544,22 +469,26 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                         source.gameObject.AddComponent<RomaozinhoComponent>();
                 }
 
+
+                if (cardBehaviour != null && cardBehaviour.Id == 28)
+                    cardBehaviour.gameObject.AddComponent<KianumakaEvoCondition>();
+
                 else
                 {
                     rectTransform.localPosition = originalPosition;
                 }
-                }
-                else
-                {
-                    Debug.Log("Not enough mana to play this card!");
-                    rectTransform.localPosition = originalPosition;
-                }
+            }
+            else
+            {
+                Debug.Log("Not enough mana to play this card!");
+                rectTransform.localPosition = originalPosition;
+            }
+        }
+        else
+        {
+            rectTransform.localPosition = originalPosition;
+        }
     }
-    else
-    {
-        rectTransform.localPosition = originalPosition;
-    }
-}
 
     private int GetPlayAreaIndexUnderCard()
     {
@@ -588,7 +517,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
         return -1;
     }
 
-    private void SnapCardToPlayArea(int playAreaIndex)
+    public void SnapCardToPlayArea(int playAreaIndex)
     {
         RectTransform playAreaRectTransform = PlayAreaManager.Instance.playAreas[playAreaIndex];
 
@@ -626,4 +555,11 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             rectTransform.localPosition = localPoint + offset;
         }
     }
+
+    public void LockInSlot(int slotIndex)
+    {
+        isDragging = false;
+        SetGlow(false);
+        SnapCardToPlayArea(slotIndex);
+    }   
 }

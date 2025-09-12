@@ -1,23 +1,34 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class AlamoaEvoComponent : MonoBehaviour
+public class AlamoaEvoCondition : MonoBehaviour
 {
-    private CardBehaviour card;         // Referência à carta atual (forma humana)
-    private int accumulatedDamage = 0;  // Contador de dano causado
-    private const int DAMAGE_THRESHOLD = 6;
+    private CardBehaviour card;                    
+    private int executionCounter = 0;              // Contador de execuções para evolução
+    private bool hasEvolved = false;
+
     private const int EVOLVED_CARD_ID = 14;
+    private const int EXECUTIONS_TO_EVOLVE = 3;
 
     void Awake()
     {
         card = GetComponent<CardBehaviour>();
+        if (card == null)
+        {
+            Debug.LogError("[AlamoaEvo] CardBehaviour não encontrado.");
+            enabled = false;
+        }
     }
 
-    // Chamado externamente quando a carta causar dano
-    public void RegisterDamage(int amount)
+    /// Chamado toda vez que a Alamoa executa um inimigo (switch case 13 no TurnManager)
+    public void RegisterExecution()
     {
-        accumulatedDamage += amount;
+        if (hasEvolved) return;
 
-        if (accumulatedDamage >= DAMAGE_THRESHOLD)
+        executionCounter++;
+        Debug.Log($"[AlamoaEvo] Execuções registradas: {executionCounter}/{EXECUTIONS_TO_EVOLVE}");
+
+        if (executionCounter >= EXECUTIONS_TO_EVOLVE)
         {
             TryEvolve();
         }
@@ -25,25 +36,56 @@ public class AlamoaEvoComponent : MonoBehaviour
 
     private void TryEvolve()
     {
+        if (hasEvolved) return;
+        hasEvolved = true;
+
         Transform parentSlot = transform.parent;
         int savedLife = card.Life;
+        bool fromPlayer = card.isFromPlayer;
 
-        // Tenta obter o prefab da forma evoluída
-        if (CardPrefabDatabase.prefabMap.TryGetValue(EVOLVED_CARD_ID, out GameObject evolvedPrefab))
+        if (!CardPrefabDatabase.prefabMap.TryGetValue(EVOLVED_CARD_ID, out GameObject evolvedPrefab))
         {
-            // Destroi a carta atual
-            Destroy(gameObject);
-
-            // Instancia nova carta na mesma posição
-            GameObject newCardObj = Instantiate(evolvedPrefab, parentSlot);
-            CardBehaviour newCard = newCardObj.GetComponent<CardBehaviour>();
-
-            // Preserva a vida da forma anterior
-            newCard.Life = savedLife;
+             Debug.LogError($"[AlamoaEvo] Prefab com ID {EVOLVED_CARD_ID} não encontrado. " +
+                   $"IDs disponíveis no prefabMap: {string.Join(", ", CardPrefabDatabase.prefabMap.Keys)}");
+            return;
         }
-        else
+
+        // Destroi a forma humana
+        Destroy(gameObject);
+
+        // Instancia forma evoluída na mesma posição
+        GameObject newCardObj = Instantiate(evolvedPrefab, parentSlot);
+
+        CardBehaviour newCard = newCardObj.GetComponent<CardBehaviour>();
+        if (newCard != null)
         {
-            Debug.LogError($"[AlamoaEvo] Prefab com ID {EVOLVED_CARD_ID} não encontrado no CardPrefabDatabase.");
+            newCard.isFromPlayer = fromPlayer;
+            newCard.MaxHealth = newCard.Life = savedLife + 2; // cura e adiciona +2 de vida
         }
+
+        CardMovement movement = newCardObj.GetComponent<CardMovement>();
+        if (movement != null)
+        {
+            movement.allowDragging = false; // trava arrasto nas evoluções
+            movement.isDragging = false;
+            movement.SetGlow(false);
+            movement.LockInSlot(parentSlot.GetSiblingIndex());
+            movement.allowHover = false;
+        }   
+
+        RectTransform newRect = newCardObj.GetComponent<RectTransform>();
+        RectTransform parentRect = parentSlot.GetComponent<RectTransform>();
+
+        if (newRect != null && parentRect != null)
+        {
+            newRect.SetParent(parentSlot);
+            newRect.localPosition = Vector3.zero; // centraliza
+            newRect.sizeDelta = parentRect.sizeDelta;
+            newRect.localScale = Vector3.one;
+            newRect.localScale = newRect.localScale * 1.25f;
+        }
+
+        Debug.Log("[AlamoaEvo] Evoluiu após 3 execuções.");
     }
 }
+

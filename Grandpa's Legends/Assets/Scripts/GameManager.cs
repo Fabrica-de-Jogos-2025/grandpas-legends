@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     public int deadPlayerCards = 0;
     public int deadEnemyCards = 0;
     public int turns = 0;
+    [SerializeField] private TextMeshProUGUI playerHealthText;
+    [SerializeField] private TextMeshProUGUI enemyHealthText;
     public int PlayerHealth
     {
         get { return playerHealth; }
@@ -43,7 +46,14 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void InitializeManagers(){
+    
+    private void Start()
+    {
+        UpdateHealthUI();
+    }
+
+    private void InitializeManagers()
+    {
         OptionsManager = GetComponentInChildren<OptionsManager>();
         AudioManager = GetComponentInChildren<AudioManager>();
         DeckManager = GetComponentInChildren<DeckManager>();
@@ -51,99 +61,130 @@ public class GameManager : MonoBehaviour
         ManaManager = GetComponentInChildren<ManaManager>();
         TurnManager = GetComponentInChildren<TurnManager>();
 
-        if(OptionsManager == null){
+        if (OptionsManager == null)
+        {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/OptionsManager");
-            if(prefab == null){
+            if (prefab == null)
+            {
                 Debug.Log($"OptionsManager not found");
-            }else {
-            Instantiate(prefab, transform.position, Quaternion.identity, transform);
-            OptionsManager = GetComponentInChildren<OptionsManager>();
+            }
+            else
+            {
+                Instantiate(prefab, transform.position, Quaternion.identity, transform);
+                OptionsManager = GetComponentInChildren<OptionsManager>();
+            }
         }
-        }
-        
 
-        if(AudioManager == null){
+
+        if (AudioManager == null)
+        {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/AudioManager");
-            if(prefab == null){
+            if (prefab == null)
+            {
                 Debug.Log($"AudioManager not found");
-            }else {
-            Instantiate(prefab, transform.position, Quaternion.identity, transform);
-            AudioManager = GetComponentInChildren<AudioManager>();
-        }
+            }
+            else
+            {
+                Instantiate(prefab, transform.position, Quaternion.identity, transform);
+                AudioManager = GetComponentInChildren<AudioManager>();
+            }
         }
 
-        if(DeckManager == null){
+        if (DeckManager == null)
+        {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/DeckManager");
-            if(prefab == null){
+            if (prefab == null)
+            {
                 Debug.Log($"DeckManager not found");
-            }else {
-            Instantiate(prefab, transform.position, Quaternion.identity, transform);
-            DeckManager = GetComponentInChildren<DeckManager>();
-        }
+            }
+            else
+            {
+                Instantiate(prefab, transform.position, Quaternion.identity, transform);
+                DeckManager = GetComponentInChildren<DeckManager>();
+            }
         }
 
-        if(ManaManager == null){
+        if (ManaManager == null)
+        {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/ManaManager");
-            if(prefab == null){
+            if (prefab == null)
+            {
                 Debug.Log($"ManaManager not found");
-            }else {
-            Instantiate(prefab, transform.position, Quaternion.identity, transform);
-            ManaManager = GetComponentInChildren<ManaManager>();
+            }
+            else
+            {
+                Instantiate(prefab, transform.position, Quaternion.identity, transform);
+                ManaManager = GetComponentInChildren<ManaManager>();
+            }
         }
-        }
-        
 
-        if(PlayAreaManager == null){
+
+        if (PlayAreaManager == null)
+        {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/PlayAreaManager");
-            if(prefab == null){
+            if (prefab == null)
+            {
                 Debug.Log($"PlayAreaManager not found");
-            }else {
-            Instantiate(prefab, transform.position, Quaternion.identity, transform);
-            PlayAreaManager = GetComponentInChildren<PlayAreaManager>();
-        }
+            }
+            else
+            {
+                Instantiate(prefab, transform.position, Quaternion.identity, transform);
+                PlayAreaManager = GetComponentInChildren<PlayAreaManager>();
+            }
         }
 
 
-        if(TurnManager == null){
+        if (TurnManager == null)
+        {
             GameObject prefab = Resources.Load<GameObject>("Prefabs/TurnManager");
-            if(prefab == null){
+            if (prefab == null)
+            {
                 Debug.Log($"TurnManager not found");
-            }else {
-            Instantiate(prefab, transform.position, Quaternion.identity, transform);
-            TurnManager = GetComponentInChildren<TurnManager>();
-        }
+            }
+            else
+            {
+                Instantiate(prefab, transform.position, Quaternion.identity, transform);
+                TurnManager = GetComponentInChildren<TurnManager>();
+            }
         }
     }
 
+    public void UpdateHealthUI()
+    {
+        if (playerHealthText != null)
+            playerHealthText.text = playerHealth.ToString();
+
+        if (enemyHealthText != null)
+            enemyHealthText.text = enemyHealth.ToString();
+    }
+    
     public void TakeDamage(int damage, bool isPlayer)
     {
-    if (isPlayer)
-    {
-        playerHealth -= damage;
-        Debug.Log($"O jogador recebeu {damage} de dano! Vida restante: {playerHealth}");
-    }
-    else
-    {
-        enemyHealth -= damage;
-        Debug.Log($"O inimigo recebeu {damage} de dano! Vida restante: {enemyHealth}");
-    }
+        if (isPlayer)
+        {
+            playerHealth -= damage;
+            Debug.Log($"O jogador recebeu {damage} de dano! Vida restante: {playerHealth}");
+        }
+        else
+        {
+            enemyHealth -= damage;
+            Debug.Log($"O inimigo recebeu {damage} de dano! Vida restante: {enemyHealth}");
+        }
+        
+        UpdateHealthUI();
+        
+        // Verifica se o jogo acabou
+        if (playerHealth <= 0)
+        {
+            Debug.Log("O jogador perdeu!");
+            // Aqui você pode adicionar lógica de fim de jogo.
+        }
 
-    // Verifica se o jogo acabou
-    if (playerHealth <= 0)
-    {
-        Debug.Log("O jogador perdeu!");
-        // Aqui você pode adicionar lógica de fim de jogo.
-    }
+        else if (enemyHealth <= 0)
 
-    else if (enemyHealth <= 0)
-
-    {
-        Debug.Log("O inimigo foi derrotado!");
-        // Aqui você pode adicionar lógica de vitória.
+        {
+            Debug.Log("O inimigo foi derrotado!");
+            // Aqui você pode adicionar lógica de vitória.
+        }
     }
-}
-    //public int PlayerHealth {
-        //get { return playerHealth; }
-        //set { playerHealth = value;}
-    //}
 }

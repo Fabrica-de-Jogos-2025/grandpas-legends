@@ -86,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 128
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1337069958311892462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +254,6 @@ GameObject:
   - component: {fileID: 4095706280557900646}
   - component: {fileID: 7429986921202086803}
   - component: {fileID: -8868535551757306514}
-  - component: {fileID: -2994131771223929051}
   m_Layer: 0
   m_Name: Card_28
   m_TagString: Untagged
@@ -417,18 +416,6 @@ MonoBehaviour:
   shield: 0
   isImmune: 0
   isFromPlayer: 0
---- !u!114 &-2994131771223929051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1210006391155251150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d311abfc512fef47b1454751fa92892, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2185596008873083397
 GameObject:
   m_ObjectHideFlags: 0

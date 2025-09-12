@@ -52,7 +52,7 @@ public class IACardPlayer : MonoBehaviour
                     CardBehaviour iaCardBehaviour = cardToPlay.GetComponent<CardBehaviour>();
 
                     if (iaCardBehaviour != null)
-                    {
+                    {   
                         // Se for Aticupu, aplica cura a um aliado (ou a si mesmo, se for o único)
                         if (iaCardBehaviour.Id == 2)
                         {
@@ -249,6 +249,9 @@ public class IACardPlayer : MonoBehaviour
                             }
                         }
 
+                        if (iaCardBehaviour.Id == 19)
+                            iaCardBehaviour.gameObject.AddComponent<BarbaRuivaEvoComponent>();
+                        
                         //boi vaquim id (21)
                         if (iaCardBehaviour.Id == 21)
                         {
@@ -320,6 +323,12 @@ public class IACardPlayer : MonoBehaviour
                             }
                         }
                     }
+
+                    if (iaCardBehaviour.Id == 23)
+                        iaCardBehaviour.gameObject.AddComponent<LobisomemEvoCondition>();
+                    
+                    if (iaCardBehaviour.Id == 28)
+                        iaCardBehaviour.gameObject.AddComponent<KianumakaEvoCondition>();       
 
                     cardsPlayed++;
                     yield return new WaitForSeconds(playDelay);

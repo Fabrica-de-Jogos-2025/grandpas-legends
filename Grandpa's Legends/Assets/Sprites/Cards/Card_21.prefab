@@ -832,9 +832,9 @@ MonoBehaviour:
   cardData:
     id: 21
     cardName: Boi Vaquim
-    cost: 0
-    power: 0
-    life: 0
+    cost: 5
+    power: 4
+    life: 2
     shield: 0
     cardDescription: "Ataca rapidamente ao entrar em combate, se atacar a vida do
       oponente diretamente e n\xE3o uma carta, inflinge dano reduzido"
