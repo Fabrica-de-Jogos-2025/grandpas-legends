@@ -14,8 +14,8 @@ public class DeckManager : MonoBehaviour
         DrawSpecificCard(hand, 6);
         DrawSpecificCard(hand, 19);
         DrawSpecificCard(hand, 13);
-        DrawSpecificCard(hand, 23);
-        DrawSpecificCard(hand, 25);
+        DrawSpecificCard(hand, 44);
+        DrawSpecificCard(hand, 43);
         DrawSpecificCard(hand, 28);
     }
 
