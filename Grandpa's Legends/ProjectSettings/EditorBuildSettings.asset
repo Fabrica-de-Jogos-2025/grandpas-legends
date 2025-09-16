@@ -21,6 +21,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Map.unity
     guid: 9b954ec9d3e24bf4aa1883913782aaf0
   - enabled: 1
+    path: Assets/Scenes/EditDeck.unity
+    guid: 6f91f78b5dcabd14c963949295961721
+  - enabled: 1
+    path: Assets/Scenes/Collection.unity
+    guid: 8b417da365b0cbf4198e7644a3aa8f7b
+  - enabled: 1
     path: Assets/Scenes/Region 1.unity
     guid: 1efea26f42f756b428ff4c3e0981e7fd
   - enabled: 1

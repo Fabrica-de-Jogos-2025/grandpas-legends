@@ -5,6 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject settingsScreen;
+
     public void PlayGame(){
         SceneManager.LoadScene("Map");
     }
@@ -91,6 +92,13 @@ public class MainMenu : MonoBehaviour
      public void Battle5(){
         SceneManager.LoadScene("Batalha 5");
     }
-
-    
+    public void EditDeck(){
+        SceneManager.LoadScene("EditDeck");
+    }
+    public void Collection(){
+        SceneManager.LoadScene("Collection");
+    }
+    public void Tutorial(){
+        SceneManager.LoadScene("Tutorial");
+    }
 }

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-public class DisplayCard : MonoBehaviour
+public class DisplayCard : MonoBehaviour, IPointerClickHandler
 {
     public int displayId; public Cards cardData;
     public TextMeshProUGUI costText;
@@ -34,13 +34,20 @@ public class DisplayCard : MonoBehaviour
         if (powerText) powerText.text = behaviour.Power.ToString();
         if (lifeText)  lifeText.text  = behaviour.Life.ToString();
     }
+
     public void UpdateCardData()
     {
-        Cards data = CardDatabase.cardList.Find(card => card.id == displayId); if (data != null)
+        cardData = CardDatabase.cardList.Find(card => card.id == displayId);
+
+        if (cardData != null)
         {
-            cardData = data; costText.text = data.cost.ToString();
-            powerText.text = data.power.ToString();
-            lifeText.text = data.life.ToString();
+            costText.text = cardData.cost.ToString();
+            powerText.text = cardData.power.ToString();
+            lifeText.text = cardData.life.ToString();
+        }
+        else
+        {
+            Debug.LogWarning($"[DisplayCard] Nenhuma carta encontrada com ID {displayId}");
         }
     }
 
@@ -134,4 +141,14 @@ private static List<DisplayCard> chosenTargets = new List<DisplayCard>();
             img.color = highlight ? Color.yellow : Color.white;
         }
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (isEnemyCard) return;
+        if (cardData == null) return;
+        if (DeckUIManager.Instance != null)
+            DeckUIManager.Instance.AddCardToDeck(cardData.id, cardData.cardName);
+    }
+    
+
 }
