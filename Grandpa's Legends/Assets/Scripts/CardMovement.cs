@@ -139,10 +139,6 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             DisplayCard displayCard = GetComponent<DisplayCard>();
             int manaCost = displayCard.cardData.cost;
 
-            Transform testSlotChildren = PlayAreaManager.Instance.playAreas[playAreaIndex];
-            if (testSlotChildren.childCount == 1)
-                return; // aqui já tem uma carta
-
             CardBehaviour cardBehaviour = displayCard.GetComponent<CardBehaviour>(); // Obtém apenas uma vez
 
             //primeiro checar se é um consumível
@@ -159,7 +155,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                 // Obtém a carta alvo (primeiro filho do slot)
                 Transform cartaAlvoTransform = slotAtual.GetChild(0);
                 CardBehaviour cartaAlvo = cartaAlvoTransform.GetComponent<CardBehaviour>();
-
+            
                 if (cartaAlvo == null)
                 {
                     Debug.LogError("A carta alvo não possui um componente CardBehaviour!");
@@ -209,6 +205,10 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                 }
                 return;
             }
+
+            Transform testSlotChildren = PlayAreaManager.Instance.playAreas[playAreaIndex];
+            if (testSlotChildren.childCount == 1)
+                return; // aqui já tem uma carta
 
             //se não tem id no CardBehaviour de 38 a 44, não é consumível
             if (ManaManager.Instance.CurrentMana >= manaCost)

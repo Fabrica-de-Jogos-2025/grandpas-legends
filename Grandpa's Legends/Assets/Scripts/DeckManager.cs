@@ -1,37 +1,58 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
     public List<Cards> allCards = new List<Cards>();
-    private int currentIndex = 1;
+    private List<Cards> playerDeck = new List<Cards>();
+    private int currentIndex = 0;
+
     void Start()
     {
+        // Carrega todas as cartas
         allCards.AddRange(CardDatabase.cardList);
-        HandManager hand = FindAnyObjectByType<HandManager>();
 
-        DrawSpecificCard(hand, 6);
-        DrawSpecificCard(hand, 19);
-        DrawSpecificCard(hand, 13);
-        DrawSpecificCard(hand, 23);
-        DrawSpecificCard(hand, 25);
-        DrawSpecificCard(hand, 28);
+        // Carrega deck salvo do PlayerDeck
+        if (PlayerDeck.Instance != null)
+        {
+            List<int> savedIds = PlayerDeck.Instance.GetDeck();
+            foreach (int id in savedIds)
+            {
+                Cards chosen = allCards.Find(c => c.id == id);
+                if (chosen != null)
+                {
+                    playerDeck.Add(chosen);
+                }
+            }
+            Debug.Log($"[DeckManager] Deck carregado com {playerDeck.Count} cartas para a partida.");
+        }
+        else
+        {
+            Debug.LogWarning("[DeckManager] PlayerDeck não encontrado, usando deck vazio.");
+        }
+
+        // Exemplo: já comprar 5 cartas na mão inicial
+        HandManager hand = FindAnyObjectByType<HandManager>();
+        for (int i = 0; i < 5 && i < playerDeck.Count; i++)
+        {
+            DrawCard(hand);
+        }
     }
 
     public void DrawSpecificCard(HandManager handManager, int cardId)
     {
-        Cards chosen = allCards.Find(c => c.id == cardId);
+        Cards chosen = playerDeck.Find(c => c.id == cardId);
         if (chosen == null) return;
 
         handManager.AddCardToHand(chosen);
-    }   
+    }
+
     public void DrawCard(HandManager handManager)
     {
-        if(allCards.Count == 0) return;
+        if (playerDeck.Count == 0) return;
 
-        Cards nextCard = allCards[currentIndex];
+        Cards nextCard = playerDeck[currentIndex];
         handManager.AddCardToHand(nextCard);
-        currentIndex = (currentIndex +1) % allCards.Count;
+        currentIndex = (currentIndex + 1) % playerDeck.Count;
     }
 }
