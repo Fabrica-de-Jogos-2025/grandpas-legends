@@ -48,7 +48,6 @@ public class CardBehaviour : MonoBehaviour
         // primeira sincronização visual
         display?.RefreshUI();
 
-        Debug.Log($"[InitFromData] {Name} (id {Id}, custo {Cost}) inicializada com {Life}/{MaxHealth} de vida e {Power} de poder. Veio como imunidade = {isImmune} e com escudo de {shield}");
     }
 
     public void RemoveAllNegativeEffects(GameObject target)
@@ -132,8 +131,6 @@ public void Die()
         if (revived) return; // Cancela a morte
     }
 
-    Debug.Log($"{cardData.cardName} foi destruída!");
-
     if (isFromPlayer) GameManager.Instance.deadPlayerCards++;
     else GameManager.Instance.deadEnemyCards++;
 
@@ -147,7 +144,6 @@ public void Die()
             if (hand != null)
             {
                 hand.AddCardToHand(cardData);
-                Debug.Log("Corpo Seco retornou para a mão do jogador.");
             }
             else Debug.LogWarning("HandManager não encontrado ao tentar retornar Corpo Seco.");
 
@@ -163,7 +159,6 @@ public void Die()
                 if (prefab != null)
                 {
                     iaDeck.AddCardToHand(prefab);
-                    Debug.Log("Corpo Seco retornou para a mão da IA.");
                 }
                 else
                 {
@@ -181,7 +176,6 @@ public void Die()
             if (hand != null)
             {
                 hand.AddCardToHand(cardData);
-                Debug.Log("Romãozinho retornou para a mão do jogador.");
             }
             else Debug.LogWarning("HandManager não encontrado ao tentar retornar Romãozinho.");
 
@@ -197,7 +191,6 @@ public void Die()
                 if (prefab != null)
                 {
                     iaDeck.AddCardToHand(prefab);
-                    Debug.Log("Romãozinho retornou para a mão da IA.");
                 }
                 else
                 {

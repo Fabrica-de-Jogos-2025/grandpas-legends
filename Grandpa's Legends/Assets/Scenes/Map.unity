@@ -387,8 +387,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
-  m_sharedMaterial: {fileID: 3648376724016987666, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
+  m_sharedMaterial: {fileID: -1941412138439397090, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1551,7 +1551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1743559138
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2050,8 +2050,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Cole\xE7\xE3o\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
-  m_sharedMaterial: {fileID: 3648376724016987666, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
+  m_sharedMaterial: {fileID: -1941412138439397090, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2236,7 +2236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2087331961
 RectTransform:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class DeckUIManager : MonoBehaviour
     public Transform deckPanel; 
     private List<DeckSlot> slots = new List<DeckSlot>();
 
-    public int deckSize = 22; // limite do deck
+    public int deckSize = 22;
 
     void Awake()
     {
@@ -121,7 +121,6 @@ public class DeckUIManager : MonoBehaviour
     {
         List<(int, string)> cardsInDeck = new List<(int, string)>();
 
-        // pega todas as cartas preenchidas
         foreach (DeckSlot s in slots)
         {
             if (s.isFilled)
@@ -129,14 +128,12 @@ public class DeckUIManager : MonoBehaviour
             s.ClearSlot();
         }
 
-        // recoloca do começo da lista
         for (int i = 0; i < cardsInDeck.Count; i++)
         {
             slots[i].SetCard(cardsInDeck[i].Item1, cardsInDeck[i].Item2);
         }
     }
 
-    // 👉 Salva o deck editado e carrega a cena de batalha
     public void SaveEditedDeck()
     {
         List<int> ids = new List<int>();
@@ -155,12 +152,6 @@ public class DeckUIManager : MonoBehaviour
         if (PlayerDeck.Instance != null)
         {
             PlayerDeck.Instance.SaveDeck(ids);
-            Debug.Log("[DeckUIManager] Deck salvo, carregando cena da batalha...");
-            SceneManager.LoadScene("Batalha 1");
-        }
-        else
-        {
-            Debug.LogWarning("[DeckUIManager] PlayerDeck não encontrado!");
         }
     }
 }

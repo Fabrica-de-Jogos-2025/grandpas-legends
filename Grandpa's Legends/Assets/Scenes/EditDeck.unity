@@ -2599,22 +2599,17 @@ MonoBehaviour:
   - {fileID: 2012476010080798414, guid: 3e477cf2bb9e4e94c80de940c2ab84d4, type: 3}
   - {fileID: 4271095744239718104, guid: 239ddf50b0537064dbe4935be7fc8058, type: 3}
   - {fileID: 5760127748921220890, guid: 4899215d0a45170448432e6ce70a9b30, type: 3}
-  - {fileID: 2278773927805323301, guid: 8c6be0753c05a504bae516c50bb8d3be, type: 3}
   - {fileID: 8914199679637205009, guid: 079a08d203138d846b3fc2f67e06a6db, type: 3}
   - {fileID: 6665086743147875614, guid: f6e3b59d7a1a503419eb2f0028a5ef02, type: 3}
   - {fileID: 7400739965624174732, guid: 9148d21c67344f048bfac1a95bab33c0, type: 3}
   - {fileID: 4251406549406915199, guid: 54ed4517c1cfd8d4595d60bf4251ad72, type: 3}
   - {fileID: 2306536976622235060, guid: 133fedc26d6f89e4b82f6296a8cf7f84, type: 3}
-  - {fileID: 7368068189853531148, guid: 91822e926a135f448b3a9675ff4e8d44, type: 3}
   - {fileID: 3582847596394065982, guid: af0e932e479ce2944b0eebed915a3565, type: 3}
   - {fileID: 7630482217274782917, guid: e02e2376b93e0ce4cb6487f625ac828a, type: 3}
   - {fileID: 1496967661646758881, guid: 095fcd93b183f45459fe852678a041c8, type: 3}
-  - {fileID: 7811736583877886540, guid: 4d8bb0058c5843b4b858a93852135a39, type: 3}
   - {fileID: 8629628578502145622, guid: 5f713c5d309d3dc4f9a7e8b6a1055d73, type: 3}
-  - {fileID: 274937839199488465, guid: 625047fdfd391304d825f9887656106b, type: 3}
   - {fileID: 2547767186743450988, guid: 02e5e90ee28bfba4e8c439ee72516786, type: 3}
   - {fileID: 1210006391155251150, guid: df47fb1ae7df50f4da80c11e3d9f77cd, type: 3}
-  - {fileID: 8434498046024098586, guid: 70c277a9cd00c9a45bd8a51ba0bea6a2, type: 3}
   - {fileID: 459194246555729235, guid: 3a62f24a2fbb737449a045e069be37b1, type: 3}
   - {fileID: 7705875354167057235, guid: 50087da0d4ba364459cbe30d66602d04, type: 3}
   - {fileID: 7968344059754086567, guid: 2e7687b2a54ff6945b8fe594457aa0ae, type: 3}
@@ -3966,7 +3961,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 541778156}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Return
+        m_MethodName: Region1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4073,8 +4068,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Complete meu deck
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
-  m_sharedMaterial: {fileID: 3648376724016987666, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
+  m_sharedMaterial: {fileID: -1941412138439397090, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4209,8 +4204,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Cole\xE7\xE3o"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
-  m_sharedMaterial: {fileID: 3648376724016987666, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
+  m_sharedMaterial: {fileID: -1941412138439397090, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5008,8 +5003,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Salvar Deck
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
-  m_sharedMaterial: {fileID: 3648376724016987666, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
+  m_sharedMaterial: {fileID: -1941412138439397090, guid: 96cf9e352cc727d408be01e54887a7bb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
