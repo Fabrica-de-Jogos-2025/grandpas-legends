@@ -433,28 +433,26 @@ MonoBehaviour:
       usar objetos cortantes feitos de metal."
   - cardPrefab: {fileID: 7811736583877886540, guid: 4d8bb0058c5843b4b858a93852135a39, type: 3}
     cardId: 24
-    lore: "Lobisomem\n--------------------------------------------------\nComo o
-      pr\xF3prio nome diz, \xE9 uma fus\xE3o entre lobo e homem. A vers\xE3o brasileira
-      da lenda relata que um menino foi amaldi\xE7oado, e a consequ\xEAncia dessa
-      maldi\xE7\xE3o \xE9 de que toda ter\xE7a ou sexta em que haver\xE1 uma lua
-      cheia, o menino se transforma em lobisomem e ataca qualquer um que aparecer
-      no seu caminho, seja pessoa ou animal. Para deter essa criatura, \xE9 preciso
-      usar objetos cortantes feitos de metal."
+    lore: "Lobisomem\n--------------------------------------------------\nEsse \xE9
+      o lobisomem transformado, normalmente em uma ter\xE7a ou sexta-feira de lua
+      cheia. Quando est\xE1 nessa forma, ele fica descontrolado, e ataca qualquer
+      um que passa pelo seu caminho. Ele s\xF3 retorna \xE0 sua forma humana ao nascer
+      do sol."
   - cardPrefab: {fileID: 8629628578502145622, guid: 5f713c5d309d3dc4f9a7e8b6a1055d73, type: 3}
     cardId: 25
+    lore: "Boto-Cor-de-Rosa (boto):\n--------------------------------------------------\nUma
+      das lendas mais populares do nosso folclore, o Boto ou Boto-Cor-de-Rosa. Ele
+      \xE9 em forma literal um boto que vive nos mares, mas quando \xE9 noite de
+      festa, ele sai dos mares e encarna um belo homem, para curtir as festas e realizar
+      alguns dos seus afazeres.."
+  - cardPrefab: {fileID: 274937839199488465, guid: 625047fdfd391304d825f9887656106b, type: 3}
+    cardId: 26
     lore: "Boto-Cor-de-Rosa (homem)\n--------------------------------------------------\nQuando
       est\xE1 nessa forma, durante as festas, ele procura por mulheres, e as que
       s\xE3o encantadas por sua beleza, acabam resultando em um romance. Por\xE9m,
       ap\xF3s o romance, o Boto-Cor-de-Rosa acaba n\xE3o retornando mais, deixando
       apenas a mulher gr\xE1vida, e os filhos delas s\xE3o conhecidos como \u201Cfilhos
       do Boto\u201D."
-  - cardPrefab: {fileID: 274937839199488465, guid: 625047fdfd391304d825f9887656106b, type: 3}
-    cardId: 26
-    lore: "Boto-Cor-de-Rosa (boto):\n--------------------------------------------------\nUma
-      das lendas mais populares do nosso folclore, o Boto ou Boto-Cor-de-Rosa. Ele
-      \xE9 em forma literal um boto que vive nos mares, mas quando \xE9 noite de
-      festa, ele sai dos mares e encarna um belo homem, para curtir as festas e realizar
-      alguns dos seus afazeres."
   - cardPrefab: {fileID: 2547767186743450988, guid: 02e5e90ee28bfba4e8c439ee72516786, type: 3}
     cardId: 27
     lore: "Rom\xE3ozinho: \n--------------------------------------------------\nO
@@ -1277,7 +1275,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 541778156}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: EditDeck
+        m_MethodName: Region1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

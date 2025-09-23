@@ -2,12 +2,13 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public int playerHealth = 20; // Valor inicial da vida do jogador
-    public int enemyHealth = 20;  // Valor inicial da vida do inimigo
+    public int playerHealth = 20; 
+    public int enemyHealth = 20;  
     public int quantityDeadCards = 0;
     public int deadPlayerCards = 0;
     public int deadEnemyCards = 0;
@@ -17,13 +18,13 @@ public class GameManager : MonoBehaviour
     public int PlayerHealth
     {
         get { return playerHealth; }
-        set { playerHealth = Mathf.Max(0, value); } // Impede valores negativos
+        set { playerHealth = Mathf.Max(0, value); } 
     }
 
     public int EnemyHealth
     {
         get { return enemyHealth; }
-        set { enemyHealth = Mathf.Max(0, value); } // Impede valores negativos
+        set { enemyHealth = Mathf.Max(0, value); } 
     }
     public OptionsManager OptionsManager {get; private set;}
     public AudioManager AudioManager {get; private set;}
@@ -163,28 +164,23 @@ public class GameManager : MonoBehaviour
         if (isPlayer)
         {
             playerHealth -= damage;
-            Debug.Log($"O jogador recebeu {damage} de dano! Vida restante: {playerHealth}");
         }
         else
         {
             enemyHealth -= damage;
-            Debug.Log($"O inimigo recebeu {damage} de dano! Vida restante: {enemyHealth}");
         }
         
         UpdateHealthUI();
         
-        // Verifica se o jogo acabou
         if (playerHealth <= 0)
         {
-            Debug.Log("O jogador perdeu!");
-            // Aqui você pode adicionar lógica de fim de jogo.
+            SceneManager.LoadScene("Defeat");
         }
 
         else if (enemyHealth <= 0)
 
         {
-            Debug.Log("O inimigo foi derrotado!");
-            // Aqui você pode adicionar lógica de vitória.
+            SceneManager.LoadScene("Victory");
         }
     }
 }
