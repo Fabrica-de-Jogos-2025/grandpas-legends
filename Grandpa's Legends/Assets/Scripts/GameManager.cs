@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -176,15 +177,13 @@ public class GameManager : MonoBehaviour
         // Verifica se o jogo acabou
         if (playerHealth <= 0)
         {
-            Debug.Log("O jogador perdeu!");
-            // Aqui você pode adicionar lógica de fim de jogo.
+            SceneManager.LoadScene("Defeat");
         }
 
         else if (enemyHealth <= 0)
 
         {
-            Debug.Log("O inimigo foi derrotado!");
-            // Aqui você pode adicionar lógica de vitória.
+            SceneManager.LoadScene("Victory");
         }
     }
 }
