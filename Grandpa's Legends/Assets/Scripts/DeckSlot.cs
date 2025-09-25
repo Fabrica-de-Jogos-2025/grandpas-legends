@@ -12,20 +12,18 @@ public class DeckSlot : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
-        ClearSlot();
+        if (!isFilled && cardText != null)
+            cardText.text = "";
     }
 
     public void SetCard(int id, string name)
     {
-
         cardId = id;
         cardName = name;
         isFilled = true;
 
-        if (cardText != null){
+        if (cardText != null)
             cardText.text = name;
-        }
-        
     }
 
     public void ClearSlot()

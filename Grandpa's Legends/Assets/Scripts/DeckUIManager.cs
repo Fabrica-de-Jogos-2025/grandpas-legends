@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,50 @@ public class DeckUIManager : MonoBehaviour
         else Destroy(gameObject);
 
         slots.AddRange(deckPanel.GetComponentsInChildren<DeckSlot>());
+    }
+
+    void Start()
+    {
+        if (PlayerDeck.Instance != null)
+        {
+            StartCoroutine(PopulateDeckOnNextFrame());
+        }
+        else
+        {
+            Debug.LogWarning("[DeckUIManager] Nenhum PlayerDeck encontrado, iniciando vazio.");
+        }
+    }
+
+    private IEnumerator PopulateDeckOnNextFrame()
+    {
+        yield return null; // espera todos os Start() dos DeckSlots serem executados
+
+        List<int> savedIds = PlayerDeck.Instance.GetDeck();
+
+        foreach (int id in savedIds)
+        {
+            // Buscar o nome da carta no CardDatabase
+            string name = $"Card {id}";
+            Cards cardData = CardDatabase.cardList.Find(c => c.id == id);
+            if (cardData != null)
+                name = cardData.cardName;
+
+            // Preenche diretamente o slot
+            DeckSlot emptySlot = slots.Find(s => !s.isFilled);
+            if (emptySlot != null)
+            {
+                emptySlot.SetCard(id, name);
+
+                // Desativa a carta correspondente na coleção para evitar duplicatas
+                DisableCardInCollection(id);
+            }
+            else
+            {
+                Debug.LogWarning($"[DeckUIManager] Não há slots suficientes para o ID {id}");
+            }
+        }
+
+        Debug.Log($"[DeckUIManager] Deck inicializado com {savedIds.Count} cartas.");
     }
 
     public bool AddCardToDeck(int cardId, string cardName)
@@ -101,7 +146,9 @@ public class DeckUIManager : MonoBehaviour
                 DisplayCard chosen = available[randomIndex];
 
                 int id = chosen.displayId;
-                string name = chosen.cardData != null ? chosen.cardData.cardName : $"Card {id}";
+                string name = $"Card {id}";
+                if (chosen.cardData != null)
+                    name = chosen.cardData.cardName;
 
                 bool added = AddCardToDeck(id, name);
 
