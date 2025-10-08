@@ -18,14 +18,26 @@ public class TurnManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-            StartFirstTurn();
-        }
-        else
-        {
+        else if (Instance != this)
             Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        StartCoroutine(InitializeTurnAfterManagers());
+    }
+
+    private IEnumerator InitializeTurnAfterManagers()
+    {
+        yield return null;
+
+        if (ManaManager.Instance == null)
+        {
+            yield break;
         }
+
+        StartFirstTurn();
     }
 
     private IEnumerator PlayerAttack()

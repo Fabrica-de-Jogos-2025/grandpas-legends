@@ -769,8 +769,8 @@ RectTransform:
   - {fileID: 2087331961}
   - {fileID: 826470602}
   - {fileID: 1636007978}
-  - {fileID: 932824944}
   - {fileID: 2098437554}
+  - {fileID: 932824944}
   - {fileID: 228805065}
   - {fileID: 2031073654}
   - {fileID: 179820733}
@@ -1004,7 +1004,7 @@ GameObject:
   - component: {fileID: 932824946}
   - component: {fileID: 932824945}
   m_Layer: 5
-  m_Name: BattleSelectionButton2
+  m_Name: BattleSelectionButton3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1075,7 +1075,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 541778156}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Battle2
+        m_MethodName: Battle3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1825,7 +1825,7 @@ GameObject:
   - component: {fileID: 2098437556}
   - component: {fileID: 2098437555}
   m_Layer: 5
-  m_Name: BattleSelectionButton3
+  m_Name: BattleSelectionButton2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1896,7 +1896,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 541778156}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Battle3
+        m_MethodName: Battle2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
