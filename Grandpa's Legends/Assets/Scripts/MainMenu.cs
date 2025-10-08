@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour
     }
 
     public void QuitPauseMenu(){
-        SceneManager.LoadScene("Map");
+        SceneManager.LoadScene("Region 1");
     }
 
     public void ReturnRegion(){
