@@ -5,10 +5,10 @@ public class PlayAreaManager : MonoBehaviour
 {
     public static PlayAreaManager Instance { get; private set; }
 
-    public RectTransform[] playAreas; 
-    public int maxCardsPerArea = 1; 
+    public RectTransform[] playAreas;
+    public int maxCardsPerArea = 1;
 
-    private List<GameObject>[] cardsInPlayAreas; 
+    private List<GameObject>[] cardsInPlayAreas;
 
     private void Awake()
     {
@@ -28,31 +28,31 @@ public class PlayAreaManager : MonoBehaviour
         }
     }
 
-public bool AddCardToPlayArea(GameObject card, int playAreaIndex)
-{
-    if (playAreaIndex < 0 || playAreaIndex >= playAreas.Length)
+    public bool AddCardToPlayArea(GameObject card, int playAreaIndex)
     {
-        Debug.Log("Invalid play area index!");
-        return false;
+        if (playAreaIndex < 0 || playAreaIndex >= playAreas.Length)
+        {
+            Debug.Log("Invalid play area index!");
+            return false;
+        }
+
+        if (playAreas[playAreaIndex].childCount >= maxCardsPerArea)
+        {
+            Debug.Log("Play area " + playAreaIndex + " is full!");
+            return false;
+        }
+
+        HandManager handManager = FindFirstObjectByType<HandManager>();
+        if (handManager != null)
+        {
+            handManager.RemoveCardFromHand(card);
+        }
+
+        card.transform.SetParent(playAreas[playAreaIndex]);
+
+        cardsInPlayAreas[playAreaIndex].Add(card);
+
+        Debug.Log("Card added to Play Area " + playAreaIndex);
+        return true;
     }
-
-    if (playAreas[playAreaIndex].childCount >= maxCardsPerArea)
-    {
-        Debug.Log("Play area " + playAreaIndex + " is full!");
-        return false;
-    }
-
-    HandManager handManager = FindFirstObjectByType<HandManager>();
-    if (handManager != null)
-    {
-        handManager.RemoveCardFromHand(card);
-    }
-
-    card.transform.SetParent(playAreas[playAreaIndex]);
-
-    cardsInPlayAreas[playAreaIndex].Add(card);
-
-    Debug.Log("Card added to Play Area " + playAreaIndex);
-    return true;
-}
 }

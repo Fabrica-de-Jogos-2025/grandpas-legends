@@ -21,6 +21,15 @@ public class DeckEditorUI : MonoBehaviour
         {
             GameObject go = Instantiate(prefab, collectionPanel);
 
+            /* destruir os componentes das instâncias que podem vir a ter
+            conflitos durante a execução do código */
+            KianumakaEvoCondition kianumakaComp = go.GetComponent<KianumakaEvoCondition>();
+            if (kianumakaComp != null)
+                Destroy(kianumakaComp);
+            LobisomemEvoCondition lobiComp = go.GetComponent<LobisomemEvoCondition>();
+            if (lobiComp != null)
+                Destroy(lobiComp);
+
             DisplayCard display = go.GetComponent<DisplayCard>();
             if (display != null)
             {

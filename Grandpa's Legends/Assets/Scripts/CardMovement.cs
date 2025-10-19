@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -9,17 +10,29 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     private Canvas canvas;
     private RectTransform canvasRectTransform;
     private Vector3 originalScale;
-    private int currentState = 0;
     private Vector3 originalPosition;
-
+    public int currentState = 0;    
     [SerializeField] private float selectScale = 1.25f;
-    [SerializeField] private GameObject glowEffect;
+    [SerializeField] public GameObject glowEffect;
+    [SerializeField] public GameObject glowEffectSecondary;
 
     private Vector2 offset;
     public bool isDragging = false;
     private bool isInPlayArea = false;
     public bool allowHover = true;
     public bool allowDragging = true;
+    public bool isAttachedToPlayArea = false;
+
+    // 🕒 Controle de clique / hover
+    private float pointerDownTime;
+    private Vector2 initialPointerPosition;
+    private bool isClickCandidate;
+    private const float clickThreshold = 0.12f;  // Tempo máximo para contar como cliques
+    private const float dragMoveThreshold = 10f; // Distância mínima para virar arrasto
+    private float hoverStartTime;
+    private const float hoverHoldTime = 1.1f; // Tempo para hover prolongado
+    private bool hoverTriggered;
+    public bool isClickable = true;
 
     void Awake()
     {
@@ -54,17 +67,21 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
 
     private void TransitionToState0()
     {
+        CardDescriptionManager.Instance.HideDescription();
         currentState = 0;
         rectTransform.localScale = originalScale;
         glowEffect.SetActive(false);
+        hoverTriggered = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
-    {      
+    {
         if (!allowHover) return;
         if (currentState == 0 && !isInPlayArea)
         {
             currentState = 1;
+            hoverStartTime = Time.time;
+            hoverTriggered = false;
         }
     }
 
@@ -74,40 +91,180 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
         if (currentState == 1)
         {
             TransitionToState0();
+
+            // Ao sair do hover, volta à escala base de acordo com o estado da carta
+            if (isAttachedToPlayArea)
+                rectTransform.localScale = originalScale * 1.25f;
+            else
+                rectTransform.localScale = originalScale * 1.0f; // mínimo aceitável
         }
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {   
+    {
         if (!allowDragging) return;
+
+        pointerDownTime = Time.time;
+        initialPointerPosition = eventData.position;
+        isClickCandidate = true;
+
         if (currentState == 1 && !isInPlayArea)
         {
             currentState = 2;
             isDragging = true;
 
             Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, canvas.worldCamera, out localPoint);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRectTransform, Input.mousePosition, canvas.worldCamera, out localPoint
+            );
             offset = rectTransform.localPosition - (Vector3)localPoint;
         }
     }
 
     public void OnDrag(PointerEventData eventData)
-    {   
-        if (!allowDragging) return; 
+    {
+        if (!allowDragging) return;
+
+        // Se mover demais, não é mais clique
+        if (Vector2.Distance(eventData.position, initialPointerPosition) > dragMoveThreshold)
+        {
+            CardDescriptionManager.Instance.HideDescription();
+            isClickCandidate = false;
+            SetSecondaryGlow(false);
+        }
+         
         if (currentState == 2 && isDragging && !isInPlayArea)
         {
             Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, eventData.position, canvas.worldCamera, out localPoint);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRectTransform, eventData.position, canvas.worldCamera, out localPoint
+            );
             rectTransform.localPosition = localPoint + offset;
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
-    {   
+    {
         if (!allowDragging) return;
+
+        float heldTime = Time.time - pointerDownTime;
+
+        if (isClickCandidate && heldTime <= clickThreshold)
+        {
+            HandleClick();
+        }
+
         if (currentState == 2 && isDragging && !isInPlayArea)
         {
             OnDrop();
+        }
+
+        isDragging = false;
+    }
+
+    // 🟡 Novo — tratamento de clique leve
+    private void HandleClick()
+    {
+        if (isClickable == false) return;
+        Debug.Log($"{name} foi clicado!");
+        // Exemplo: alternar brilho
+        glowEffect.SetActive(!glowEffect.activeSelf);
+        SelectClickManager.Instance.Select(this);
+    }
+
+    public void SetSecondaryGlow(bool active)
+    {
+        if (glowEffectSecondary != null)
+            glowEffectSecondary.SetActive(active);
+    }
+
+    private void HandleHoverState()
+    {
+        if (!isInPlayArea)
+        {
+            glowEffect.SetActive(true);
+
+            // Se a carta não estiver anexada, aplica leve aumento de escala
+            if (!isAttachedToPlayArea)
+                rectTransform.localScale = originalScale * 1.0f;
+            else
+                rectTransform.localScale = originalScale * 1.25f; // cartas fixadas sempre 1.25
+
+            // Hover prolongado (tooltip)
+            if (!hoverTriggered && Time.time - hoverStartTime >= hoverHoldTime)
+            {
+                hoverTriggered = true;
+                OnHoverHold();
+            }
+        }
+    }
+
+
+    private void OnHoverHold()
+    {
+        CardBehaviour cb = GetComponent<CardBehaviour>();
+        if (cb != null)
+        {
+            Debug.Log($"Hover prolongado sobre {cb.name}");
+
+            if (cb != null && CardDescriptionManager.Instance != null)
+            {
+                Vector3 cardWorldPos = transform.position;
+                CardDescriptionManager.Instance.ShowDescription(cb.CardDescription, cardWorldPos);
+            }
+        }
+    }
+
+
+    // Permite posicionar a carta manualmente em um playArea
+    public void TryPlaceAtPlayAreaIndex(int playAreaIndex)
+    {
+        if (playAreaIndex == -1)
+        {
+            Debug.Log("[TryPlaceAtPlayAreaIndex] Índice inválido, ignorando.");
+            return;
+        }
+
+        // Reutiliza o mesmo método usado por drag
+        SnapCardToPlayArea(playAreaIndex);
+
+        // Garante que os estados fiquem limpos
+        isDragging = false;
+        currentState = 0;
+        glowEffect.SetActive(false);
+
+        // Executa a mesma lógica de OnDrop
+        OnDrop();
+    }
+
+    public void TryPlaceViaClick(int playAreaIndex)
+    {
+        StartCoroutine(PlaceViaClickCoroutine(playAreaIndex));
+    }
+
+    private IEnumerator PlaceViaClickCoroutine(int playAreaIndex)
+    {
+        if (playAreaIndex == -1) yield break;
+
+        currentState = 2;
+        isDragging = true;
+
+        // Snap visual instantâneo
+        SnapCardToPlayArea(playAreaIndex);
+
+        yield return null; // espera 1 frame para o Update() processar normalmente
+
+        isDragging = false;
+        OnDrop();
+    }
+
+    private void HandleDragState()
+    {
+        if (!isInPlayArea)
+        {
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, canvas.worldCamera, out localPoint);
+            rectTransform.localPosition = localPoint + offset;
         }
     }
 
@@ -119,17 +276,11 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
         }
     }
 
-    private IEnumerator DestroyAfterDelay(GameObject card, float delay)
+    public void OnDrop()
     {
-        yield return new WaitForSeconds(delay);
-        Destroy(card);
-    }
-
-    private void OnDrop()
-    {
+        CardDescriptionManager.Instance.HideDescription();
         isDragging = false;
         currentState = 0;
-
         glowEffect.SetActive(false);
 
         int playAreaIndex = GetPlayAreaIndexUnderCard();
@@ -139,7 +290,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             DisplayCard displayCard = GetComponent<DisplayCard>();
             int manaCost = displayCard.cardData.cost;
 
-            CardBehaviour cardBehaviour = displayCard.GetComponent<CardBehaviour>(); // Obtém apenas uma vez
+            CardBehaviour cardBehaviour = displayCard.GetComponent<CardBehaviour>();
 
             //primeiro checar se é um consumível
             if (cardBehaviour != null && cardBehaviour.Id >= 38 && cardBehaviour.Id <= 44)
@@ -155,7 +306,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                 // Obtém a carta alvo (primeiro filho do slot)
                 Transform cartaAlvoTransform = slotAtual.GetChild(0);
                 CardBehaviour cartaAlvo = cartaAlvoTransform.GetComponent<CardBehaviour>();
-            
+
                 if (cartaAlvo == null)
                 {
                     Debug.LogError("A carta alvo não possui um componente CardBehaviour!");
@@ -167,37 +318,8 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                     ManaManager.Instance.SpendMana(manaCost); // Gasta a mana necessária
 
                     // Código para ativar o efeito da carta consumível...
-                    switch (cardBehaviour.Id)
-                    {
-                        case 38:
-                            Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
-                            EffectHandler.ApplyEffect(cartaAlvo, 38, cardBehaviour.gameObject);
-                            return;
-                        case 39:
-                            Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
-                            EffectHandler.ApplyEffect(cartaAlvo, 39, cardBehaviour.gameObject);
-                            return;
-                        case 40:
-                            Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
-                            EffectHandler.ApplyEffect(cartaAlvo, 40, cardBehaviour.gameObject);
-                            return;
-                        case 41:
-                            Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
-                            EffectHandler.ApplyEffect(cartaAlvo, 41, cardBehaviour.gameObject);
-                            return;
-                        case 42:
-                            Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
-                            EffectHandler.ApplyEffect(cartaAlvo, 42, cardBehaviour.gameObject);
-                            return;
-                        case 43:
-                            Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
-                            EffectHandler.ApplyEffect(cartaAlvo, 43, cardBehaviour.gameObject);
-                            return;
-                        case 44:
-                            Debug.Log($"Carta de id {cardBehaviour.Id} consumida");
-                            EffectHandler.ApplyEffect(cartaAlvo, 44, cardBehaviour.gameObject);
-                            return;
-                    }
+                    EffectHandler.ApplyEffect(cartaAlvo, cardBehaviour.Id, cardBehaviour.gameObject);
+                    return;
                 }
                 else
                 {
@@ -207,8 +329,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             }
 
             Transform testSlotChildren = PlayAreaManager.Instance.playAreas[playAreaIndex];
-            if (testSlotChildren.childCount == 1)
-                return; // aqui já tem uma carta
+            if (testSlotChildren.childCount == 1) return; // aqui já tem uma carta
 
             //se não tem id no CardBehaviour de 38 a 44, não é consumível
             if (ManaManager.Instance.CurrentMana >= manaCost)
@@ -221,7 +342,11 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
 
                     SnapCardToPlayArea(playAreaIndex);
 
+                    isAttachedToPlayArea = true;
+
                     cardBehaviour.isFromPlayer = true;
+
+                    isClickable = false;
 
                     rectTransform.SetParent(PlayAreaManager.Instance.playAreas[playAreaIndex]);
 
@@ -266,7 +391,46 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                     }
                 }
 
-                //se a carta for a boiúna (id 12), ganharemos 2 cartas de peixe
+                // a Onça boi ao ser jogada em campo, dá duas cópias marcadas (para que não peguemos infinitas cartas)
+                if (cardBehaviour != null && cardBehaviour.Id == 10)
+                {
+                    if (cardBehaviour.GetComponent<Marked>() == null)
+                        for (int i = 0; i < 2; i++)
+                        {
+                            HandManager.Instance.AddMarkedOncaBoiToHand();
+                        }
+                
+                    int found = -1;
+
+                    List<CardBehaviour> allOncas = new List<CardBehaviour>();
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Transform areaTransform = PlayAreaManager.Instance.playAreas[i].transform;
+
+                        if (areaTransform.childCount > 0)
+                        {
+                            CardBehaviour cb = areaTransform.GetChild(0).GetComponent<CardBehaviour>();
+
+                            if (cb != null && cb.Id == 10)
+                            {
+                                allOncas.Add(cb);
+                                found++;
+                            }
+                        }
+                    }
+
+                    foreach (CardBehaviour onca in allOncas)
+                    {
+                        onca.MaxHealth += found;
+                        onca.Power += found;
+                        onca.Heal(found);
+                        DisplayCard display = onca.gameObject.GetComponent<DisplayCard>();
+                        display?.RefreshUI();
+                    }
+                }
+
+                // se a carta for a boiúna (id 12), ganharemos 2 cartas de peixe
                 if (cardBehaviour != null && cardBehaviour.Id == 12)
                 {
                     for (int i = 0; i < 2; i++)
@@ -274,14 +438,9 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                         Cards cardData = CardDatabase.cardList.Find(card => card.id == 45); //as cartas de id 45 são as de peixe
 
                         if (cardData != null)
-                        {
                             HandManager.Instance.AddCardToHand(cardData);
-                            Debug.Log($"Carta consumível com ID 45 adicionada à mão.");
-                        }
                         else
-                        {
                             Debug.LogWarning($"Carta com ID 45 não encontrada no CardDatabase.");
-                        }
                     }
                 }
 
@@ -490,6 +649,22 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
         }
     }
 
+    private IEnumerator SmoothScale(Vector3 targetScale, float duration)
+    {
+        Vector3 startScale = rectTransform.localScale;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+            rectTransform.localScale = Vector3.Lerp(startScale, targetScale, t);
+            yield return null;
+        }
+
+        rectTransform.localScale = targetScale;
+    }
+
     private int GetPlayAreaIndexUnderCard()
     {
         Vector2 cardScreenPosition = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, rectTransform.position);
@@ -497,7 +672,6 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
         for (int i = 0; i < PlayAreaManager.Instance.playAreas.Length; i++)
         {
             RectTransform playArea = PlayAreaManager.Instance.playAreas[i];
-
             Vector3[] playAreaCorners = new Vector3[4];
             playArea.GetWorldCorners(playAreaCorners);
 
@@ -509,9 +683,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             );
 
             if (playAreaScreenRect.Overlaps(new Rect(cardScreenPosition, Vector2.one)))
-            {
                 return i;
-            }
         }
 
         return -1;
@@ -519,6 +691,10 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
 
     public void SnapCardToPlayArea(int playAreaIndex)
     {
+        Debug.Log($"Snapping {name} para PlayArea {playAreaIndex}");
+
+        rectTransform.localPosition = originalPosition; // alteração
+        
         RectTransform playAreaRectTransform = PlayAreaManager.Instance.playAreas[playAreaIndex];
 
         Vector2 localPosition = playAreaRectTransform.InverseTransformPoint(rectTransform.position);
@@ -536,26 +712,14 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
         localPosition.y = Mathf.Clamp(localPosition.y, minY, maxY);
 
         rectTransform.localPosition = playAreaRectTransform.TransformPoint(localPosition);
-    }
-    private void HandleHoverState()
-    {
-        if (!isInPlayArea)
-        {
-            glowEffect.SetActive(true);
-            rectTransform.localScale = originalScale * selectScale;
-        }
-    }
+        // Corrige posição
+        rectTransform.localPosition = playAreaRectTransform.TransformPoint(localPosition);
 
-    private void HandleDragState()
-    {
-        if (!isInPlayArea)
-        {
-            Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, canvas.worldCamera, out localPoint);
-            rectTransform.localPosition = localPoint + offset;
-        }
+        // Corrige escala visual (suavemente aumenta)
+        StopAllCoroutines(); // opcional — evita empilhar animações
+        StartCoroutine(SmoothScale(originalScale * selectScale, 0.25f));
     }
-
+    
     public void LockInSlot(int slotIndex)
     {
         isDragging = false;

@@ -73,7 +73,7 @@ public class TurnManager : MonoBehaviour
                 {
                     var stunned = attacker.GetComponent<StunnedComponent>();
                     stunned.ReduceTurn();  // Reduz 1 turno restante
-                    yield break; // Pula ataque
+                    continue; // Pula ataque
                 }
 
                 if (enemySlot.childCount > 0)
@@ -88,7 +88,6 @@ public class TurnManager : MonoBehaviour
                     }
 
                     SwitchEffect(attacker.cardData.id, attacker, defender);
-
                     ProcessAllEffectsOnCard(attacker.gameObject);
                 }
                 else
@@ -239,7 +238,7 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
                 break;
 
             case 6:
-                ModifyPowerComponent.ApplyEffect(defender.gameObject, "Boitatá - Redução", 2, 1);
+                ModifyPowerComponent.ApplyEffect(defender.gameObject, "Boitatá - Redução", 2, -1);
                 break;
 
             case 7:
@@ -329,19 +328,11 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
                 break;
 
             case 29:
-                // Determina se o atacante é do jogador ou da IA
                 string enemyFieldPrefix = attacker.isFromPlayer ? "EnemyPlayArea " : "PlayArea ";
-
-                // Obtém o índice da posição atual do atacante no campo
                 int attackerSlotIndex = attacker.transform.parent.GetSiblingIndex();
-
-                // Calcula a posição alvo: próxima posição com wrap-around
                 int targetIndex = (attackerSlotIndex + 1) % 5;
 
-                // Busca o slot inimigo correspondente
                 Transform enemySlot = GameObject.Find($"{enemyFieldPrefix}{targetIndex}").transform;
-
-                // Aplica o dano apenas se houver uma carta no slot
                 if (enemySlot.childCount > 0)
                 {
                     CardBehaviour targetCard = enemySlot.GetChild(0).GetComponent<CardBehaviour>();
@@ -421,13 +412,13 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
 
     public static void SelectionQuickAttack(CardBehaviour attacker, CardBehaviour defender)
     {
-        if (TurnManager.Instance == null)
+        if (Instance == null)
         {
             Debug.LogError("[TurnManager] Instance não encontrada para SelectionQuickAttack!");
             return;
         }
 
-        TurnManager.Instance.StartCoroutine(TurnManager.Instance.SelectionQuickAttackRoutine(attacker, defender));
+        Instance.StartCoroutine(Instance.SelectionQuickAttackRoutine(attacker, defender));
     }
 
     private IEnumerator SelectionQuickAttackRoutine(CardBehaviour attacker, CardBehaviour defender)
@@ -513,7 +504,6 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
             }
         }
     }
-
 
     private void StartPlayerTurn()
     {

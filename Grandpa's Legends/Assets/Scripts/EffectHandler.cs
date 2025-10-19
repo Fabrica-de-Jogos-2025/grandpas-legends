@@ -101,7 +101,7 @@ public class EffectHandler : MonoBehaviour
         }
         if (consumableCard != null)
         {
-            HandManager handManager = GameObject.FindObjectOfType<HandManager>();
+            HandManager handManager = GameObject.FindFirstObjectByType<HandManager>();
             if (handManager != null)
             {
                 handManager.RemoveCardFromHand(consumableCard);

@@ -55,6 +55,44 @@ public class HandManager : MonoBehaviour
 
         UpdateHandVisuals();
     }
+    public void AddMarkedOncaBoiToHand()
+    {
+        // Busca o card data específico (id = 10)
+        Cards cardData = CardDatabase.cardList.Find(card => card.id == 10);
+
+        if (cardData == null)
+        {
+            Debug.LogError("Carta de ID 10 (Onça Boi) não encontrada no CardDatabase!");
+            return;
+        }
+
+        // Verifica se a mão está cheia
+        if (cardsInHand.Count >= maxHandSize) 
+            return;
+        
+
+        CardPrefabMapping mapping = cardPrefabMappings.Find(m => m.cardId == 10);
+
+        if (mapping == null)
+            return;
+        
+        GameObject newCard = Instantiate(mapping.cardPrefab, handTransform.position, Quaternion.identity, handTransform);
+        cardsInHand.Add(newCard);
+
+        DisplayCard display = newCard.GetComponent<DisplayCard>();
+        if (display != null)
+            display.cardData = cardData;
+        
+        else
+            Debug.LogWarning("DisplayCard não encontrado no prefab da carta com ID 10.");
+        
+
+        if (newCard.GetComponent<Marked>() == null)
+            newCard.AddComponent<Marked>();
+
+        UpdateHandVisuals();
+    }
+
 
     void Update()
     {

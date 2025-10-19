@@ -78,22 +78,27 @@ public class CardBehaviour : MonoBehaviour
     
     public void TakeDamage(int damage)
     {
-        var invulnerable = GetComponent<InvulnerableComponent>();
+        InvulnerableComponent invulnerable = GetComponent<InvulnerableComponent>();
 
         //se estiver com o componente de invulnerabilidade, sai da função
         if (invulnerable != null) return;
 
-        while (damage > 0) // Enquanto houver dano a ser tomado
+        int animateDmg = 0;
+
+        while (damage > 0 && Life > 0) // Enquanto houver dano a ser tomado
         {
             if (shield > 0) shield--; // Escudo absorve dano 1 a 1
-        
+
             else Life--; // Se não houver escudo, o dano vai para a vida
 
             damage--; // Reduz o dano aplicado
+            animateDmg++;
         }
 
         display?.RefreshUI();   // <<< atualiza UI aqui
 
+        TryAnimate(animateDmg, isDamage: true);
+        
         if (Life <= 0) Die();
     }
 
@@ -101,6 +106,8 @@ public void Heal(int amount)
 {
     Life += amount;
     if (Life > MaxHealth) Life = MaxHealth;
+
+        TryAnimate(amount, isDamage: false);
     
     display?.RefreshUI();   // <<< atualiza UI aqui
     Debug.Log($"Carta curada em {amount}. Vida atual: {Life}/{MaxHealth}");
@@ -115,91 +122,112 @@ public void Heal(int amount)
         display?.RefreshUI();   // <<< atualiza UI aqui
     }
 
-public void Die()
-{   
-    PastoreioReviveComponent pastureRevive = GetComponent<PastoreioReviveComponent>();
-    if (pastureRevive != null)
+    private void TryAnimate(int amount, bool isDamage)
     {
-        bool revived = pastureRevive.TryRevive();
-        if (revived) return; // Cancela a morte
-    }
+        if (amount <= 0)
+            return;
 
-    ReviveComponent revive = GetComponent<ReviveComponent>();
-    if (revive != null)
-    {
-        bool revived = revive.TryRevive();
-        if (revived) return; // Cancela a morte
-    }
+        // Pega o Transform pai (ex: "PlayArea 3" ou "EnemyPlayArea 2")
+        string parentName = transform.parent.name;
 
-    if (isFromPlayer) GameManager.Instance.deadPlayerCards++;
-    else GameManager.Instance.deadEnemyCards++;
+        bool isPlayer = !parentName.StartsWith("Enemy");
+        // Pega o último caractere (índice)
+        char lastChar = parentName[parentName.Length - 1];
+        int slotIndex = int.Parse(lastChar.ToString());
 
-    GameManager.Instance.quantityDeadCards++;
-
-    if (cardData.id == 3) // Corpo Seco
-    {
-        if (isFromPlayer)
-        {
-            HandManager hand = FindAnyObjectByType<HandManager>();
-            if (hand != null)
-            {
-                hand.AddCardToHand(cardData);
-            }
-            else Debug.LogWarning("HandManager não encontrado ao tentar retornar Corpo Seco.");
-
-        }
+        // Chama o gerenciador visual
+        if (isDamage)
+            AnimatedMeshManager.Instance.GetMesh(isPlayer, slotIndex)?.Damage(amount);
         else
-        {
-            IADeckManager iaDeck = FindAnyObjectByType<IADeckManager>();
-            if (iaDeck != null)
-            {
-                GameObject prefab = iaDeck.deckPrefabs.FirstOrDefault(p => 
-                    p.GetComponent<DisplayCard>().cardData == cardData);
-
-                if (prefab != null)
-                {
-                    iaDeck.AddCardToHand(prefab);
-                }
-                else
-                {
-                    Debug.LogWarning("Prefab do Corpo Seco não encontrado para a IA.");
-                }
-            }
-        }
+            AnimatedMeshManager.Instance.GetMesh(isPlayer, slotIndex)?.Heal(amount);
     }
-    
-    if (cardData.id == 27) // Romãozinho
+
+    public void Die()
     {
+        PastoreioReviveComponent pastureRevive = GetComponent<PastoreioReviveComponent>();
+        if (pastureRevive != null)
+        {
+            bool revived = pastureRevive.TryRevive();
+            if (revived) return; // Cancela a morte
+        }
+
+        ReviveComponent revive = GetComponent<ReviveComponent>();
+        if (revive != null)
+        {
+            bool revived = revive.TryRevive();
+            if (revived) return; // Cancela a morte
+        }
+
         if (isFromPlayer)
-        {
-            HandManager hand = FindAnyObjectByType<HandManager>();
-            if (hand != null)
-            {
-                hand.AddCardToHand(cardData);
-            }
-            else Debug.LogWarning("HandManager não encontrado ao tentar retornar Romãozinho.");
-
-        }
+            GameManager.Instance.deadPlayerCards++;
         else
-        {
-            IADeckManager iaDeck = FindAnyObjectByType<IADeckManager>();
-            if (iaDeck != null)
-            {
-                GameObject prefab = iaDeck.deckPrefabs.FirstOrDefault(p =>
-                    p.GetComponent<DisplayCard>().cardData == cardData);
+            GameManager.Instance.deadEnemyCards++;
+        GameManager.Instance.quantityDeadCards++;
 
-                if (prefab != null)
+        if (cardData.id == 3) // Corpo Seco
+        {
+            if (isFromPlayer)
+            {
+                HandManager hand = FindAnyObjectByType<HandManager>();
+                if (hand != null)
                 {
-                    iaDeck.AddCardToHand(prefab);
+                    hand.AddCardToHand(cardData);
                 }
-                else
+                else Debug.LogWarning("HandManager não encontrado ao tentar retornar Corpo Seco.");
+                
+            }
+            else
+            {
+                IADeckManager iaDeck = FindAnyObjectByType<IADeckManager>();
+                if (iaDeck != null)
                 {
-                    Debug.LogWarning("Prefab do Romãozinho não encontrado para a IA.");
+                    GameObject prefab = iaDeck.deckPrefabs.FirstOrDefault(p =>
+                        p.GetComponent<DisplayCard>().cardData == cardData);
+
+                    if (prefab != null)
+                    {
+                        iaDeck.AddCardToHand(prefab);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Prefab do Corpo Seco não encontrado para a IA.");
+                    }
                 }
             }
         }
-    }
 
-    Destroy(gameObject);
+        if (cardData.id == 27) // Romãozinho
+        {
+            if (isFromPlayer)
+            {
+                HandManager hand = FindAnyObjectByType<HandManager>();
+                if (hand != null)
+                {
+                    hand.AddCardToHand(cardData);
+                }
+                else Debug.LogWarning("HandManager não encontrado ao tentar retornar Romãozinho.");
+
+            }
+            else
+            {
+                IADeckManager iaDeck = FindAnyObjectByType<IADeckManager>();
+                if (iaDeck != null)
+                {
+                    GameObject prefab = iaDeck.deckPrefabs.FirstOrDefault(p =>
+                        p.GetComponent<DisplayCard>().cardData == cardData);
+
+                    if (prefab != null)
+                    {
+                        iaDeck.AddCardToHand(prefab);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Prefab do Romãozinho não encontrado para a IA.");
+                    }
+                }
+            }
+        }
+
+        Destroy(gameObject);
     }
 }

@@ -83,9 +83,9 @@ public static class TargetingManager
                             {
                                 t.MaxHealth = Mathf.Max(0, t.MaxHealth - 2);
                                 if (t.Life > t.MaxHealth) t.Life = t.MaxHealth;
-                                if (t.MaxHealth <= 2)
+                                if (t.MaxHealth <= 1)
                                 {
-                                    int predictedLife = t.Life - 1; // simulação do dano
+                                    int predictedLife = t.Life - 2; // simulação do dano
 
                                     if (predictedLife <= 0)
                                     {
@@ -172,7 +172,6 @@ public static class TargetingManager
     }
 
     // --------- Helpers de aplicação de efeito ---------
-
     private static IEnumerator AttackSequentially(CardBehaviour source, List<CardBehaviour> targets)
     {
         foreach (var t in targets)

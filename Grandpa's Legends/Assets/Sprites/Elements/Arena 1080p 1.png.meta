@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Arena 1080p 1_0: 8670496256007874058
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -4,12 +4,23 @@ using System.Linq;
 
 public class IADeckManager : MonoBehaviour
 {
-    public static IADeckManager Instance;
+    public static IADeckManager Instance { get; private set; }
+
     public List<GameObject> deckPrefabs;
     private Queue<GameObject> drawPile = new Queue<GameObject>();
-    private List<GameObject> currentHand = new List<GameObject>();
-
+    private readonly List<GameObject> currentHand = new List<GameObject>();
     public List<GameObject> CurrentHand => currentHand.ToList();
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     void Start()
     {

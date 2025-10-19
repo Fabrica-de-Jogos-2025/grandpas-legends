@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class KianumakaEvoCondition : MonoBehaviour
@@ -8,17 +9,19 @@ public class KianumakaEvoCondition : MonoBehaviour
     private bool hasEvolved = false;
     private const int EVOLVED_CARD_ID = 29;
 
-    void Start()
+    IEnumerator Start()
     {
+        // Espera 1 frame para garantir que CardBehaviour foi inicializado
+        yield return null;
+
         card = GetComponent<CardBehaviour>();
 
         if (card == null)
         {
             Debug.LogError("[KianumakaEvoCondition] CardBehaviour não encontrado!");
-            return;
+            yield break; // encerra a corrotina, mais apropriado que yield return null aqui
         }
 
-        // Captura o número atual de aliados mortos no momento em que a carta entra em campo
         initialDeadCount = card.isFromPlayer
             ? GameManager.Instance.deadPlayerCards
             : GameManager.Instance.deadEnemyCards;

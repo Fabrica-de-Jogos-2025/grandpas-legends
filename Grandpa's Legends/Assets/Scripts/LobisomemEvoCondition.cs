@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System;            // ← garante Action / Mathf etc.
 
 public class LobisomemEvoCondition : MonoBehaviour
@@ -10,8 +11,9 @@ public class LobisomemEvoCondition : MonoBehaviour
     private const int THRESHOLD       = 3;   // sobrevive 3 turnos
     private const int EVOLVED_CARD_ID = 24;  // id da forma Lobisomem
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return null;
         card = GetComponent<CardBehaviour>();
 
         if (card == null)

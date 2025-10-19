@@ -232,7 +232,6 @@ GameObject:
   - component: {fileID: 25128215355437475}
   - component: {fileID: 4662063336480091475}
   - component: {fileID: 8282237151449716595}
-  - component: {fileID: -7323646325480803982}
   m_Layer: 0
   m_Name: Card_14
   m_TagString: Untagged
@@ -252,6 +251,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1837271137518048169}
   - {fileID: 7634425627678081032}
   - {fileID: 4241315894521218864}
   - {fileID: 7661957658268955440}
@@ -274,11 +274,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27fafb7bc683f8b409d601a280ccb40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
   selectScale: 1.25
   glowEffect: {fileID: 495622739280853427}
+  glowEffectSecondary: {fileID: 5751219081252867484}
   isDragging: 0
   allowHover: 1
   allowDragging: 1
+  isAttachedToPlayArea: 0
+  isClickable: 1
 --- !u!114 &-8314695333728653809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,23 +396,11 @@ MonoBehaviour:
     power: 2
     life: 8
     shield: 0
-    cardDescription: Ao atacar, se cura em 1
+    cardDescription: Ao atacar, se cura em 1.
   MaxHealth: 0
   shield: 0
   isImmune: 0
   isFromPlayer: 0
---- !u!114 &-7323646325480803982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2278773927805323301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d4eca56a5bbadc4090f8257d37ddf26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2603436684944784780
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,7 +504,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 3648376724016987666, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1028,6 +1020,81 @@ RectTransform:
   m_AnchoredPosition: {x: 42.949997, y: -104.5}
   m_SizeDelta: {x: 8.6679, y: 10.8275}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &5751219081252867484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1837271137518048169}
+  - component: {fileID: 5742589476271835315}
+  - component: {fileID: 7199832249512606855}
+  m_Layer: 0
+  m_Name: CardHighlight2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1837271137518048169
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5751219081252867484}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3936084943403832872}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.099975586, y: -0.3999939}
+  m_SizeDelta: {x: 162.2411, y: 240}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5742589476271835315
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5751219081252867484}
+  m_CullTransparentMesh: 1
+--- !u!114 &7199832249512606855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5751219081252867484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.34723783, g: 1, b: 0, a: 0.6}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -7654328554491658452, guid: 466ef6ac9fc95234f8dbd4eec4ae0b5e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6428015778555235090
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1237,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Card Description
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 3648376724016987666, guid: 8c37dfbcad7605945928e565640f01e1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
