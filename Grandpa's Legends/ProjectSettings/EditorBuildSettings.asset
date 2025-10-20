@@ -51,6 +51,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Defeat.unity
     guid: 26fb6c43466eb2c4097c89fcd7eedf8e
   - enabled: 1
+    path: Assets/Scenes/Loading Screen.unity
+    guid: 1bceaef25e92a4f42a1caf2143fa8079
+  - enabled: 1
     path: Assets/Scenes/Victory.unity
     guid: 28201c8a30aa19144b3d0118118f8c1f
   m_configObjects:
