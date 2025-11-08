@@ -71,8 +71,6 @@ public class Dialogue1 : MonoBehaviour
 
     void HandleLine(int i)
     {
-        if (i == 3)
-            clickToContinueMesh.SetActive(false);    
             
         if (startDialogWithGrandpa == true)
         {

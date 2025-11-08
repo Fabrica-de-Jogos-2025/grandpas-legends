@@ -1711,6 +1711,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundObject: {fileID: 830554669}
   blackFadeDuration: 1.5
+--- !u!114 &2089143906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548512150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0565cdba4dd6fbd488fd4d8ce4b38b62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComponent: {fileID: 1692004768}
+  lines:
+  - "Oi netinho, voc\xEA achou meu velho jogo de cartas. J\xE1 que voc\xEA encontrou
+    ele, vamos jogar um pouco. Antes disso vou te ensinar a jogar esse jogo que me
+    divertiu muito."
+  - Cada carta tem status de custo, dano e vida e vou te explicar o que cada um significa.
+  - "Custo \xE9 o valor que voc\xEA vai gastar para jogar a carta em campo."
+  - " Dano \xE9 a pontua\xE7\xE3o que sua carta dar\xE1 na vida da carta inimiga.
+    Vida \xE9 o quanto a essa carta pode receber de dano. "
+  - "Cartas tamb\xE9m podem possuir habilidades, cada carta tem sua pr\xF3pria habilidade
+    ent\xE3o leia as cartas e planeje como voc\xEA vai jogar elas."
+  - "Existem cartas que n\xE3o possuem habilidades, mas mesmo assim \xE9 bom planejar
+    como jogar elas."
+  - "Tamb\xE9m existem cartas de itens que s\xE3o cartas que n\xE3o possuem dano
+    de ataque e pontos de vida, elas s\xF3 possuem o custo e efeito."
+  - "Cartas de itens devem ser jogadas em cima de cartas que j\xE1 est\xE3o em campo
+    para ajud\xE1-las."
+  - "Voc\xEA n\xE3o ir\xE1 jogar essas cartas para causar dano ou receber diretamente,
+    servem apenas para suporte."
+  - " Algumas cartas conseguem evoluir em batalha, essas cartas possuem uma condi\xE7\xE3o
+    de upgrade que ao ser cumprida a carta evolui para uma vers\xE3o mais forte"
+  - "Esse \xE9 o campo de batalha, o objetivo \xE9 zerar a vida do seu advers\xE1rio,
+    mas preste aten\xE7\xE3o que voc\xEA possui uma quantidade limitada de mana para
+    jogar as cartas. "
+  - "Essa mana que vai ser utilizada pelo custo das cartas para serem jogadas, ent\xE3o
+    preste aten\xE7\xE3o na mana para poder jogar as cartas estrategicamente."
+  - " No campo de batalha existem 5 slots que voc\xEA pode jogar cartas neles, clique
+    e arraste as cartas para o slot escolhido."
+  - " Se voc\xEA tiver a mana necess\xE1ria, elas se anexar\xE3o ao encaixe; voc\xEA
+    perder\xE1 aquela mana no processo."
+  - " Lembrando que a carta n\xE3o pode ser movida para outro slot depois de ser
+    jogada. "
+  - "Quando o turno terminar, se houver uma carta no slot \xE0 frente da sua carta,
+    essa carta inimiga receber\xE1 o dano."
+  - "Num caso contr\xE1rio, o inimigo diretamente receber\xE1 esse dano permanentemente."
+  - "Voc\xEA pode editar seu deck, na tela de edi\xE7\xE3o voc\xEA ver\xE1 a cole\xE7\xE3o
+    de cartas e 22 placas que consistem no que ser\xE1 a sua m\xE3o em jogo."
+  - "Se quiser retirar a carta do seu deck \xE9 s\xF3 clicar na placa com o nome
+    da carta que voc\xEA deseja retirar."
+  - "E isso \xE9 tudo, netinho. Tenha um bom jogo."
+  textSpeed: 0.02
+  clickToContinueMesh: {fileID: 1487616826}
+  videoPlayer: {fileID: 1958946534}
+  cumadreImg: {fileID: 348201731}
+  cumadreAbility: {fileID: 694896051}
+  mariaCaninana: {fileID: 856987365}
+  guaranaExplain: {fileID: 399413591}
+  alamoaEvolve: {fileID: 1022377193}
+  battleCamp1: {fileID: 383881348}
+  battleCamp2: {fileID: 522677024}
+  cardAgress: {fileID: 32900000, guid: 98e5381eacf76044cb43401234c0c7db, type: 3}
+  deckExplain: {fileID: 1169016607}
 --- !u!1001 &2018430692168761738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1846,6 +1910,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1301421860757397310, guid: 42d1f2470188f8747840f1bd23d5a943, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2089143904}
+    - targetCorrespondingSourceObject: {fileID: 1301421860757397310, guid: 42d1f2470188f8747840f1bd23d5a943, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2089143906}
     - targetCorrespondingSourceObject: {fileID: 1301421860757397310, guid: 42d1f2470188f8747840f1bd23d5a943, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2089143905}
