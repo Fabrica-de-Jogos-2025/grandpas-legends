@@ -226,15 +226,22 @@ public class GameManager : MonoBehaviour
 
             yield break;
         }
-        else if (enemyHealth <= 0) // Inimigo derrotado
+        else if (enemyHealth <= 0) 
         {
             MakeAllCardsInHandInteractiveOrNot(false);
 
-            // 🔹 Libera a próxima batalha ANTES do diálogo e do fade
-            BattleUnlockManager.UnlockNextBattle();
-            Debug.Log("[GameManager] Próxima batalha liberada!");
+            string sceneName = SceneManager.GetActiveScene().name;
+            if (sceneName.StartsWith("Batalha "))
+            {
+                if (int.TryParse(sceneName.Replace("Batalha ", ""), out int battleNumber))
+                {
+                    BattleUnlockManager.UnlockNextBattle(battleNumber);
+                    Debug.Log($"[GameManager] Vitória na Batalha {battleNumber}, próxima desbloqueada!");
+                }
+            }
 
-            DialogOfScene.SetActive(true);
+            if (DialogOfScene != null)
+                DialogOfScene.SetActive(true);
 
             yield return StartCoroutine(WaitUntilDialogueEnds(DialogOfScene));
             yield return StartCoroutine(AnimateBattle.Instance.FadeToBlack());
@@ -244,12 +251,12 @@ public class GameManager : MonoBehaviour
         }
 
 
+
         yield break;
     }
     
     private IEnumerator WaitUntilDialogueEnds(GameObject dialogueGO)
     {
-        // espera até que o diálogo fique inativo novamente
         while (dialogueGO != null && dialogueGO.activeSelf)
         {
             yield return null;

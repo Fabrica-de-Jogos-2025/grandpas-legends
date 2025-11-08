@@ -4,7 +4,6 @@ using System.Linq;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.AssetImporters;
 
 public static class TargetingManager
 {

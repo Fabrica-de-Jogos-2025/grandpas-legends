@@ -4,14 +4,13 @@ using UnityEngine.UI;
 public class BattleUnlockManager : MonoBehaviour
 {
     [Header("Botões das batalhas na ordem")]
-    [SerializeField] private Button[] battleButtons; // arraste os 5 botões aqui
+    [SerializeField] private Button[] battleButtons;
 
     void Awake()
     {
-        // Garante que exista um progresso salvo
-        if (!PlayerPrefs.HasKey("UnlockedBattles"))
+        if (!PlayerPrefs.HasKey("Battle1_Unlocked"))
         {
-            PlayerPrefs.SetInt("UnlockedBattles", 1);
+            PlayerPrefs.SetInt("Battle1_Unlocked", 1); 
             PlayerPrefs.Save();
         }
     }
@@ -23,38 +22,37 @@ public class BattleUnlockManager : MonoBehaviour
 
     public void UpdateBattleButtons()
     {
-        int unlockedCount = PlayerPrefs.GetInt("UnlockedBattles", 1);
-
         for (int i = 0; i < battleButtons.Length; i++)
         {
-            bool isUnlocked = i < unlockedCount;
+            bool isUnlocked = PlayerPrefs.GetInt($"Battle{i + 1}_Unlocked", 0) == 1;
 
-            // 🔹 Deixa todos visíveis, mas só os liberados interativos
             battleButtons[i].interactable = isUnlocked;
 
-            // 🔹 Efeito visual: botões bloqueados ficam semitransparentes
             Image img = battleButtons[i].GetComponent<Image>();
             if (img != null)
             {
                 var color = img.color;
-                color.a = isUnlocked ? 1f : 0.4f; // 40% transparência quando bloqueado
+                color.a = isUnlocked ? 1f : 0.4f;
                 img.color = color;
             }
-
-            // 🔹 (opcional) se quiser mostrar um ícone de cadeado
-            // você pode ativar/desativar um filho aqui
         }
     }
 
-    public static void UnlockNextBattle()
+    public static void UnlockNextBattle(int currentBattle)
     {
-        int unlockedCount = PlayerPrefs.GetInt("UnlockedBattles", 1);
+        int nextBattle = currentBattle + 1;
         int totalBattles = 5;
 
-        if (unlockedCount < totalBattles)
+        if (nextBattle > totalBattles)
+            return;
+
+        string key = $"Battle{nextBattle}_Unlocked";
+
+        if (PlayerPrefs.GetInt(key, 0) == 0)
         {
-            PlayerPrefs.SetInt("UnlockedBattles", unlockedCount + 1);
+            PlayerPrefs.SetInt(key, 1);
             PlayerPrefs.Save();
+            Debug.Log($"[BattleUnlock] Batalha {nextBattle} desbloqueada!");
         }
     }
 }

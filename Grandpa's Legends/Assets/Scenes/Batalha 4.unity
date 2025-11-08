@@ -4472,7 +4472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -414, y: -422}
+  m_AnchoredPosition: {x: -414, y: -442}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1515729826
@@ -4488,7 +4488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentObject: {fileID: 1515729825}
-  anchoredPosition: {x: 550, y: 160}
+  anchoredPosition: {x: 550, y: 120}
   anchorMin: {x: 0, y: 0}
   anchorMax: {x: 0, y: 0}
   pivot: {x: 0, y: 0}
@@ -5724,6 +5724,10 @@ PrefabInstance:
       propertyPath: 'playAreas.Array.data[4]'
       value: 
       objectReference: {fileID: 2044579347226106007}
+    - target: {fileID: 4172607592804863674, guid: 08d68cd26b62336409200179fd34a491, type: 3}
+      propertyPath: attackSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: ab77d1db278b18d42b0ba9e63c2241e6, type: 3}
     - target: {fileID: 4172607592804863674, guid: 08d68cd26b62336409200179fd34a491, type: 3}
       propertyPath: playerHand
       value: 
