@@ -25,7 +25,7 @@ public class ReviveComponent : MonoBehaviour
 
         Debug.Log($"[Sobrevida] {gameObject.name} foi revivida com 1 de vida!");
         CardBehaviour target = GetComponent<CardBehaviour>();
-        target.Heal(50); // Cura geral (para remover efeitos negativos, etc.)
+        target.Heal(target.MaxHealth); // Cura geral (para remover efeitos negativos, etc.)
         target.TakeDamage(target.MaxHealth - 1); // Fica com 1 de vida
         hasRevived = true;
         Destroy(this);

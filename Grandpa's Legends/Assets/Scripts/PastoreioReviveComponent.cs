@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PastoreioReviveComponent : MonoBehaviour
 {
@@ -20,7 +21,10 @@ public class PastoreioReviveComponent : MonoBehaviour
 
             target.Power += 4;
 
-            HealComponent.ApplyEffect(target.gameObject, "Bênção da Virgem Maria - Cura", 3, 1);
+            Image img = IconManager.Instance.retreiveIconHeal;
+            string desc = "Durante 3 turnos, se cura em 1";
+
+            EffectUtility.ApplyHealEffect(target.gameObject, "Bênção da Virgem Maria - Cura", 3, 1, img, desc);
         }
 
         hasRevived = true;

@@ -12,7 +12,9 @@ public class SuddenDeathComponent : MonoBehaviour
 
         if (existingEffect != null && existingEffect.effectName == name)
         {
-            existingEffect.ResetEffect(turns);
+            return; /* Não faz sentido o jogador ter que resetar os turnos pro  efeito da execução
+                       funcionar uma vez que ele joga o mesmo efeito na mesma carta, apenas saia da 
+                       função se for o caso */
         }
         else
         {
@@ -24,12 +26,6 @@ public class SuddenDeathComponent : MonoBehaviour
     public void Initialize(string name, int turns)
     {
         effectName = name;
-        duration = turns;
-        remainingTurns = turns;
-    }
-
-    public void ResetEffect(int turns)
-    {
         duration = turns;
         remainingTurns = turns;
     }

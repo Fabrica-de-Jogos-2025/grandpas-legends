@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class SelectClickManager : MonoBehaviour
 {
     public static SelectClickManager Instance { get; private set; }
-    private CardMovement selectedCard;
+    public CardMovement selectedCard;
+    private bool justSelected = false;
+
 
     void Awake()
     {
@@ -18,21 +21,17 @@ public class SelectClickManager : MonoBehaviour
 
     private void Update()
     {
-        // Se houver uma carta selecionada, escuta cliques no campo
-        if (selectedCard != null && Input.GetMouseButtonDown(0))
+        if (selectedCard != null && Input.GetMouseButtonDown(0) && !justSelected)
         {
-            int playAreaIndex = GetPlayAreaIndexUnderMouse();
-
-            if (playAreaIndex != -1)
-            {
-                // Tenta jogar a carta nesse slot via click
-                selectedCard.TryPlaceViaClick(playAreaIndex);
-
-                // Desativa o highlight secundário
-                selectedCard.SetSecondaryGlow(false);
-                selectedCard = null;
-            }
+            TryPlaceSelectedCard();
         }
+    }
+
+    private IEnumerator ResetJustSelectedNextFrame()
+    {
+        justSelected = true;
+        yield return null; // espera 1 frame
+        justSelected = false;
     }
 
     /// Seleciona a carta. Se a mesma carta já estava selecionada, dessela (toggle).
@@ -44,47 +43,55 @@ public class SelectClickManager : MonoBehaviour
         if (selectedCard != null && selectedCard != card)
         {
             selectedCard.SetSecondaryGlow(false);
+            selectedCard.onSelectClick = false;
             selectedCard = null;
         }
 
-        // Toggle: se clicou na mesma carta, dessela; se for outra, seleciona-a
+        // Toggle
         if (selectedCard == card)
         {
-            // dessela
             selectedCard.SetSecondaryGlow(false);
+            selectedCard.onSelectClick = false;
             selectedCard = null;
             return;
         }
 
-        // seleciona a nova
         selectedCard = card;
         selectedCard.SetSecondaryGlow(true);
+        selectedCard.onSelectClick = true;
+
+        // Evita clique duplo no mesmo frame
+        StartCoroutine(ResetJustSelectedNextFrame());
     }
-    
+
     public CardMovement GetSelected() => selectedCard;
 
     // 🔹 Procedimento de teleporte para PlayArea
     private void TryPlaceSelectedCard()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            // Checa se o clique foi em UI, mas no nosso caso isso é esperado
-            int playAreaIndex = GetPlayAreaIndexUnderMouse();
-            if (playAreaIndex != -1)
-            {
-                Debug.Log($"Colocando {selectedCard.name} no PlayArea {playAreaIndex}");
-                selectedCard.SnapCardToPlayArea(playAreaIndex);
-                selectedCard.OnDrop(); // chama o drop dela
-                ClearSelection();
-            }
-        }
+        if (selectedCard == null) return;
+
+        int playAreaIndex = GetPlayAreaIndexUnderMouse();
+        Debug.Log($"Colocando {selectedCard.name} no PlayArea {playAreaIndex}");
+
+        // Configura a carta para simular um drop real
+        selectedCard.currentState = 2;
+        selectedCard.isDragging = true;
+        selectedCard.onSelectClick = false;
+
+        // Agora faz o snap e o drop funcionarem normalmente
+        selectedCard.OnDrop();
+
+        ClearSelection();
     }
+
 
     public void ClearSelection()
     {
         if (selectedCard != null)
         {
             selectedCard.SetSecondaryGlow(false);
+            selectedCard.onSelectClick = false;
             selectedCard = null;
         }
     }
@@ -98,22 +105,21 @@ public class SelectClickManager : MonoBehaviour
     // 🔹 Detecta qual área está sob o mouse (adaptado)
     private int GetPlayAreaIndexUnderMouse()
     {
-        Vector2 mouseScreenPosition = Input.mousePosition;
-
+        Vector2 mousePos = Input.mousePosition;
         for (int i = 0; i < PlayAreaManager.Instance.playAreas.Length; i++)
         {
-            RectTransform playArea = PlayAreaManager.Instance.playAreas[i];
-            Vector3[] playAreaCorners = new Vector3[4];
-            playArea.GetWorldCorners(playAreaCorners);
+            RectTransform area = PlayAreaManager.Instance.playAreas[i];
+            Vector3[] corners = new Vector3[4];
+            area.GetWorldCorners(corners);
 
-            Rect playAreaScreenRect = new Rect(
-                playAreaCorners[0].x,
-                playAreaCorners[0].y,
-                playAreaCorners[2].x - playAreaCorners[0].x,
-                playAreaCorners[2].y - playAreaCorners[0].y
+            Rect rect = new Rect(
+                corners[0].x,
+                corners[0].y,
+                corners[2].x - corners[0].x,
+                corners[2].y - corners[0].y
             );
 
-            if (playAreaScreenRect.Contains(mouseScreenPosition))
+            if (rect.Contains(mousePos))
                 return i;
         }
         return -1;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;            // ← garante Action / Mathf etc.
+using UnityEngine.UI;
 
 public class LobisomemEvoCondition : MonoBehaviour
 {
@@ -61,12 +62,23 @@ public class LobisomemEvoCondition : MonoBehaviour
             CardMovement movement = newObj.GetComponent<CardMovement>();
             if (movement != null)
             {
-                movement.allowDragging = false; // trava arrasto nas evoluções
+                movement.allowDragging = true; // trava arrasto nas evoluções
                 movement.isDragging = false;
+                movement.isClickable = false;
                 movement.SetGlow(false);
                 movement.LockInSlot(parentSlot.GetSiblingIndex());
-                movement.allowHover = false;    // não responde mais a hover do mouse
-                movement.allowDragging = false;
+                movement.allowHover = true;    // não responde mais a hover do mouse
+                movement.isAttachedToPlayArea = true;
+
+                Image img = movement.glowEffectSecondary.GetComponent<Image>();
+                if (img != null)
+                {
+                    Color c = img.color;
+                    c.r = 255;
+                    c.g = 255;
+                    c.b = 255;
+                    img.color = c;
+                }
             }   
 
             RectTransform newRect = newObj.GetComponent<RectTransform>();

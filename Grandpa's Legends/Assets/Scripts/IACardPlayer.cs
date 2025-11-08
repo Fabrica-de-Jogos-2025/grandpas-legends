@@ -161,28 +161,19 @@ public class IACardPlayer : MonoBehaviour
             movement.enabled = true; // mantém ativo para possíveis efeitos passivos
         }
 
-        // Oculta efeitos visuais de highlight
+        // Deixa o gloweffectsecondary branco
         if (cardInstance.TryGetComponent(out CardMovement cm))
         {
-            if (cm.glowEffect != null)
-            {
-                var img = cm.glowEffect.GetComponent<UnityEngine.UI.Image>();
-                if (img != null)
-                {
-                    Color c = img.color;
-                    c.a = 0f;
-                    img.color = c;
-                }
-            }
-
             if (cm.glowEffectSecondary != null)
             {
                 var img2 = cm.glowEffectSecondary.GetComponent<UnityEngine.UI.Image>();
                 if (img2 != null)
                 {
-                    Color c2 = img2.color;
-                    c2.a = 0f;
-                    img2.color = c2;
+                    Color c = img2.color;
+                    c.r = 255;
+                    c.g = 255;
+                    c.b = 255;
+                    img2.color = c;
                 }
             }
         }

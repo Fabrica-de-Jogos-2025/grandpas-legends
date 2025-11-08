@@ -5,7 +5,7 @@ public class PlayAreaManager : MonoBehaviour
 {
     public static PlayAreaManager Instance { get; private set; }
 
-    public RectTransform[] playAreas;
+    [SerializeField] public RectTransform[] playAreas;
     public int maxCardsPerArea = 1;
 
     private List<GameObject>[] cardsInPlayAreas;

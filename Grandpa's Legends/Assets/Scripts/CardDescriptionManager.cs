@@ -1,12 +1,20 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardDescriptionManager : MonoBehaviour
 {
     public static CardDescriptionManager Instance { get; private set; }
 
+    [Header("Elementos visuais")]
     [SerializeField] private GameObject cardDescriptionBox;
-    [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private Image cardImage; // nova referência
+    [SerializeField] private TMP_Text lifeText;
+    [SerializeField] private TMP_Text powerText;
+    [SerializeField] private TMP_Text costText;
+    [SerializeField] private RectTransform rectRoster;
+
+    [Header("Animação e offset")]
     [SerializeField] private float yOffset = 120f;
     [SerializeField] private float smoothSpeed = 10f;
 
@@ -22,7 +30,6 @@ public class CardDescriptionManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
 
         if (cardDescriptionBox != null)
@@ -40,7 +47,6 @@ public class CardDescriptionManager : MonoBehaviour
     {
         if (isShowing && boxRect != null)
         {
-            // Faz o movimento suave até a posição alvo
             boxRect.localPosition = Vector3.Lerp(
                 boxRect.localPosition,
                 targetLocalPos,
@@ -49,34 +55,38 @@ public class CardDescriptionManager : MonoBehaviour
         }
     }
 
-    public void ShowDescription(string description, Vector3 worldPosition)
+    public void ShowDescription(
+        bool whichHalf,
+        Sprite sprite,
+        int life,
+        int power,
+        int cost,
+        Vector3 worldPosition)
     {
-        if (cardDescriptionBox == null || descriptionText == null || canvasRect == null)
+        if (cardDescriptionBox == null || canvasRect == null)
         {
             Debug.LogWarning("[CardDescriptionManager] Referências não configuradas!");
             return;
         }
 
-        if (description == "" || description == " ")
+        // Atualiza sprite e atributos
+        if (sprite != null)
         {
-            descriptionText.text = "Esta carta não tem nenhum efeito especial";
-            cardDescriptionBox.SetActive(true);
-            isShowing = true;
+            cardImage.sprite = sprite;
         }
-        else
-        {
-            descriptionText.text = description;
-            cardDescriptionBox.SetActive(true);
-            isShowing = true;
-        }
-        // Detecta automaticamente a câmera correta pro canvas
+        lifeText.text = life.ToString();
+        powerText.text = power.ToString();
+        costText.text = cost.ToString();
+
+        // Ativa a caixa
+        cardDescriptionBox.SetActive(true);
+        isShowing = true;
+
+        // --- POSICIONAMENTO ---
         Canvas canvas = canvasRect.GetComponent<Canvas>();
         Camera cam = canvas.renderMode == RenderMode.ScreenSpaceCamera ? canvas.worldCamera : null;
 
-        // Converte a posição do mundo para posição de tela
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldPosition);
-
-        // Converte posição de tela para espaço local do canvas
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRect,
             screenPos,
@@ -85,6 +95,20 @@ public class CardDescriptionManager : MonoBehaviour
         );
 
         targetLocalPos.y += yOffset;
+
+        if (rectRoster != null)
+        {
+            Vector2 anchoredPos = rectRoster.anchoredPosition;
+
+            if (whichHalf == false)
+                anchoredPos.x = 163.79f;
+            else 
+            {
+                anchoredPos.x = -157.15f;
+            }
+
+            rectRoster.anchoredPosition = anchoredPos;
+        }
     }
 
     public void HideDescription()
@@ -95,3 +119,4 @@ public class CardDescriptionManager : MonoBehaviour
         isShowing = false;
     }
 }
+

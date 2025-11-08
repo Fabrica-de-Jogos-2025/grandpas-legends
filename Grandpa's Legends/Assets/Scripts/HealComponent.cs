@@ -7,21 +7,6 @@ public class HealComponent : MonoBehaviour
     public int healPerTurn;
     private int remainingTurns;
 
-    public static void ApplyEffect(GameObject target, string name, int turns, int healAmount)
-    {
-        HealComponent existingEffect = target.GetComponent<HealComponent>();
-
-        if (existingEffect != null && existingEffect.effectName == name)
-        {
-            existingEffect.ResetEffect(turns, healAmount);
-        }
-        else
-        {
-            HealComponent newEffect = target.AddComponent<HealComponent>();
-            newEffect.Initialize(name, turns, healAmount);
-        }
-    }
-
     public void Initialize(string name, int turns, int healAmount)
     {
         effectName = name;

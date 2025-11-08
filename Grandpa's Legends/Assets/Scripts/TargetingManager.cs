@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEditor.AssetImporters;
 
 public static class TargetingManager
 {
@@ -58,7 +60,9 @@ public static class TargetingManager
                         onChosen: targets =>
                         {
                             var t = targets[0];
-                            ModifyPowerComponent.ApplyEffect(t.gameObject, "Hipocampo - Redução", 1, -2);
+                            Image img = IconManager.Instance.retreiveIconWeakeness;
+                            string desc = "Em três turnos, esta carta morrerá";
+                            EffectUtility.ApplyPowerModifier(t.gameObject, "Hipocampo - Redução", 1, -2, img, desc);
                             Debug.Log($"redução aplicada ao alvo {t.gameObject}");
                         }
                     );
@@ -82,6 +86,10 @@ public static class TargetingManager
                             foreach (var t in targets)
                             {
                                 t.MaxHealth = Mathf.Max(0, t.MaxHealth - 2);
+
+                                DisplayCard dp = t.GetComponent<DisplayCard>();
+                                if (dp != null) dp.RefreshUI();
+
                                 if (t.Life > t.MaxHealth) t.Life = t.MaxHealth;
                                 if (t.MaxHealth <= 1)
                                 {
@@ -119,8 +127,9 @@ public static class TargetingManager
                         onChosen: targets =>
                         {
                             var chosen = targets[0];
-                            var revive = chosen.gameObject.AddComponent<ReviveComponent>();
-                            revive.Initialize(source);
+                            Image img = IconManager.Instance.retreiveIconRevive;
+                            string desc = "Se esta carta morrer enquanto quem deu o efeito viver, reviverá";
+                            EffectUtility.ApplyRevive(chosen.gameObject, source, img, desc);
                             Debug.Log($"R.C. aplicado ao alvo {source.gameObject}");
                         }
                     );
@@ -158,7 +167,9 @@ public static class TargetingManager
                         onChosen: targets =>
                         {
                             var target = targets[0];
-                            SuddenDeathComponent.ApplyEffect(target.gameObject, "Morte Súbita", 3);
+                            Image img = IconManager.Instance.retreiveIconSuddenDeath;
+                            string desc = "Em três turnos, esta carta morrerá";
+                            EffectUtility.ApplySuddenDeath(target.gameObject, "Morte Súbita", 3 , img, desc);
                             Debug.Log($"M.S. aplicada ao alvo {target.gameObject}");
                         }
                     );
@@ -189,8 +200,9 @@ public static class TargetingManager
     private static void ApplyAticupu(CardBehaviour source, List<CardBehaviour> targets)
     {
         var target = targets[0];
-        var heal = target.gameObject.AddComponent<ConditionalHealComponent>();
-        heal.Initialize(source, target);
+        Image img = IconManager.Instance.retreiveIconHeal;
+        string desc = "Enquanto a carta que deu o efeito viver, cura 1 por turno";
+        EffectUtility.ApplyConditionalHeal(target.gameObject, source, img, desc);
     }
 
     // --------- Seleção: auto vs manual ---------
@@ -311,7 +323,7 @@ public static class TargetingManager
         GameObject.DontDestroyOnLoad(go);
         _activeTimer = go.AddComponent<TargetingTimer>();
 
-        _activeTimer.Arm(5f, () =>
+        _activeTimer.Arm(60f, () =>
         {
             Debug.Log("[TargetingManager] Tempo de seleção expirou. Limpando...");
 
@@ -328,6 +340,7 @@ public static class TargetingManager
             CancelSelectionTimer(); // garante que o timer foi limpo
         });
     }
+    
     private class TargetingTimer : MonoBehaviour
     {
         private Action onTimeout;

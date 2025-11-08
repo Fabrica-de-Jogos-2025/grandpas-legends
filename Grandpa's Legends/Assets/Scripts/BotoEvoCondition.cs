@@ -1,3 +1,4 @@
+using UnityEngine.UI;
 using UnityEngine;
 
 public class BotoEvoCondition : MonoBehaviour
@@ -27,7 +28,10 @@ public class BotoEvoCondition : MonoBehaviour
 
         if (enemyTurnCounter % 2 == 0 && card.GetComponent<InvulnerableComponent>() == null)
         {
-            InvulnerableComponent.ApplyEffect(card.gameObject, "Escondeu-se na água", 1);
+            Image img = IconManager.Instance.retreiveIconInvulnerable;
+            string desc = "Não receberá danos por 1 turno";
+
+            EffectUtility.ApplyInvulnerability(card.gameObject, "Escondeu-se na água", 1, img, desc);
             Debug.Log("[Boto] ficou invulnerável por 1 turno.");
         }
     }
@@ -60,11 +64,23 @@ public class BotoEvoCondition : MonoBehaviour
             CardMovement movement = newCardObj.GetComponent<CardMovement>();
             if (movement != null)
             {
-                movement.allowDragging = false; // trava arrasto nas evoluções
+                movement.allowDragging = true; // trava arrasto nas evoluções
                 movement.isDragging = false;
+                movement.isClickable = false;
                 movement.SetGlow(false);
                 movement.LockInSlot(parentSlot.GetSiblingIndex());
-                movement.allowHover = false;
+                movement.allowHover = true;
+                movement.isAttachedToPlayArea = true;
+
+                Image img = movement.glowEffectSecondary.GetComponent<Image>();
+                if (img != null)
+                {
+                    Color c = img.color;
+                    c.r = 255;
+                    c.g = 255;
+                    c.b = 255;
+                    img.color = c;
+                }
             }
 
             RectTransform newRect = newCardObj.GetComponent<RectTransform>();

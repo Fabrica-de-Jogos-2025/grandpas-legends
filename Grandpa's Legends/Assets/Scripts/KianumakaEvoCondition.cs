@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KianumakaEvoCondition : MonoBehaviour
 {
@@ -65,12 +66,24 @@ public class KianumakaEvoCondition : MonoBehaviour
         CardMovement movement = evolvedCard.GetComponent<CardMovement>();
         if (movement != null)
         {
-            movement.allowDragging = false; // trava arrasto nas evoluções
+            movement.allowDragging = true; // trava arrasto nas evoluções
             movement.isDragging = false;
+            movement.isClickable = false;
             movement.SetGlow(false);
             movement.LockInSlot(parent.GetSiblingIndex());
-            movement.allowHover = false;
-        } 
+            movement.allowHover = true;
+            movement.isAttachedToPlayArea = true;
+
+            Image img = movement.glowEffectSecondary.GetComponent<Image>();
+            if (img != null)
+            {
+                Color c = img.color;
+                c.r = 255;
+                c.g = 255;
+                c.b = 255;
+                img.color = c;
+            }
+        }
 
         RectTransform newRect = evolvedCard.GetComponent<RectTransform>();
         RectTransform parentRect = parent.GetComponent<RectTransform>();

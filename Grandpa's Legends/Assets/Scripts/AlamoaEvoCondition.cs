@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AlamoaEvoCondition : MonoBehaviour
 {
@@ -66,11 +67,23 @@ public class AlamoaEvoCondition : MonoBehaviour
         CardMovement movement = newCardObj.GetComponent<CardMovement>();
         if (movement != null)
         {
-            movement.allowDragging = false; // trava arrasto nas evoluções
+            movement.allowDragging = true; // trava arrasto nas evoluções
             movement.isDragging = false;
+            movement.isClickable = false;
             movement.SetGlow(false);
             movement.LockInSlot(parentSlot.GetSiblingIndex());
-            movement.allowHover = false;
+            movement.allowHover = true;
+            movement.isAttachedToPlayArea = true;
+
+            Image img = movement.glowEffectSecondary.GetComponent<Image>();
+            if (img != null)
+            {
+                Color c = img.color;
+                c.r = 255;
+                c.g = 255;
+                c.b = 255;
+                img.color = c;
+            }
         }   
 
         RectTransform newRect = newCardObj.GetComponent<RectTransform>();

@@ -72,7 +72,7 @@ public class TurnManager : MonoBehaviour
                 if (attacker.GetComponent<StunnedComponent>() != null)
                 {
                     var stunned = attacker.GetComponent<StunnedComponent>();
-                    stunned.ReduceTurn();  // Reduz 1 turno restante
+                    stunned.ProcessEffect();  // Reduz 1 turno restante
                     continue; // Pula ataque
                 }
 
@@ -87,126 +87,135 @@ public class TurnManager : MonoBehaviour
                         defender.TakeDamage(attacker.Power);
                     }
 
-                    SwitchEffect(attacker.cardData.id, attacker, defender);
+                    SwitchCardPassives.Instance.OnAttack(attacker.cardData.id, attacker, defender);
                     ProcessAllEffectsOnCard(attacker.gameObject);
                 }
                 else
                 {
                     // Ataca o inimigo diretamente
                     yield return StartCoroutine(AnimateAttack(attacker.transform, enemySlot.transform));
-                    GameManager.Instance.TakeDamage(attacker.cardData.power, false);
+                    yield return GameManager.Instance.TakeDamage(attacker.cardData.power, false);
                     ProcessAllEffectsOnCard(attacker.gameObject);
                 }
             }
         }
     }
 
-private IEnumerator EnemyAttack()
-{
-    for (int i = 0; i < 5; i++)
+    private IEnumerator EnemyAttack()
     {
-        Transform enemySlot = GameObject.Find($"EnemyPlayArea {i}").transform;
-        Transform playerSlot = GameObject.Find($"PlayArea {i}").transform;
-
-        if (enemySlot.childCount > 0)
+        for (int i = 0; i < 5; i++)
         {
-            CardBehaviour attacker = enemySlot.GetChild(0).GetComponent<CardBehaviour>();
-            
-            if (attacker.TryGetComponent<BotoEvoCondition>(out var boto))
-            {
-                // Executa no turno do inimigo
-                if (attacker.isFromPlayer != IsPlayerTurn)
-                {
-                    boto.OnEnemyTurnStart();
-                }
-            }
+            Transform enemySlot = GameObject.Find($"EnemyPlayArea {i}").transform;
+            Transform playerSlot = GameObject.Find($"PlayArea {i}").transform;
 
-            if (attacker.TryGetComponent<BarbaRuivaEvoComponent>(out var barba))
+            if (enemySlot.childCount > 0)
             {
-                // Executa no turno do inimigo
-                if (attacker.isFromPlayer != IsPlayerTurn)
-                {
-                    barba.OnOwnerTurnStart();
-                }
-            }
+                CardBehaviour attacker = enemySlot.GetChild(0).GetComponent<CardBehaviour>();
 
-            if (attacker.GetComponent<StunnedComponent>() != null)
+                if (attacker.TryGetComponent<BotoEvoCondition>(out var boto))
+                {
+                    // Executa no turno do inimigo
+                    if (attacker.isFromPlayer != IsPlayerTurn)
+                    {
+                        boto.OnEnemyTurnStart();
+                    }
+                }
+
+                if (attacker.TryGetComponent<BarbaRuivaEvoComponent>(out var barba))
+                {
+                    // Executa no turno do inimigo
+                    if (attacker.isFromPlayer != IsPlayerTurn)
+                    {
+                        barba.OnOwnerTurnStart();
+                    }
+                }
+
+                if (attacker.GetComponent<StunnedComponent>() != null)
                 {
                     var stunned = attacker.GetComponent<StunnedComponent>();
-                    stunned.ReduceTurn();  // Reduz 1 turno restante
+                    stunned.ProcessEffect();  // Reduz 1 turno restante
                     yield break; // Pula ataque
                 }
-                
-            if (playerSlot.childCount > 0)
-            {
-                // Efeitos à carta do player
-                CardBehaviour defender = playerSlot.GetChild(0).GetComponent<CardBehaviour>();
 
-                if (attacker.cardData.power > 0)
+                if (playerSlot.childCount > 0)
                 {
-                    yield return StartCoroutine(AnimateAttack(attacker.transform, defender.transform));
-                    defender.TakeDamage(attacker.Power);
+                    // Efeitos à carta do player
+                    CardBehaviour defender = playerSlot.GetChild(0).GetComponent<CardBehaviour>();
+
+                    if (attacker.cardData.power > 0)
+                    {
+                        yield return StartCoroutine(AnimateAttack(attacker.transform, defender.transform));
+                        defender.TakeDamage(attacker.Power);
+                    }
+
+                    SwitchCardPassives.Instance.OnAttack(attacker.cardData.id, attacker, defender);
+                    ProcessAllEffectsOnCard(attacker.gameObject);
                 }
-
-                SwitchEffect(attacker.cardData.id, attacker, defender);
-                ProcessAllEffectsOnCard(attacker.gameObject);
-            }
-            else
-            {
-                // Ataca o jogador diretamente
-                yield return StartCoroutine(AnimateAttack(attacker.transform, playerSlot.transform));
-                GameManager.Instance.TakeDamage(attacker.cardData.power, true); // true = dano no jogador
-                ProcessAllEffectsOnCard(attacker.gameObject);
+                else
+                {
+                    // Ataca o jogador diretamente
+                    yield return StartCoroutine(AnimateAttack(attacker.transform, playerSlot.transform));
+                    yield return GameManager.Instance.TakeDamage(attacker.cardData.power, true); // true = dano no jogador
+                    ProcessAllEffectsOnCard(attacker.gameObject);
+                }
             }
         }
     }
-}
 
-public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defender)
-{
-    if (attacker == null)
+    // --------- Helpers de aplicação de efeito ---------
+    public IEnumerator AttackSequentially(CardBehaviour source, List<CardBehaviour> targets)
     {
-        Debug.LogError("QuickAttackRoutine: attacker está null!");
-        yield break;
-    }
-
-    if (attacker.cardData == null)
-    {
-        Debug.LogError("QuickAttackRoutine: cardData do attacker está null!");
-        yield break;
-    }
-
-    if (defender != null)
-    {
-        yield return StartCoroutine(AnimateAttack(attacker.transform, defender.transform));
-        defender.TakeDamage(attacker.cardData.power);
-    }
-    else
-    {
-        // Pega o nome do slot onde a carta está (PlayArea 0-4 ou EnemyArea 0-4)
-        Transform parent = attacker.transform.parent;
-        string parentName = parent.name;
-
-        // Último caractere representa o índice
-        int index = int.Parse(parentName[parentName.Length - 1].ToString());
-
-        // Decide qual lado atacar
-        bool isPlayerCard = parentName.StartsWith("PlayArea");
-
-        // Busca o slot correspondente no lado oposto
-        string opposingSlotName = (isPlayerCard ? "EnemyPlayArea " : "PlayArea ") + index;
-        Transform opposingSlot = GameObject.Find(opposingSlotName)?.transform;
-
-        Transform attackTarget;
-
-        if (attacker.GetComponent<StunnedComponent>() != null)
+        foreach (var t in targets)
         {
-            var stunned = attacker.GetComponent<StunnedComponent>();
-            stunned.ReduceTurn();  // Reduz 1 turno restante
-            yield break; // Pula ataque
+            yield return Instance.StartCoroutine(
+                Instance.QuickAttackRoutine(source, t)
+            );
+
+            yield return new WaitForSeconds(0.4f); // 🔑 intervalo entre ataques
         }
 
-        if (opposingSlot != null)
+        DisplayCard.ClearSelection();
+    }
+
+    public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defender)
+    {
+        if (attacker == null || attacker.cardData == null)
+        {
+            Debug.LogError("QuickAttackRoutine: attacker ou attacker.cardData está null!");
+            yield break;
+        }
+
+        if (defender != null)
+        {
+            yield return StartCoroutine(AnimateAttack(attacker.transform, defender.transform));
+            defender.TakeDamage(attacker.cardData.power);
+        }
+        else
+        {
+            // Pega o nome do slot onde a carta está (PlayArea 0-4 ou EnemyArea 0-4)
+            Transform parent = attacker.transform.parent;
+            string parentName = parent.name;
+
+            // Último caractere representa o índice
+            int index = int.Parse(parentName[parentName.Length - 1].ToString());
+
+            // Decide qual lado atacar
+            bool isPlayerCard = parentName.StartsWith("PlayArea");
+
+            // Busca o slot correspondente no lado oposto
+            string opposingSlotName = (isPlayerCard ? "EnemyPlayArea " : "PlayArea ") + index;
+            Transform opposingSlot = GameObject.Find(opposingSlotName)?.transform;
+
+            Transform attackTarget;
+
+            if (attacker.GetComponent<StunnedComponent>() != null)
+            {
+                var stunned = attacker.GetComponent<StunnedComponent>();
+                stunned.ProcessEffect();  // Reduz 1 turno restante
+                yield break; // Pula ataque
+            }
+
+            if (opposingSlot != null)
             {
                 // Ataca diretamente o slot vazio do inimigo
                 attackTarget = opposingSlot;
@@ -217,130 +226,12 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
                 yield break;
             }
 
-        yield return StartCoroutine(AnimateAttack(attacker.transform, attackTarget));
+            yield return StartCoroutine(AnimateAttack(attacker.transform, attackTarget));
 
-        SwitchEffect(attacker.cardData.id, attacker, defender);        
+            SwitchCardPassives.Instance.OnAttack(attacker.cardData.id, attacker, defender);
 
-        GameManager.Instance.TakeDamage(attacker.cardData.power, !isPlayerCard);
-    }
-}
-
-    public void SwitchEffect(int id, CardBehaviour attacker, CardBehaviour defender)
-    {
-        switch (id)
-        {
-            case 4:
-                DamageComponent.ApplyEffect(defender.gameObject, "Cumadre Fulôzinha - Veneno", 2, 1);
-                break;
-
-            case 5:
-                ModifyPowerComponent.ApplyEffect(defender.gameObject, "Hipocampo - Redução", 1, -2);
-                break;
-
-            case 6:
-                ModifyPowerComponent.ApplyEffect(defender.gameObject, "Boitatá - Redução", 2, -1);
-                break;
-
-            case 7:
-                bool foundAllyToGiveShield = false;
-                int attempts = 0;
-                CardBehaviour shieldReceiver = null;
-
-                while (!foundAllyToGiveShield && attempts < 10)
-                {
-                    int randomIndex = UnityEngine.Random.Range(0, 4);
-                    Transform randomSlot = GameObject.Find($"EnemyPlayArea {randomIndex}").transform;
-
-                    if (randomSlot.childCount > 0)
-                    {
-                        CardBehaviour potentialReceiver = randomSlot.GetChild(0).GetComponent<CardBehaviour>();
-
-                        if (potentialReceiver != attacker)
-                        {
-                            shieldReceiver = potentialReceiver;
-                            foundAllyToGiveShield = true;
-                            break;
-                        }
-                    }
-
-                    attempts++;
-                }
-
-                if (!foundAllyToGiveShield)
-                {
-                    shieldReceiver = attacker;
-                }
-
-                shieldReceiver.ModifyShield(3);
-                break;
-
-            case 8:
-                attacker.Power += 1;
-                break;
-
-            case 13:
-                if (attacker.Power >= defender.Life)
-                {
-                    var alamoa = attacker.GetComponent<AlamoaEvoCondition>();
-                    if (alamoa != null)
-                    {
-                        alamoa.RegisterExecution();
-                    }
-                }
-                break;
-
-            case 14:
-                attacker.Heal(1);
-                break;
-
-            case 16:
-                DamageComponent.ApplyEffect(defender.gameObject, "Mula sem Cabeça - Queimadura", 3, 1);
-                break;
-
-            case 24:
-                if (defender.Life < defender.MaxHealth)
-                {
-                    defender.TakeDamage(1);
-                }
-                break;
-
-            case 25:
-                var botoComponent = attacker.GetComponent<BotoEvoCondition>();
-                if (botoComponent != null)
-                {
-                    botoComponent.RegisterDamage(attacker.Power);
-                }
-                break;
-
-            case 26:
-                defender.MaxHealth = defender.MaxHealth - 2;
-                break;
-
-            case 27:
-                if (attacker.Power >= defender.Life)
-                {
-                    var romao = attacker.GetComponent<RomaozinhoComponent>();
-                    if (romao != null)
-                    {
-                        romao.RegisterDeath();
-                    }
-                }
-                break;
-
-            case 29:
-                string enemyFieldPrefix = attacker.isFromPlayer ? "EnemyPlayArea " : "PlayArea ";
-                int attackerSlotIndex = attacker.transform.parent.GetSiblingIndex();
-                int targetIndex = (attackerSlotIndex + 1) % 5;
-
-                Transform enemySlot = GameObject.Find($"{enemyFieldPrefix}{targetIndex}").transform;
-                if (enemySlot.childCount > 0)
-                {
-                    CardBehaviour targetCard = enemySlot.GetChild(0).GetComponent<CardBehaviour>();
-                    QuickAttackRoutine(attacker, targetCard);
-                }
-
-                break;
-        }   
+            yield return GameManager.Instance.TakeDamage(attacker.cardData.power, !isPlayerCard);
+        }
     }
 
     public void QuickAttack(CardBehaviour attacker)
@@ -377,14 +268,22 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
 
     private IEnumerator AnimateAttack(Transform attacker, Transform target)
     {
+        if (attacker == null || target == null) yield break;
+
         Vector3 originalPos = attacker.position;
         Vector3 attackPos = originalPos + (target.position - originalPos) * 0.3f;
-
+        
         float duration = 0.3f;
         float elapsed = 0;
         while (elapsed < duration)
         {
-            attacker.position = Vector3.Lerp(originalPos, attackPos, elapsed / duration);
+            if (attacker == null || target == null)
+            {
+                Debug.LogWarning($"[TurnManager] AnimateAttack. Transform attacker = {attacker} || Transform target = {target} ");
+                yield break;
+            }
+            
+            attacker.position = Vector3.Lerp(originalPos, attackPos, elapsed / duration); // linha tenta acessar, não consegue
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -394,6 +293,12 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
         Vector3 overTarget = target.position + Vector3.up * 0.2f;
         while (elapsed < duration)
         {
+            if (attacker == null || target == null)
+            {
+                Debug.LogWarning($"[TurnManager] AnimateAttack. Transform attacker = {attacker} || Transform target = {target} ");
+                yield break;
+            }
+
             attacker.position = Vector3.Lerp(attackPos, overTarget, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
@@ -401,7 +306,13 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
         
         elapsed = 0;
         while (elapsed < duration)
-        {
+        {   
+            if (attacker == null || target == null)
+            {
+                Debug.LogError($"[TurnManager] AnimateAttack. Transform attacker = {attacker} || Transform target = {target} ");
+                yield break;
+            }
+
             attacker.position = Vector3.Lerp(overTarget, originalPos, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
@@ -443,15 +354,12 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
             defender.TakeDamage(attacker.cardData.power);
 
             // Aplica efeitos pós-ataque
-            SwitchEffect(attacker.cardData.id, attacker, defender);
+            SwitchCardPassives.Instance.OnAttack(attacker.cardData.id, attacker, defender);
         }
         else
-        {
             Debug.LogWarning("SelectionQuickAttackRoutine chamado com defender = null. Nenhum ataque realizado.");
-        }
     } 
   
-
     public void ProcessAllEffectsOnCard(GameObject card)
     {
         // Verifica e processa cada tipo de componente de efeito contínuo
@@ -473,8 +381,20 @@ public IEnumerator QuickAttackRoutine(CardBehaviour attacker, CardBehaviour defe
             effect.ProcessEffect();
         }
 
+        InvulnerableComponent[] invulnerable = card.GetComponents<InvulnerableComponent>();
+        foreach (InvulnerableComponent effect in invulnerable)
+        {
+            effect.ProcessEffect();
+        }
+
         ModifyPowerComponent[] modifyComponents = card.GetComponents<ModifyPowerComponent>();
         foreach (ModifyPowerComponent effect in modifyComponents)
+        {
+            effect.ProcessEffect();
+        }
+
+        SuddenDeathComponent[] suddenDeathComponents = card.GetComponents<SuddenDeathComponent>();
+        foreach (SuddenDeathComponent effect in suddenDeathComponents)
         {
             effect.ProcessEffect();
         }

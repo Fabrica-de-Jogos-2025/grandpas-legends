@@ -26,6 +26,7 @@ public class DeckEditorUI : MonoBehaviour
             KianumakaEvoCondition kianumakaComp = go.GetComponent<KianumakaEvoCondition>();
             if (kianumakaComp != null)
                 Destroy(kianumakaComp);
+                
             LobisomemEvoCondition lobiComp = go.GetComponent<LobisomemEvoCondition>();
             if (lobiComp != null)
                 Destroy(lobiComp);

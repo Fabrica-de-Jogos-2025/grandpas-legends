@@ -22,7 +22,6 @@ public class CardBehaviour : MonoBehaviour
     public string CardDescription { get; private set; }
     public int MaxHealth;
     public int shield;
-    public bool isImmune;
     public bool isFromPlayer;
     private DisplayCard display; // <- cache
 
@@ -33,9 +32,7 @@ public class CardBehaviour : MonoBehaviour
     private void Start()
     {
         if (cardData == null)
-        {
             return;
-        }
 
         Id = cardData.id;
         Name = cardData.cardName;
@@ -43,11 +40,9 @@ public class CardBehaviour : MonoBehaviour
         CardDescription = cardData.cardDescription;
         MaxHealth = cardData.life;
         shield = 0;
-        isImmune = false;
 
         // primeira sincronização visual
         display?.RefreshUI();
-
     }
 
     public void RemoveAllNegativeEffects(GameObject target)

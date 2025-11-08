@@ -29,10 +29,7 @@ public class ImmunityComponent : MonoBehaviour
 
         CardBehaviour card = GetComponent<CardBehaviour>();
         if (card != null)
-        {
-            card.RemoveAllNegativeEffects(gameObject); // Corrigido: agora passa gameObject corretamente
-            card.isImmune = true;
-        }
+            card.RemoveAllNegativeEffects(gameObject);
     }
 
     public void ResetEffect(int turns)
@@ -46,16 +43,8 @@ public class ImmunityComponent : MonoBehaviour
         if (remainingTurns > 0)
         {
             remainingTurns--;
-
             if (remainingTurns <= 0)
-            {
-                CardBehaviour card = GetComponent<CardBehaviour>();
-                if (card != null && card.isImmune)
-                {
-                    card.isImmune = false;
-                }
                 Destroy(this);
-            }
         }
     }
 }

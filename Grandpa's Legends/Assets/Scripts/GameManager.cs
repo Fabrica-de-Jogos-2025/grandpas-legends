@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,8 +14,11 @@ public class GameManager : MonoBehaviour
     public int deadPlayerCards = 0;
     public int deadEnemyCards = 0;
     public int turns = 0;
+
     [SerializeField] private TextMeshProUGUI playerHealthText;
     [SerializeField] private TextMeshProUGUI enemyHealthText;
+    private GameObject DialogOfScene = null;
+    
     public int PlayerHealth
     {
         get { return playerHealth; }
@@ -45,11 +49,38 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        // Busca profunda para que achemos o DialogBox específico daquela cena
+        foreach (GameObject go in SceneManager.GetActiveScene().GetRootGameObjects())
+        {
+            Transform found = go.transform.Find("DialogueBox");
+            if (found != null)
+            {
+                DialogOfScene = found.gameObject;
+                break;
+            }
+        }
+
+        if (DialogOfScene == null) Debug.LogWarning("[GameManager] nenhuma caixa de diálogo para essa cena foi encontrada");
+        else Debug.Log($"[GameManager] uma caixa de diálogo {DialogOfScene.name} para essa cena foi encontrada");
     }
-    
+
     private void Start()
     {
         UpdateHealthUI();
+    }
+
+    private void MakeAllCardsInHandInteractiveOrNot(bool active)
+    {
+        if (HandManager.Instance != null)
+        {
+            foreach (GameObject gmObj in HandManager.Instance.cardsInHand)
+            {
+                CardMovement move = gmObj.GetComponent<CardMovement>();
+                if (move != null)
+                    if (move.cachedImage != null)
+                        move.cachedImage.raycastTarget = active;
+            }
+        }
     }
 
     private void InitializeManagers()
@@ -157,29 +188,67 @@ public class GameManager : MonoBehaviour
         if (enemyHealthText != null)
             enemyHealthText.text = enemyHealth.ToString();
     }
-    
-    public void TakeDamage(int damage, bool isPlayer)
+
+    public IEnumerator TakeDamage(int damage, bool isPlayer)
     {
         if (isPlayer)
         {
             playerHealth -= damage;
+
+            // isPlayer = true
+            AnimatedMeshManager.Instance.GetSideLifeMesh(player: isPlayer)?.LifeLoss(amountTaken: damage, isPlayer: isPlayer);
+
+            /* Usar esse código quando tivermos uma estrutura para que fique vermelha quando algum
+            dos lados levarem dano diretamente, por ora, deixar comentado para não causar conflitos
+
+            yield return StartCoroutine(AnimateBattle.Instance.QuickFadeToRed(isPlayerUI: true)); */
         }
         else
         {
             enemyHealth -= damage;
+
+            // isPlayer = false
+            AnimatedMeshManager.Instance.GetSideLifeMesh(player: isPlayer)?.LifeLoss(amountTaken: damage, isPlayer: isPlayer);
+
+            /* Análogo ao comentário no desvio condicional acima */
+            // yield return StartCoroutine(AnimateBattle.Instance.QuickFadeToRed(isPlayerUI: false));
         }
-        
+
         UpdateHealthUI();
-        
-        if (playerHealth <= 0)
+
+        if (playerHealth <= 0) // Player derrotado
         {
+            MakeAllCardsInHandInteractiveOrNot(false);
+
+            yield return StartCoroutine(AnimateBattle.Instance.FadeToBlack());
+
             SceneManager.LoadScene("Defeat");
+
+            yield break;
+        }
+        else if (enemyHealth <= 0) // Inimigo derrotado
+        {
+            MakeAllCardsInHandInteractiveOrNot(false);
+
+            DialogOfScene.SetActive(true);
+
+            yield return StartCoroutine(WaitUntilDialogueEnds(DialogOfScene));
+            yield return StartCoroutine(AnimateBattle.Instance.FadeToBlack());
+
+            SceneManager.LoadScene("Victory");
+
+            yield break;
         }
 
-        else if (enemyHealth <= 0)
-
+        yield break;
+    }
+    
+    private IEnumerator WaitUntilDialogueEnds(GameObject dialogueGO)
+    {
+        // espera até que o diálogo fique inativo novamente
+        while (dialogueGO != null && dialogueGO.activeSelf)
         {
-            SceneManager.LoadScene("Victory");
+            yield return null;
         }
     }
 }

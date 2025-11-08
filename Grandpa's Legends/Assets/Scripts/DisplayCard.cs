@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public class DisplayCard : MonoBehaviour, IPointerClickHandler
 {
-    public int displayId; public Cards cardData;
+    public int displayId; 
+    public Cards cardData;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI powerText;
     public TextMeshProUGUI lifeText;
@@ -68,7 +69,7 @@ public class DisplayCard : MonoBehaviour, IPointerClickHandler
         {
             CardMovement movement = candidate.GetComponent<CardMovement>();
             if (movement != null)
-                movement.SetGlow(true);
+                movement.glowEffectToSelect.SetActive(true);
 
             EventTrigger trigger = candidate.gameObject.AddComponent<EventTrigger>();
 
@@ -76,7 +77,7 @@ public class DisplayCard : MonoBehaviour, IPointerClickHandler
             entry.callback.AddListener((eventData) =>
             {
                 // desliga glow depois do clique
-                if (movement != null) movement.SetGlow(false);
+                if (movement != null) movement.glowEffectToSelect.SetActive(false);
 
                 onChosen(new List<DisplayCard> { candidate });
             });
@@ -85,7 +86,7 @@ public class DisplayCard : MonoBehaviour, IPointerClickHandler
         }
     }
 
-private static List<DisplayCard> chosenTargets = new List<DisplayCard>();
+    private static List<DisplayCard> chosenTargets = new List<DisplayCard>();
 
     public static IReadOnlyList<DisplayCard> GetChosenTargets()
     {
@@ -117,7 +118,7 @@ private static List<DisplayCard> chosenTargets = new List<DisplayCard>();
     private static void CleanCard(GameObject cardObj)
     {
         CardMovement movement = cardObj.GetComponent<CardMovement>();
-        if (movement != null) movement.SetGlow(false);
+        if (movement != null) movement.glowEffectToSelect.SetActive(false);
 
         EventTrigger trigger = cardObj.GetComponent<EventTrigger>();
         if (trigger != null)
@@ -126,21 +127,6 @@ private static List<DisplayCard> chosenTargets = new List<DisplayCard>();
             UnityEngine.Object.Destroy(trigger);
         }
     }  
-    
-    public void HideTargetSelection()
-    {
-        HighlightAsTarget(false);
-    }
-
-    /// Só para feedback visual.
-    private void HighlightAsTarget(bool highlight)
-    {
-        // Exemplo: muda a cor do fundo ou ativa um outline
-        if (TryGetComponent(out UnityEngine.UI.Image img))
-        {
-            img.color = highlight ? Color.yellow : Color.white;
-        }
-    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
