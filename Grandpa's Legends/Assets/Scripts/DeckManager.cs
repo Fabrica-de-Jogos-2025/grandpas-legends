@@ -23,13 +23,10 @@ public class DeckManager : MonoBehaviour
                     playerDeck.Add(chosen);
             }
 
-            Debug.Log($"[DeckManager] Deck carregado com {playerDeck.Count} cartas para a partida.");
-
             ShuffleDeck();
         }
         else
         {
-            Debug.LogWarning("[DeckManager] PlayerDeck não encontrado, usando deck vazio.");
         }
 
         HandManager hand = FindAnyObjectByType<HandManager>();
@@ -50,16 +47,12 @@ public class DeckManager : MonoBehaviour
         }
 
         currentIndex = 0;
-        Debug.Log("[DeckManager] Deck embaralhado.");
     }
 
     public void DrawCard(HandManager handManager)
     {
         if (playerDeck.Count == 0)
-        {
-            Debug.LogWarning("[DeckManager] Tentativa de comprar carta com deck vazio!");
             return;
-        }
 
         Cards nextCard = playerDeck[currentIndex];
         handManager.AddCardToHand(nextCard);

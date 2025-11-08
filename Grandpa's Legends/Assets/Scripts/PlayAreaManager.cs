@@ -10,6 +10,12 @@ public class PlayAreaManager : MonoBehaviour
 
     private List<GameObject>[] cardsInPlayAreas;
 
+    [Header("VFX Settings")]
+    [SerializeField] private GameObject cardPlayVFX; // arraste o prefab aqui
+
+    [Header("SFX Settings")]
+    [SerializeField] private AudioClip cardPlaySFX; // arraste o som aqui
+
     private void Awake()
     {
         if (Instance == null)
@@ -31,28 +37,32 @@ public class PlayAreaManager : MonoBehaviour
     public bool AddCardToPlayArea(GameObject card, int playAreaIndex)
     {
         if (playAreaIndex < 0 || playAreaIndex >= playAreas.Length)
-        {
-            Debug.Log("Invalid play area index!");
             return false;
-        }
 
         if (playAreas[playAreaIndex].childCount >= maxCardsPerArea)
-        {
-            Debug.Log("Play area " + playAreaIndex + " is full!");
             return false;
-        }
 
         HandManager handManager = FindFirstObjectByType<HandManager>();
         if (handManager != null)
-        {
             handManager.RemoveCardFromHand(card);
-        }
 
+        // Move a carta para a área de jogo
         card.transform.SetParent(playAreas[playAreaIndex]);
-
         cardsInPlayAreas[playAreaIndex].Add(card);
 
-        Debug.Log("Card added to Play Area " + playAreaIndex);
+        // 🔹 Instancia o VFX na posição da carta
+        if (cardPlayVFX != null)
+        {
+            Vector3 spawnPos = card.transform.position;
+            Instantiate(cardPlayVFX, spawnPos, Quaternion.identity);
+        }
+
+        // 🔊 Toca o som usando o AudioManager global
+        if (cardPlaySFX != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(cardPlaySFX);
+        }
+
         return true;
     }
 }

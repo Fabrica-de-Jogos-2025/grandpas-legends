@@ -672,6 +672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseScreen: {fileID: 371835283}
   settingsScreen: {fileID: 1049643733}
+  continueButton: {fileID: 0}
 --- !u!114 &371835285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,6 +926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseScreen: {fileID: 371835283}
   settingsScreen: {fileID: 1049643733}
+  continueButton: {fileID: 0}
 --- !u!114 &468439779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2193,6 +2195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseScreen: {fileID: 371835283}
   settingsScreen: {fileID: 1049643733}
+  continueButton: {fileID: 0}
 --- !u!114 &1049643735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4045,7 +4048,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -414, y: -391.2}
+  m_AnchoredPosition: {x: -414, y: -422}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1515729826
@@ -4396,6 +4399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseScreen: {fileID: 371835283}
   settingsScreen: {fileID: 1049643733}
+  continueButton: {fileID: 0}
 --- !u!114 &1689203257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5668,6 +5672,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1774737427}
     - target: {fileID: 897689695631284601, guid: 08d68cd26b62336409200179fd34a491, type: 3}
+      propertyPath: aiCardPlaySFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 5ece66b193a089746825fe18312a3d49, type: 3}
+    - target: {fileID: 897689695631284601, guid: 08d68cd26b62336409200179fd34a491, type: 3}
       propertyPath: playAreas.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -5691,6 +5699,10 @@ PrefabInstance:
       propertyPath: 'playAreas.Array.data[4]'
       value: 
       objectReference: {fileID: 2044579347226106007}
+    - target: {fileID: 4172607592804863674, guid: 08d68cd26b62336409200179fd34a491, type: 3}
+      propertyPath: attackSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: ab77d1db278b18d42b0ba9e63c2241e6, type: 3}
     - target: {fileID: 4172607592804863674, guid: 08d68cd26b62336409200179fd34a491, type: 3}
       propertyPath: playerHand
       value: 
@@ -5799,6 +5811,10 @@ PrefabInstance:
       propertyPath: 'deckPrefabs.Array.data[21]'
       value: 
       objectReference: {fileID: 4271095744239718104, guid: 239ddf50b0537064dbe4935be7fc8058, type: 3}
+    - target: {fileID: 5080069534393994098, guid: 08d68cd26b62336409200179fd34a491, type: 3}
+      propertyPath: cardPlaySFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 5ece66b193a089746825fe18312a3d49, type: 3}
     - target: {fileID: 5080069534393994098, guid: 08d68cd26b62336409200179fd34a491, type: 3}
       propertyPath: playAreas.Array.size
       value: 5

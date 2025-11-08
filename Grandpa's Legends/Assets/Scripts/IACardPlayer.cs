@@ -18,6 +18,9 @@ public class IACardPlayer : MonoBehaviour
     [SerializeField] private IADeckManager deckManager;
     [SerializeField] public Transform[] playAreas;
 
+    [Header("SFX Settings")]
+    [SerializeField] private AudioClip aiCardPlaySFX; // 🔊 som da IA jogando carta
+
     void Start()
     {
         StartCoroutine(FirstTurnDelay());
@@ -32,7 +35,6 @@ public class IACardPlayer : MonoBehaviour
     public IEnumerator PlayTurn()
     {
         CheckHandForConsumables();
-        Debug.Log("[IA] Iniciando turno...");
 
         deckManager.DrawCards(1);
         int cardsToPlay = currentDifficulty == Difficulty.Hard ? maxCardsPerTurnHard : maxCardsPerTurnEasy;
@@ -47,27 +49,12 @@ public class IACardPlayer : MonoBehaviour
                 GameObject cardToPlay = SelectCardToPlay();
                 if (cardToPlay != null)
                 {
-                    // FINAL SAFETY CHECK - right before playing
+                    // Evita consumíveis
                     CardBehaviour finalCheck = cardToPlay.GetComponent<CardBehaviour>();
                     if (finalCheck != null && finalCheck.Id >= 38 && finalCheck.Id <= 44)
-                    {
-                        Debug.LogError($"[IA] CRITICAL: Carta consumível ID {finalCheck.Id} passou por todas as verificações!");
-                        continue; // Skip this card and move to next area
-                    }
+                        continue;
 
                     PlayCard(cardToPlay, area);
-
-                    CardBehaviour iaCardBehaviour = cardToPlay.GetComponent<CardBehaviour>();
-
-                    if (iaCardBehaviour != null)
-                    {
-                        if (iaCardBehaviour.Id == 23)
-                            iaCardBehaviour.gameObject.AddComponent<LobisomemEvoCondition>();
-
-                        if (iaCardBehaviour.Id == 28)
-                            iaCardBehaviour.gameObject.AddComponent<KianumakaEvoCondition>();
-                    }
-
                     cardsPlayed++;
                     yield return new WaitForSeconds(playDelay);
                 }
@@ -91,12 +78,11 @@ public class IACardPlayer : MonoBehaviour
     {
         if (deckManager.CurrentHand.Count == 0) return null;
 
-        // Filter out consumable cards first
         var validCards = deckManager.CurrentHand
             .Where(c =>
             {
                 CardBehaviour cb = c.GetComponent<CardBehaviour>();
-                return cb != null && (cb.Id < 38 || cb.Id > 44); // Exclude IDs 38-44
+                return cb != null && (cb.Id < 38 || cb.Id > 44);
             })
             .ToList();
 
@@ -117,33 +103,27 @@ public class IACardPlayer : MonoBehaviour
 
     private void PlayCard(GameObject cardPrefab, Transform playArea)
     {
-        // Double-check if this is a consumable card BEFORE doing anything
         CardBehaviour cardBehaviour = cardPrefab.GetComponent<CardBehaviour>();
 
         if (cardBehaviour != null && cardBehaviour.Id >= 38 && cardBehaviour.Id <= 44)
         {
-            Debug.LogWarning($"[IA] BLOCKED: Tentativa de jogar carta consumível ID {cardBehaviour.Id}");
-
-            // Try to find and play a different valid card
             GameObject alternativeCard = GetValidNonConsumableCard();
             if (alternativeCard != null)
-            {
-                Debug.Log($"[IA] Jogando carta alternativa: {alternativeCard.name}");
                 PlayCard(alternativeCard, playArea);
-            }
-            else
-            {
-                Debug.Log("[IA] Nenhuma carta não-consumível disponível para jogar.");
-            }
             return;
         }
 
-        // If we get here, the card is valid - proceed with playing it
         DisplayCard display = cardPrefab.GetComponent<DisplayCard>();
 
         GameObject cardInstance = Instantiate(cardPrefab, playArea);
         cardInstance.transform.localPosition = Vector3.zero;
-        cardInstance.transform.localScale = Vector3.one * 1.25f; // mantém escala 1.25x
+        cardInstance.transform.localScale = Vector3.one * 1.25f;
+
+        // 🎧 🔹 toca o som da IA jogando carta
+        if (aiCardPlaySFX != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(aiCardPlaySFX);
+        }
 
         // Atualiza o display da carta
         if (display != null)
@@ -152,16 +132,15 @@ public class IACardPlayer : MonoBehaviour
             display.UpdateCardData();
         }
 
-        // Configura o CardMovement sem desativar o componente
+        // Configura comportamento visual e interativo
         if (cardInstance.TryGetComponent(out CardMovement movement))
         {
             movement.isAttachedToPlayArea = true;
             movement.allowDragging = false;
             movement.isClickable = false;
-            movement.enabled = true; // mantém ativo para possíveis efeitos passivos
+            movement.enabled = true;
         }
 
-        // Deixa o gloweffectsecondary branco
         if (cardInstance.TryGetComponent(out CardMovement cm))
         {
             if (cm.glowEffectSecondary != null)
@@ -178,12 +157,8 @@ public class IACardPlayer : MonoBehaviour
             }
         }
 
-        // Remove da mão da IA
         deckManager.RemoveCardFromHand(cardPrefab);
-
-        Debug.Log($"[IA] Carta {cardPrefab.name} colocada na área {playArea.name}");
     }
-
 
     private GameObject GetValidNonConsumableCard()
     {
@@ -198,15 +173,8 @@ public class IACardPlayer : MonoBehaviour
             })
             .ToList();
 
-        if (validCards.Count == 0)
-        {
-            Debug.Log("[IA] Nenhuma carta não-consumível encontrada na mão.");
-            return null;
-        }
-
-        GameObject selected = validCards[Random.Range(0, validCards.Count)];
-        Debug.Log($"[IA] Carta alternativa selecionada: {selected.name} (ID: {selected.GetComponent<CardBehaviour>().Id})");
-        return selected;
+        if (validCards.Count == 0) return null;
+        return validCards[Random.Range(0, validCards.Count)];
     }
 
     public void SetDifficulty(Difficulty newDifficulty)

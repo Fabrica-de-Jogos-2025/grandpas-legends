@@ -39,15 +39,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Batalha 2.unity
     guid: 744f79ee3762c664b8ddbff4786f93a6
   - enabled: 1
-    path: Assets/Scenes/Batalha 3.unity
-    guid: fb174f29b1ae8de4488b069eb50a47c5
-  - enabled: 1
-    path: Assets/Scenes/Batalha 4.unity
-    guid: 235c549b7d498894e8f9dbf046f3e7b2
-  - enabled: 1
-    path: Assets/Scenes/Batalha 5.unity
-    guid: 3b02937cd24a38643b5709e84fb476e9
-  - enabled: 1
     path: Assets/Scenes/Defeat.unity
     guid: 26fb6c43466eb2c4097c89fcd7eedf8e
   - enabled: 1

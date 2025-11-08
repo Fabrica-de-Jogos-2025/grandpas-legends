@@ -230,15 +230,19 @@ public class GameManager : MonoBehaviour
         {
             MakeAllCardsInHandInteractiveOrNot(false);
 
+            // 🔹 Libera a próxima batalha ANTES do diálogo e do fade
+            BattleUnlockManager.UnlockNextBattle();
+            Debug.Log("[GameManager] Próxima batalha liberada!");
+
             DialogOfScene.SetActive(true);
 
             yield return StartCoroutine(WaitUntilDialogueEnds(DialogOfScene));
             yield return StartCoroutine(AnimateBattle.Instance.FadeToBlack());
 
             SceneManager.LoadScene("Victory");
-
             yield break;
         }
+
 
         yield break;
     }

@@ -15,6 +15,10 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private HandManager playerHand;
     [SerializeField] private IACardPlayer iaCardPlayer;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip attackSFX;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -270,6 +274,10 @@ public class TurnManager : MonoBehaviour
     {
         if (attacker == null || target == null) yield break;
 
+        // 🎧 Toca som de ataque se o AudioManager existir
+        if (AudioManager.Instance != null && attackSFX != null)
+            AudioManager.Instance.PlaySFX(attackSFX);
+
         Vector3 originalPos = attacker.position;
         Vector3 attackPos = originalPos + (target.position - originalPos) * 0.3f;
         
@@ -283,7 +291,7 @@ public class TurnManager : MonoBehaviour
                 yield break;
             }
             
-            attacker.position = Vector3.Lerp(originalPos, attackPos, elapsed / duration); // linha tenta acessar, não consegue
+            attacker.position = Vector3.Lerp(originalPos, attackPos, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -320,6 +328,7 @@ public class TurnManager : MonoBehaviour
 
         attacker.position = originalPos;
     }
+
 
     public static void SelectionQuickAttack(CardBehaviour attacker, CardBehaviour defender)
     {
